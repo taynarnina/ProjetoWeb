@@ -10,17 +10,20 @@ import com.mysql.jdbc.Connection;
 
 public class Conexao {
 	
+	private static String url = "jdbc:mysql://localhost:3306/biblio_ufab";
 	private static String user = "root";
 	private static String password = "root";
+	private static Connection con = null;
 	private static final Logger logger = LogManager.getLogger(Conexao.class);
 	
 	
 	public static Connection fazconexao() throws SQLException {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			return (Connection) DriverManager.getConnection("jdbc:mysql://Local instance MySQL57/biblio_ufab",user,password);
+			con = (Connection) DriverManager.getConnection(url,user,password);
+			return con;
 		}catch(ClassNotFoundException e){
-			logger.error("falha na conexao");
+			logger.error("erro na comunicação com o BD");
 			throw new SQLException(e.getException());	
 			
 		}

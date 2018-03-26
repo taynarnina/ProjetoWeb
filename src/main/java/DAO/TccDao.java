@@ -29,7 +29,7 @@ public  class TccDao implements Acervo<Tcc> {
 		PreparedStatement sql =null;
 		
 		try {
-		 sql = conexion.prepareStatement("INSERT INTO tcc VALUES(?,?,?,?,?)");
+		 sql = conexion.prepareStatement("INSERT INTO tcc(titulo,autor,orientador,tipo,anodefesa,local) VALUES(?,?,?,?,?)");
 		 sql.setString(1,t.getTitulo());		
 		 sql.setString(2,t.getAutor());
 		 sql.setString(3,t.getOrientador());
@@ -54,6 +54,7 @@ public  class TccDao implements Acervo<Tcc> {
 			sql = conexion.prepareStatement("UPDATE tcc	SET titulo = ?  WHERE titulo = ?");
 			sql.setString(1, troca_titulo);
 			sql.setString(2, titulo_tcc);
+			sql.execute();
 		} catch (SQLException e) {
 			logger.error("falha ao editar!");
 			e.printStackTrace();
@@ -69,6 +70,7 @@ public  class TccDao implements Acervo<Tcc> {
 		try {
 			sql = conexion.prepareStatement("SELECT * FROM tcc WHERE titulo = ?");
 			sql.setString(1, titulo_tcc);
+			sql.execute();
 		} catch (SQLException e) {
 			logger.error("falha na pesquisa!");
 			e.printStackTrace();
@@ -84,6 +86,7 @@ public  class TccDao implements Acervo<Tcc> {
 		try {
 			sql = conexion.prepareStatement("DELETE FROM tcc WHERE titulo = ?");
 			sql.setString(1, titulo_tcc);
+			sql.execute();
 		} catch (SQLException e) {
 			logger.error("falha!");
 			e.printStackTrace();

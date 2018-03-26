@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Midias {
 	private static String titulo;
 	private static String tipo;
-	private static Date dtgravacao;
+	private static String dtgravacao;
 	public static String getTitulo() {
 		return titulo;
 	}
@@ -18,10 +18,10 @@ public class Midias {
 	public static void setTipo(String tipo) {
 		Midias.tipo = tipo;
 	}
-	public static Date getDtgravacao() {
+	public static String getDtgravacao() {
 		return dtgravacao;
 	}
-	public static void setDtgravacao(Date dtgravacao) {
+	public static void setDtgravacao(String dtgravacao) {
 		Midias.dtgravacao = dtgravacao;
 	}
 }

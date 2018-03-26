@@ -26,7 +26,7 @@ public  class AnaisDao implements Acervo<Anais> {
 		
 		PreparedStatement sql =null;
 		try {
-		 sql = conexion.prepareStatement("INSERT INTO anais VALUES(?,?,?,?,?)");
+		 sql = conexion.prepareStatement("INSERT INTO anais(titulo,tipo,autores,nome_congresso,ano_publiclocal) VALUES(?,?,?,?,?,?)");
 		 sql.setString(1,a.getTitulo());		
 		 sql.setString(2,a.getTipo());
 		 sql.setString(3,a.getAutores());
@@ -50,6 +50,7 @@ public  class AnaisDao implements Acervo<Anais> {
 			sql = conexion.prepareStatement("UPDATE anais SET titulo = ?  WHERE titulo = ?");
 			sql.setString(1, troca_titulo);
 			sql.setString(2, titulo_negocio);
+			sql.execute();
 		} catch (SQLException e) {
 			logger.error("falha ao editar!");
 			e.printStackTrace();
@@ -65,6 +66,7 @@ public  class AnaisDao implements Acervo<Anais> {
 		try {
 			sql = conexion.prepareStatement("SELECT * FROM anais WHERE titulo = ?");
 			sql.setString(1, titulo_negocio);
+			sql.execute();
 		} catch (SQLException e) {
 			logger.error("falha na pesquisa!");
 			e.printStackTrace();
@@ -79,6 +81,7 @@ public  class AnaisDao implements Acervo<Anais> {
 		try {
 			sql = conexion.prepareStatement("DELETE FROM anais WHERE titulo = ?");
 			sql.setString(1, titulo_negocio);
+			sql.execute();
 		} catch (SQLException e) {
 			logger.error("falha!");
 			e.printStackTrace();

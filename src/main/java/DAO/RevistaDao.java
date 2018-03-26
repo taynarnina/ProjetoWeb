@@ -2,6 +2,9 @@ package DAO;
 
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -26,11 +29,21 @@ public  class RevistaDao implements Acervo<Revista> {
 	public void criar(Revista r) throws SQLException {
 		
 		PreparedStatement sql =null;
+		
+		String dataString = r.getDtpublicacao();
+		DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+		java.sql.Date d = null;
 		try {
-		 sql = conexion.prepareStatement("INSERT INTO livro VALUES(?,?,?,?,?)");
+			d = new java.sql.Date(fmt.parse(dataString).getTime());
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+		 sql = conexion.prepareStatement("INSERT INTO livro(titulo,editora,dtpublicacao,edicao,numpaginas) VALUES(?,?,?,?,?)");
 		 sql.setString(1,r.getTitulo());		
 		 sql.setString(2,r.getEditora());
-		 sql.setDate(3,r.getDtpublicacao());
+		 sql.setDate(3,d);
 		 sql.setInt(4,r.getEdicao());
 		 sql.setInt(5,r.getNumpaginas());
 		 sql.execute();
@@ -50,6 +63,7 @@ public  class RevistaDao implements Acervo<Revista> {
 			sql = conexion.prepareStatement("UPDATE revista SET titulo = ?  WHERE titulo = ?");
 			sql.setString(1, troca_titulo);
 			sql.setString(2, titulo_revista);
+			sql.execute();
 		} catch (SQLException e) {
 			logger.error("falha ao editar!");
 			e.printStackTrace();
@@ -66,6 +80,7 @@ public  class RevistaDao implements Acervo<Revista> {
 		try {
 			sql = conexion.prepareStatement("SELECT * FROM revista WHERE titulo = ?");
 			sql.setString(1, titulo_revista);
+			sql.execute();
 		} catch (SQLException e) {
 			logger.error("falha na pesquisa!");
 			e.printStackTrace();
@@ -81,6 +96,7 @@ public  class RevistaDao implements Acervo<Revista> {
 		try {
 			sql = conexion.prepareStatement("DELETE FROM revista WHERE titulo = ?");
 			sql.setString(1, titulo_revista);
+			sql.execute();
 		} catch (SQLException e) {
 			logger.error("falha!");
 			e.printStackTrace();

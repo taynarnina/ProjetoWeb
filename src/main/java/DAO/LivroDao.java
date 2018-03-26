@@ -25,7 +25,7 @@ public  class LivroDao implements Acervo<Livro> {
 		
 		PreparedStatement sql =null;
 		try {
-		 sql = conexion.prepareStatement("INSERT INTO livro VALUES(?,?,?,?,?,?,?,?)");
+		 sql = conexion.prepareStatement("INSERT INTO livro(titulo,autor,isbn,editora,ano_public,numpaginas,area_conhecimento,tema) VALUES(?,?,?,?,?,?,?,?)");
 		 sql.setString(1,l.getTitulo());		
 		 sql.setString(2,l.getAutor());
 		 sql.setLong(3,l.getIsbn());
@@ -52,6 +52,7 @@ public  class LivroDao implements Acervo<Livro> {
 			sql = conexion.prepareStatement("UPDATE livro SET titulo = ?  WHERE titulo = ?");
 			sql.setString(1, troca_titulo);
 			sql.setString(2, titulo_livro);
+			sql.execute();
 		} catch (SQLException e) {
 			logger.error("falha ao editar!");
 			e.printStackTrace();
@@ -67,6 +68,7 @@ public  class LivroDao implements Acervo<Livro> {
 		try {
 			sql = conexion.prepareStatement("SELECT * FROM livro WHERE titulo = ?");
 			sql.setString(1, titulo_livro);
+			sql.execute();
 		} catch (SQLException e) {
 			logger.error("falha na pesquisa!");
 			e.printStackTrace();
@@ -81,6 +83,7 @@ public  class LivroDao implements Acervo<Livro> {
 		try {
 			sql = conexion.prepareStatement("DELETE FROM livro WHERE titulo = ?");
 			sql.setString(1, titulo_livro);
+			sql.execute();
 		} catch (SQLException e) {
 			logger.error("falha!");
 			e.printStackTrace();

@@ -16,15 +16,17 @@ public class Jornal {
 	public void setEdicao(int edicao) {
 		this.edicao = edicao;
 	}
-	public Date getDtpublic() {
+
+	public String getDtpublic() {
 		return dtpublic;
 	}
-	public void setDtpublic(Date dtpublic) {
+	public void setDtpublic(String dtpublic) {
 		this.dtpublic = dtpublic;
 	}
+
 	private String titulo;
 	private int edicao;
-	private Date dtpublic;
+	private String dtpublic;
 
 	
 

@@ -2,6 +2,9 @@ package DAO;
 
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -26,11 +29,21 @@ public  class MidiasDao implements Acervo<Midias>{
 	public void criar(Midias m) throws SQLException {
 		
 		PreparedStatement sql =null;
+		
+		String dataString = m.getDtgravacao();
+		DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+		java.sql.Date d = null;
 		try {
-		 sql = conexion.prepareStatement("INSERT INTO midias VALUES(?,?,?)");
+			d = new java.sql.Date(fmt.parse(dataString).getTime());
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+		 sql = conexion.prepareStatement("INSERT INTO midias(titulo,tipo,dtgravacao) VALUES(?,?,?)");
 		 sql.setString(1,m.getTitulo());		
 		 sql.setString(2,m.getTipo());
-		 sql.setDate(3,m.getDtgravacao());
+		 sql.setDate(3,d);
 		 sql.execute();
 		}catch(SQLException e){
 
@@ -49,6 +62,7 @@ public  class MidiasDao implements Acervo<Midias>{
 			sql = conexion.prepareStatement("UPDATE midias	SET titulo = ?  WHERE titulo = ?");
 			sql.setString(1, troca_titulo);
 			sql.setString(2, titulo_midia);
+			sql.execute();
 		} catch (SQLException e) {
 			logger.error("falha ao editar!");
 			e.printStackTrace();
@@ -64,6 +78,7 @@ public  class MidiasDao implements Acervo<Midias>{
 		try {
 			sql = conexion.prepareStatement("SELECT * FROM midias WHERE titulo = ?");
 			sql.setString(1, titulo_midia);
+			sql.execute();
 		} catch (SQLException e) {
 			logger.error("falha na pesquisa!");
 			e.printStackTrace();
@@ -78,6 +93,7 @@ public  class MidiasDao implements Acervo<Midias>{
 		try {
 			sql = conexion.prepareStatement("DELETE FROM midias WHERE titulo = ?");
 			sql.setString(1, titulo_midia);
+			sql.execute();
 		} catch (SQLException e) {
 			logger.error("falha!");
 			e.printStackTrace();

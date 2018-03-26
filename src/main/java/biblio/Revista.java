@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Revista {
 	private static String titulo;
 	private static String editora;
-	private static Date dtpublicacao;
+	private static String dtpublicacao;
 	private static int edicao;
 	private static int numpaginas;
 	
@@ -21,10 +21,10 @@ public class Revista {
 	public static void setEditora(String editora) {
 		Revista.editora = editora;
 	}
-	public static Date getDtpublicacao() {
+	public static String getDtpublicacao() {
 		return dtpublicacao;
 	}
-	public static void setDtpublicacao(Date dtpublicacao) {
+	public static void setDtpublicacao(String dtpublicacao) {
 		Revista.dtpublicacao = dtpublicacao;
 	}
 	public static int getEdicao() {
