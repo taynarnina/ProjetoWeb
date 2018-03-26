@@ -2,33 +2,33 @@ package biblio;
 
 import java.sql.Date;
 
-public class Jornal implements Acervo{
+public class Jornal {
 	
+	public String getTitulo() {
+		return titulo;
+	}
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+	public int getEdicao() {
+		return edicao;
+	}
+	public void setEdicao(int edicao) {
+		this.edicao = edicao;
+	}
+	public Date getDtpublic() {
+		return dtpublic;
+	}
+	public void setDtpublic(Date dtpublic) {
+		this.dtpublic = dtpublic;
+	}
 	private String titulo;
 	private int edicao;
 	private Date dtpublic;
-	private Date dtpublic2;
+
+	
 
 
 
-	public void criar() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void editar() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void pesquisar() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void excluir() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

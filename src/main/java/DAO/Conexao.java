@@ -15,13 +15,14 @@ public class Conexao {
 	private static final Logger logger = LogManager.getLogger(Conexao.class);
 	
 	
-	public static Connection conexao() throws SQLException {
+	public static Connection fazconexao() throws SQLException {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			return (Connection) DriverManager.getConnection("jdbc:mysql://localhost/biblio_ufab",user,password);
+			return (Connection) DriverManager.getConnection("jdbc:mysql://Local instance MySQL57/biblio_ufab",user,password);
 		}catch(ClassNotFoundException e){
 			logger.error("falha na conexao");
-			throw new SQLException(e.getException());			
+			throw new SQLException(e.getException());	
+			
 		}
 	}
 
