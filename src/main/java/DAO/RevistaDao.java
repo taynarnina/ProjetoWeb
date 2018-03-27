@@ -1,7 +1,7 @@
 package DAO;
 
 
-import java.sql.SQLException;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import com.mysql.jdbc.Connection;
 
@@ -40,16 +41,13 @@ public  class RevistaDao implements Acervo<Revista> {
 			e1.printStackTrace();
 		}
 		try {
-		 sql = conexion.prepareStatement("INSERT INTO livro(titulo,editora,dtpublicacao,edicao,numpaginas) VALUES(?,?,?,?,?)");
+		 sql = conexion.prepareStatement("INSERT INTO revista(titulo,editora,dtpublicacao,edicao,numpaginas) VALUES(?,?,?,?,?)");
 		 sql.setString(1,r.getTitulo());		
 		 sql.setString(2,r.getEditora());
 		 sql.setDate(3,d);
 		 sql.setInt(4,r.getEdicao());
 		 sql.setInt(5,r.getNumpaginas());
 		 sql.execute();
-		 
-		 sql.close();
-		 conexion.close();
 		 
 		 return true;
 		}catch(SQLException e){
@@ -71,9 +69,6 @@ public  class RevistaDao implements Acervo<Revista> {
 			sql.setString(1, troca_titulo);
 			sql.setString(2, titulo_revista);
 			sql.execute();
-			
-			sql.close();
-			conexion.close();
 			
 			return true;
 		} catch (SQLException e) {

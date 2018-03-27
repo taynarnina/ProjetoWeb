@@ -1,11 +1,10 @@
 package DAO;
 
 
-import java.sql.SQLException;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import com.mysql.jdbc.Connection;
 
@@ -26,7 +25,7 @@ public  class AnaisDao implements Acervo<Anais> {
 		
 		PreparedStatement sql =null;
 		try {
-			 sql = conexion.prepareStatement("INSERT INTO anais(titulo,tipo,autores,nome_congresso,ano_publiclocal) VALUES(?,?,?,?,?,?)");
+			 sql = conexion.prepareStatement("INSERT INTO anais(titulo,tipo,autores,nome_congresso,ano_public,local) VALUES(?,?,?,?,?,?)");
 			 sql.setString(1,a.getTitulo());		
 			 sql.setString(2,a.getTipo());
 			 sql.setString(3,a.getAutores());

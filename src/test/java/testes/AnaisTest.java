@@ -17,11 +17,12 @@ import org.junit.Test;
 
 import com.mysql.jdbc.PreparedStatement;
 
+import DAO.AnaisDao;
 import DAO.Conexao;
-import DAO.JornalDao;
-import biblio.Jornal;
+import biblio.Anais;
 
-public class JornalTest {
+
+public class AnaisTest {
 	
 	private static Connection con;
 	private PreparedStatement sql;
@@ -57,15 +58,19 @@ public class JornalTest {
 	
 	@Test
 	public void testCriar() throws SQLException  {
-		JornalDao jd = new JornalDao();
+		AnaisDao ad = new AnaisDao();
+		Anais a = new Anais();
 		
-		Jornal j1 = new Jornal();
-		j1.setTitulo("jornal da pb");
-		j1.setDtpublic("10/07/2014");
-		j1.setEdicao(3);
+		a.setTitulo("Estudo de caso sobre engenharia da qualidade do software");
+		a.setTipo("artigo");
+		a.setAutores("José da silva,et.al");
+		a.setNome_congresso("ENECT");
+		a.setAnopublic(2018);
+		a.setLocal("Campina grande-PB");
+		
 		
 		testaconexao();
-		assertTrue(jd.criar(j1));
+		assertTrue(ad.criar(a));
 		fecharConexao();
 
 	
@@ -74,10 +79,10 @@ public class JornalTest {
 	
 	@Test
 	public void testEditar() throws SQLException  {
-		JornalDao jd = new JornalDao();
+		AnaisDao ad = new AnaisDao();
 		
 		testaconexao();
-		assertTrue(jd.editar("jornal da pb","jornal da manha"));
+		assertTrue(ad.editar("Estudo de caso sobre engenharia da qualidade do software","engenharia de software"));
 		fecharConexao();
 
 	
@@ -86,10 +91,10 @@ public class JornalTest {
 	
 	@Test
 	public void testPesquisar() throws SQLException  {
-		JornalDao jd = new JornalDao();
+		AnaisDao ad = new AnaisDao();
 		
 		testaconexao();
-		assertTrue(jd.pesquisar("jornal da manha"));
+		assertTrue(ad.pesquisar("engenharia de software"));
 		fecharConexao();
 
 	
@@ -98,10 +103,10 @@ public class JornalTest {
 	
 	@Test
 	public void testExcluir() throws SQLException  {
-		JornalDao jd = new JornalDao();
+		AnaisDao ad = new AnaisDao();
 		
 		testaconexao();
-		assertTrue(jd.excluir("jornal da manha"));
+		assertTrue(ad.excluir("engenharia de software"));
 		fecharConexao();
 
 	

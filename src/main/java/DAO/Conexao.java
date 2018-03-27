@@ -12,7 +12,7 @@ public class Conexao {
 	
 	private static String url = "jdbc:mysql://localhost:3306/biblio_ufab";
 	private static String user = "root";
-	private static String password = "";
+	private static String password = "root";
 	private static Connection con = null;
 	private static final Logger logger = LogManager.getLogger(Conexao.class);
 	

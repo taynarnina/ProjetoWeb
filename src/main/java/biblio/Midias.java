@@ -1,6 +1,5 @@
 package biblio;
 
-import java.sql.Date;
 
 public class Midias {
 	private static String titulo;

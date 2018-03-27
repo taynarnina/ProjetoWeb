@@ -1,7 +1,5 @@
 package DAO;
 
-
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,6 +10,7 @@ import org.apache.log4j.Logger;
 import java.util.Date;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import com.mysql.jdbc.Connection;
 
@@ -49,11 +48,9 @@ public  class JornalDao implements Acervo<Jornal> {
 		 sql.setLong(3,j.getEdicao());
 		 sql.execute();
 		 System.out.println("inserido");
-		 
-		 sql.close();
-		 conexion.close();
 		
 		 return true;
+		 
 		}catch(SQLException e){
 			
 			logger.error(e.getMessage());
