@@ -2,14 +2,11 @@ package testes;
 
 import static org.junit.Assert.*;
 
-
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -18,11 +15,11 @@ import org.junit.Test;
 import com.mysql.jdbc.PreparedStatement;
 
 import DAO.Conexao;
-import DAO.JornalDao;
-import biblio.Jornal;
+import DAO.RevistaDao;
+import biblio.Revista;
 
-public class JornalTest {
-	
+public class RevistaTest {
+
 	private static Connection con;
 	private PreparedStatement sql;
 	
@@ -52,20 +49,22 @@ public class JornalTest {
 			e.printStackTrace();
 		}
 	}
-	@Before
+
 	
 	
 	@Test
-	public void testCriar() throws SQLException  {
-		JornalDao jd = new JornalDao();
+	public void testCriar() throws SQLException   {
+		RevistaDao rd = new RevistaDao();
+		Revista r = new Revista();
 		
-		Jornal j1 = new Jornal();
-		j1.setTitulo("jornal da pb");
-		j1.setDtpublic("10/07/2014");
-		j1.setEdicao(3);
+		r.setTitulo("Caras e bocas");
+		r.setEditora("Abril");
+		r.setDtpublicacao("09/04/2017");
+		r.setEdicao(5);
+		r.setNumpaginas(113);
 		
 		testaconexao();
-		assertTrue(jd.criar(j1));
+		assertTrue(rd.criar(r));
 		fecharConexao();
 
 	
@@ -74,10 +73,10 @@ public class JornalTest {
 	
 	@Test
 	public void testEditar() throws SQLException  {
-		JornalDao jd = new JornalDao();
+		RevistaDao rd = new RevistaDao();
 		
 		testaconexao();
-		assertTrue(jd.editar("jornal da pb","jornal da manha"));
+		assertTrue(rd.editar("Caras e bocas","Caras Brasil"));
 		fecharConexao();
 
 	
@@ -86,10 +85,10 @@ public class JornalTest {
 	
 	@Test
 	public void testPesquisar() throws SQLException  {
-		JornalDao jd = new JornalDao();
+		RevistaDao rd = new RevistaDao();
 		
 		testaconexao();
-		assertTrue(jd.pesquisar("jornal da manha"));
+		assertTrue(rd.pesquisar("Caras Brasil"));
 		fecharConexao();
 
 	
@@ -98,16 +97,14 @@ public class JornalTest {
 	
 	@Test
 	public void testExcluir() throws SQLException  {
-		JornalDao jd = new JornalDao();
+		RevistaDao rd = new RevistaDao();
 		
 		testaconexao();
-		assertTrue(jd.excluir("jornal da manha"));
+		assertTrue(rd.excluir("Caras Brasil"));
 		fecharConexao();
 
 	
 		
 	}
-
-
 
 }

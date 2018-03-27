@@ -1,11 +1,11 @@
 package DAO;
 
 
-import java.sql.SQLException;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import com.mysql.jdbc.Connection;
 

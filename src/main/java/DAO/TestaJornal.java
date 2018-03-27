@@ -8,29 +8,16 @@ public class TestaJornal {
 	
 	
 	public static void main(String[] args) throws SQLException  {
-		/*Excluir
+		Jornal j1 = new Jornal();
 		JornalDao jd = new JornalDao();
 		
-		jd.excluir("novoTitulo");
+		j1.setTitulo("comportas de boqueirão");
+		j1.setDtpublic("10/02/2016");
+		j1.setEdicao(5);
 		
-		Pesquisar
-		JornalDao jd = new JornalDao();
+		jd.criar(j1);
 		
-		jd.pesquisar("novoTitul");
-		
-		/Edita 
-		JornalDao jd = new JornalDao();
-		
-		jd.editar("comportas de boqueirão", "novoTitulo");
-		
-		/Criar
-		Jornal j = new Jornal();
-		j.setTitulo("comportas de boqueirão");
-		j.setDtpublic("10/10/2001");
-		j.setEdicao(5);
-		JornalDao jd = new JornalDao();
-		
-		jd.criar(j);*/
 	}
 	
+
 }

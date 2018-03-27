@@ -2,27 +2,23 @@ package testes;
 
 import static org.junit.Assert.*;
 
-
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.mysql.jdbc.PreparedStatement;
 
 import DAO.Conexao;
-import DAO.JornalDao;
-import biblio.Jornal;
+import DAO.LivroDao;
+import biblio.Livro;
 
-public class JornalTest {
-	
+
+public class LivroTest {
 	private static Connection con;
 	private PreparedStatement sql;
 	
@@ -52,20 +48,25 @@ public class JornalTest {
 			e.printStackTrace();
 		}
 	}
-	@Before
+
 	
 	
 	@Test
-	public void testCriar() throws SQLException  {
-		JornalDao jd = new JornalDao();
+	public void testCriar() throws SQLException   {
+		LivroDao ld = new LivroDao();
+		Livro l = new Livro();
 		
-		Jornal j1 = new Jornal();
-		j1.setTitulo("jornal da pb");
-		j1.setDtpublic("10/07/2014");
-		j1.setEdicao(3);
+		l.setTitulo("Programação web para leigos");
+		l.setAutor("Thiago Batista");
+		l.setIsbn(78945);
+		l.setEditora("Novatec");
+		l.setAnopublic(2017);
+		l.setNumpaginas(300);
+		l.setArea_conhecimento("programação");
+		l.setTema("programação web");
 		
 		testaconexao();
-		assertTrue(jd.criar(j1));
+		assertTrue(ld.criar(l));
 		fecharConexao();
 
 	
@@ -74,10 +75,10 @@ public class JornalTest {
 	
 	@Test
 	public void testEditar() throws SQLException  {
-		JornalDao jd = new JornalDao();
+		LivroDao ld = new LivroDao();
 		
 		testaconexao();
-		assertTrue(jd.editar("jornal da pb","jornal da manha"));
+		assertTrue(ld.editar("Programação web para leigos","Programação para leigos"));
 		fecharConexao();
 
 	
@@ -86,10 +87,10 @@ public class JornalTest {
 	
 	@Test
 	public void testPesquisar() throws SQLException  {
-		JornalDao jd = new JornalDao();
+		LivroDao ld = new LivroDao();
 		
 		testaconexao();
-		assertTrue(jd.pesquisar("jornal da manha"));
+		assertTrue(ld.pesquisar("Programação para leigos"));
 		fecharConexao();
 
 	
@@ -98,16 +99,15 @@ public class JornalTest {
 	
 	@Test
 	public void testExcluir() throws SQLException  {
-		JornalDao jd = new JornalDao();
+		LivroDao ld = new LivroDao();
+		
 		
 		testaconexao();
-		assertTrue(jd.excluir("jornal da manha"));
+		assertTrue(ld.excluir("Programação para leigos"));
 		fecharConexao();
 
 	
 		
 	}
-
-
 
 }

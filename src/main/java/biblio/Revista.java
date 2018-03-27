@@ -1,6 +1,6 @@
 package biblio;
 
-import java.sql.Date;
+
 
 public class Revista {
 	private static String titulo;

@@ -1,7 +1,5 @@
 package DAO;
 
-
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,6 +7,7 @@ import java.text.SimpleDateFormat;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import com.mysql.jdbc.Connection;
 
