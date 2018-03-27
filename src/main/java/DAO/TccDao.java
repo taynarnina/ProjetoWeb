@@ -24,37 +24,48 @@ public  class TccDao implements Acervo<Tcc> {
 		conexion = Conexao.fazconexao();
 	}
 	
-	public void criar(Tcc t) throws SQLException{
+	public boolean criar(Tcc t) throws SQLException{
 		
 		PreparedStatement sql =null;
 		
 		try {
-		 sql = conexion.prepareStatement("INSERT INTO tcc(titulo,autor,orientador,tipo,anodefesa,local) VALUES(?,?,?,?,?)");
-		 sql.setString(1,t.getTitulo());		
-		 sql.setString(2,t.getAutor());
-		 sql.setString(3,t.getOrientador());
-		 sql.setString(4,t.getTipo());
-		 sql.setInt(5,t.getAnodefesa());
-		 sql.setString(6,t.getLocal());
-		 sql.execute();
+			 sql = conexion.prepareStatement("INSERT INTO tcc(titulo,autor,orientador,tipo,anodefesa,local) VALUES(?,?,?,?,?)");
+			 sql.setString(1,t.getTitulo());		
+			 sql.setString(2,t.getAutor());
+			 sql.setString(3,t.getOrientador());
+			 sql.setString(4,t.getTipo());
+			 sql.setInt(5,t.getAnodefesa());
+			 sql.setString(6,t.getLocal());
+			 sql.execute();
+			 
+			 sql.close();
+			 conexion.close();
+			
+			 return true;
 		 
 		}catch(SQLException e){
 			
-			logger.error("erro na inserção dos dados! "+e);
-			//throw new SQLException(e.getMessage());
+			logger.error(e.getMessage());
 			
 		}
 		sql.close();
 		conexion.close();
+		
+		return false;
 	}
 
-	public void editar(String titulo_tcc,String troca_titulo)throws SQLException {
+	public boolean editar(String titulo_tcc,String troca_titulo)throws SQLException {
 		PreparedStatement sql =null;
 		try {
 			sql = conexion.prepareStatement("UPDATE tcc	SET titulo = ?  WHERE titulo = ?");
 			sql.setString(1, troca_titulo);
 			sql.setString(2, titulo_tcc);
 			sql.execute();
+			
+			sql.close();
+			conexion.close();
+			
+			return true;
 		} catch (SQLException e) {
 			logger.error("falha ao editar!");
 			e.printStackTrace();
@@ -62,15 +73,22 @@ public  class TccDao implements Acervo<Tcc> {
 		sql.close();
 		conexion.close();
 		
+		return false;
+		
 	}
 		
 
-	public void pesquisar(String titulo_tcc) throws SQLException {
+	public boolean pesquisar(String titulo_tcc) throws SQLException {
 		PreparedStatement sql =null;
 		try {
 			sql = conexion.prepareStatement("SELECT * FROM tcc WHERE titulo = ?");
 			sql.setString(1, titulo_tcc);
 			sql.execute();
+			
+			sql.close();
+			conexion.close();
+			
+			return true;
 		} catch (SQLException e) {
 			logger.error("falha na pesquisa!");
 			e.printStackTrace();
@@ -78,15 +96,22 @@ public  class TccDao implements Acervo<Tcc> {
 		
 		sql.close();
 		conexion.close();
+		
+		return false;
 	}
 
 
-	public void excluir(String titulo_tcc) throws SQLException {
+	public boolean excluir(String titulo_tcc) throws SQLException {
 		PreparedStatement sql =null;
 		try {
 			sql = conexion.prepareStatement("DELETE FROM tcc WHERE titulo = ?");
 			sql.setString(1, titulo_tcc);
 			sql.execute();
+			
+			sql.close();
+			conexion.close();
+			
+			return true;
 		} catch (SQLException e) {
 			logger.error("falha!");
 			e.printStackTrace();
@@ -95,8 +120,8 @@ public  class TccDao implements Acervo<Tcc> {
 		sql.close();
 		conexion.close();
 		
+		return false;
+		
 	}
-
-
 
 }

@@ -26,7 +26,7 @@ public  class MidiasDao implements Acervo<Midias>{
 		conexion = Conexao.fazconexao();
 	}
 	
-	public void criar(Midias m) throws SQLException {
+	public boolean criar(Midias m) throws SQLException {
 		
 		PreparedStatement sql =null;
 		
@@ -40,29 +40,40 @@ public  class MidiasDao implements Acervo<Midias>{
 			e1.printStackTrace();
 		}
 		try {
-		 sql = conexion.prepareStatement("INSERT INTO midias(titulo,tipo,dtgravacao) VALUES(?,?,?)");
-		 sql.setString(1,m.getTitulo());		
-		 sql.setString(2,m.getTipo());
-		 sql.setDate(3,d);
-		 sql.execute();
+			 sql = conexion.prepareStatement("INSERT INTO midias(titulo,tipo,dtgravacao) VALUES(?,?,?)");
+			 sql.setString(1,m.getTitulo());		
+			 sql.setString(2,m.getTipo());
+			 sql.setDate(3,d);
+			 sql.execute();
+			 
+			 sql.close();
+			 conexion.close();
+			
+			 return true;
 		}catch(SQLException e){
 
-			logger.error("erro na inserção dos dados!");
-			throw new SQLException(e.getMessage());
+			logger.error(e.getMessage());
 			
 		}
 		sql.close();
 		conexion.close();
 		
+		return false;
+		
 	}
 
-	public void editar(String titulo_midia,String troca_titulo)throws SQLException {
+	public boolean editar(String titulo_midia,String troca_titulo)throws SQLException {
 		PreparedStatement sql =null;
 		try {
 			sql = conexion.prepareStatement("UPDATE midias	SET titulo = ?  WHERE titulo = ?");
 			sql.setString(1, troca_titulo);
 			sql.setString(2, titulo_midia);
 			sql.execute();
+			
+			sql.close();
+			conexion.close();
+			
+			return true;
 		} catch (SQLException e) {
 			logger.error("falha ao editar!");
 			e.printStackTrace();
@@ -70,30 +81,43 @@ public  class MidiasDao implements Acervo<Midias>{
 		sql.close();
 		conexion.close();
 		
+		return false;
+		
 	}
 		
 
-	public void pesquisar(String titulo_midia) throws SQLException {
+	public boolean pesquisar(String titulo_midia) throws SQLException {
 		PreparedStatement sql =null;
 		try {
 			sql = conexion.prepareStatement("SELECT * FROM midias WHERE titulo = ?");
 			sql.setString(1, titulo_midia);
 			sql.execute();
+			
+			sql.close();
+			conexion.close();
+			
+			return true;
 		} catch (SQLException e) {
 			logger.error("falha na pesquisa!");
 			e.printStackTrace();
 		}
 		sql.close();
 		conexion.close();
+		
+		return false;
 	}
 
-
-	public void excluir(String titulo_midia) throws SQLException {
+	public boolean excluir(String titulo_midia) throws SQLException {
 		PreparedStatement sql =null;
 		try {
 			sql = conexion.prepareStatement("DELETE FROM midias WHERE titulo = ?");
 			sql.setString(1, titulo_midia);
 			sql.execute();
+			
+			sql.close();
+			conexion.close();
+			
+			return true;
 		} catch (SQLException e) {
 			logger.error("falha!");
 			e.printStackTrace();
@@ -101,8 +125,8 @@ public  class MidiasDao implements Acervo<Midias>{
 		sql.close();
 		conexion.close();
 		
+		return false;
+		
 	}
-
-
 
 }

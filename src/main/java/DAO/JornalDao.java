@@ -29,7 +29,7 @@ public  class JornalDao implements Acervo<Jornal> {
 		conexion = Conexao.fazconexao();
 	}
 	
-	public void criar(Jornal j) throws SQLException {
+	public boolean criar(Jornal j) throws SQLException {
 		
 		PreparedStatement sql =null;
 		String dataString = j.getDtpublic();
@@ -49,6 +49,11 @@ public  class JornalDao implements Acervo<Jornal> {
 		 sql.setLong(3,j.getEdicao());
 		 sql.execute();
 		 System.out.println("inserido");
+		 
+		 sql.close();
+		 conexion.close();
+		
+		 return true;
 		}catch(SQLException e){
 			
 			logger.error(e.getMessage());
@@ -56,10 +61,10 @@ public  class JornalDao implements Acervo<Jornal> {
 		}
 		sql.close();
 		conexion.close();
-		
+		return false;
 	}
 
-	public void editar(String titulo_jornal,String troca_titulo)throws SQLException {
+	public boolean editar(String titulo_jornal,String troca_titulo)throws SQLException {
 		PreparedStatement sql =null;
 		try {
 			sql = conexion.prepareStatement("UPDATE jornal SET titulo = ? WHERE titulo = ?");
@@ -67,6 +72,11 @@ public  class JornalDao implements Acervo<Jornal> {
 			sql.setString(2, titulo_jornal);
 			sql.execute();
 			System.out.println("alterado");
+			
+			sql.close();
+			conexion.close();
+			
+			return true;
 		} catch (SQLException e) {
 			logger.error("falha ao editar!");
 			e.printStackTrace();
@@ -74,30 +84,44 @@ public  class JornalDao implements Acervo<Jornal> {
 		sql.close();
 		conexion.close();
 		
+		return false;
 	}
 		
 
-	public void pesquisar(String titulo_jornal) throws SQLException {
+	public boolean pesquisar(String titulo_jornal) throws SQLException {
 		PreparedStatement sql =null;
 		try {
 			sql = conexion.prepareStatement("SELECT * FROM jornal WHERE titulo = ?");
 			sql.setString(1, titulo_jornal);
 			sql.execute();
+			System.out.println("eu encontrei");
+			
+			sql.close();
+			conexion.close();
+			
+			return true;
 		} catch (SQLException e) {
 			logger.error("falha na pesquisa!");
 			e.printStackTrace();
 		}
 		sql.close();
 		conexion.close();
+		
+		return false;
 	}
 
-
-	public void excluir(String titulo_jornal) throws SQLException {
+	public boolean excluir(String titulo_jornal) throws SQLException {
 		PreparedStatement sql =null;
 		try {
 			sql = conexion.prepareStatement("DELETE FROM jornal WHERE titulo = ?");
 			sql.setString(1, titulo_jornal);
 			sql.execute();
+			System.out.println("excluido");
+			
+			sql.close();
+			conexion.close();
+			
+			return true;
 		} catch (SQLException e) {
 			logger.error("falha!");
 			e.printStackTrace();
@@ -105,8 +129,6 @@ public  class JornalDao implements Acervo<Jornal> {
 		sql.close();
 		conexion.close();
 		
+		return false;
 	}
-
-
-
 }

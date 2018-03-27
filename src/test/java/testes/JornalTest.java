@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -58,20 +57,14 @@ public class JornalTest {
 		j1.setDtpublic("10/10/2001");
 		j1.setEdicao(5);
 		
-		
-			
-			try {
-				testaconexao();
-				jd.criar(j1);
-				fecharConexao();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-		
-		assertNull(null);
+		try {
+			testaconexao();
+			assertFalse(jd.criar(j1));
+			fecharConexao();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 
 }

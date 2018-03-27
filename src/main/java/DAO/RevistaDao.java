@@ -26,7 +26,7 @@ public  class RevistaDao implements Acervo<Revista> {
 		conexion = Conexao.fazconexao();
 	}
 	
-	public void criar(Revista r) throws SQLException {
+	public boolean criar(Revista r) throws SQLException {
 		
 		PreparedStatement sql =null;
 		
@@ -47,23 +47,35 @@ public  class RevistaDao implements Acervo<Revista> {
 		 sql.setInt(4,r.getEdicao());
 		 sql.setInt(5,r.getNumpaginas());
 		 sql.execute();
+		 
+		 sql.close();
+		 conexion.close();
+		 
+		 return true;
 		}catch(SQLException e){
-			logger.error("erro na inserção dos dados!");
 			
-			
+			logger.error(e.getMessage());
+		
 		}
 		sql.close();
 		conexion.close();
 		
+		return false;
+		
 	}
 
-	public void editar(String titulo_revista,String troca_titulo)throws SQLException {
+	public boolean editar(String titulo_revista,String troca_titulo)throws SQLException {
 		PreparedStatement sql =null;
 		try {
 			sql = conexion.prepareStatement("UPDATE revista SET titulo = ?  WHERE titulo = ?");
 			sql.setString(1, troca_titulo);
 			sql.setString(2, titulo_revista);
 			sql.execute();
+			
+			sql.close();
+			conexion.close();
+			
+			return true;
 		} catch (SQLException e) {
 			logger.error("falha ao editar!");
 			e.printStackTrace();
@@ -71,16 +83,23 @@ public  class RevistaDao implements Acervo<Revista> {
 		sql.close();
 		conexion.close();
 		
+		return false;
+		
 		
 	}
 		
 
-	public void pesquisar(String titulo_revista) throws SQLException {
+	public boolean pesquisar(String titulo_revista) throws SQLException {
 		PreparedStatement sql =null;
 		try {
 			sql = conexion.prepareStatement("SELECT * FROM revista WHERE titulo = ?");
 			sql.setString(1, titulo_revista);
 			sql.execute();
+			
+			sql.close();
+			conexion.close();
+			
+			return true;
 		} catch (SQLException e) {
 			logger.error("falha na pesquisa!");
 			e.printStackTrace();
@@ -88,21 +107,30 @@ public  class RevistaDao implements Acervo<Revista> {
 		}
 		sql.close();
 		conexion.close();
+		
+		return false;
 	}
 
 
-	public void excluir(String titulo_revista) throws SQLException {
+	public boolean excluir(String titulo_revista) throws SQLException {
 		PreparedStatement sql =null;
 		try {
 			sql = conexion.prepareStatement("DELETE FROM revista WHERE titulo = ?");
 			sql.setString(1, titulo_revista);
 			sql.execute();
+			
+			sql.close();
+			conexion.close();
+			
+			return true;
 		} catch (SQLException e) {
 			logger.error("falha!");
 			e.printStackTrace();
 		}
 		sql.close();
 		conexion.close();
+		
+		return false;
 		
 	}
 

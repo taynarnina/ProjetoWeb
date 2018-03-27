@@ -23,7 +23,7 @@ public  class CursosDao {
 		}
 
 
-		public void criar(Cursos c) throws SQLException  {
+		public boolean criar(Cursos c) throws SQLException  {
 			PreparedStatement sql =null;
 			try {
 			 sql = conexion.prepareStatement("INSERT INTO cursos(nome,area,tipo) VALUES(?,?,?)");
@@ -31,24 +31,35 @@ public  class CursosDao {
 			 sql.setString(2,c.getArea());
 			 sql.setString(3,c.getTipo());
 			 sql.execute();
+			 
+			 sql.close();
+			 conexion.close();
+			 
+			 return true;
 			}catch(SQLException e){
-				logger.error("erro na inserção dos dados!");
-				throw new SQLException(e.getMessage());
+				logger.error(e.getMessage());
 				
 			}
 			sql.close();
 			conexion.close();
 			
+			return false;
+			
 		}
 
 
-		public void editar(String troca_nome, String nome_novo) throws SQLException {
+		public boolean editar(String troca_nome, String nome_novo) throws SQLException {
 			PreparedStatement sql =null;
 			try {
 				sql = conexion.prepareStatement("UPDATE jornal	SET titulo = ?  WHERE titulo = ?");
 				sql.setString(1, nome_novo);
 				sql.setString(2, troca_nome);
 				sql.execute();
+				
+				sql.close();
+				conexion.close();
+				
+				return true;
 			} catch (SQLException e) {
 				logger.error("falha ao editar!");
 				e.printStackTrace();
@@ -56,21 +67,30 @@ public  class CursosDao {
 			sql.close();
 			conexion.close();
 			
+			return false;
+			
 		}
 
 
-		public void excluir(String nome_curso) throws SQLException {
+		public boolean excluir(String nome_curso) throws SQLException {
 			PreparedStatement sql =null;
 			try {
 				sql = conexion.prepareStatement("DELETE FROM jornal WHERE titulo = ?");
 				sql.setString(1, nome_curso);
 				sql.execute();
+				
+				sql.close();
+				conexion.close();
+				
+				return true;
 			} catch (SQLException e) {
 				logger.error("falha!");
 				e.printStackTrace();
 			}
 			sql.close();
 			conexion.close();
+			
+			return false;
 			
 		}
 		
