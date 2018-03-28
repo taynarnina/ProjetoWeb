@@ -50,7 +50,7 @@ public class LivroTest {
 	}
 	
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testCriar() throws SQLException   {
 		LivroDao ld = new LivroDao();
 		Livro l = new Livro();
@@ -68,9 +68,22 @@ public class LivroTest {
 		assertTrue(ld.criar(l));
 		fecharConexao();
 		
+		Livro ll = new Livro();
+		
+		ll.setAutor("Thiago Batista");
+		ll.setIsbn(78945);
+		ll.setEditora("Novatec");
+		ll.setAnopublic(2017);
+		ll.setNumpaginas(300);
+		ll.setArea_conhecimento("programação");
+		ll.setTema("programação web");
+		
+		testaconexao();
+		assertTrue(ld.criar(ll));
+		fecharConexao();
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testEditar() throws SQLException  {
 		LivroDao ld = new LivroDao();
 		
@@ -78,11 +91,13 @@ public class LivroTest {
 		assertTrue(ld.editar("Programação web para leigos","Programação para leigos"));
 		fecharConexao();
 
-	
+		testaconexao();
+		ld.pesquisar("Programação para leigos");
+		fecharConexao();
 		
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testPesquisar() throws SQLException  {
 		LivroDao ld = new LivroDao();
 		
@@ -90,21 +105,23 @@ public class LivroTest {
 		assertTrue(ld.pesquisar("Programação para leigos"));
 		fecharConexao();
 
-	
+		testaconexao();
+		ld.pesquisar("Programação para leigos");
+		fecharConexao();
 		
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testExcluir() throws SQLException  {
 		LivroDao ld = new LivroDao();
-		
 		
 		testaconexao();
 		assertTrue(ld.excluir("Programação para leigos"));
 		fecharConexao();
 
-	
-		
+		testaconexao();
+		ld.excluir("Programação para leigos");
+		fecharConexao();
 	}
 
 }

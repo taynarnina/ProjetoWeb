@@ -56,7 +56,7 @@ public class AnaisTest {
 	@Before
 	
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testCriar() throws SQLException  {
 		AnaisDao ad = new AnaisDao();
 		Anais a = new Anais();
@@ -73,11 +73,22 @@ public class AnaisTest {
 		assertTrue(ad.criar(a));
 		fecharConexao();
 
-	
+		Anais aa = new Anais();
+		
+		aa.setTipo("artigo");
+		aa.setAutores("José da silva,et.al");
+		aa.setNome_congresso("ENECT");
+		aa.setAnopublic(2018);
+		aa.setLocal("Campina grande-PB");
+		
+		
+		testaconexao();
+		//ad.criar(aa);
+		fecharConexao();
 		
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testEditar() throws SQLException  {
 		AnaisDao ad = new AnaisDao();
 		
@@ -85,11 +96,13 @@ public class AnaisTest {
 		assertTrue(ad.editar("Estudo de caso engenharia da qualidade","engenharia de software"));
 		fecharConexao();
 
-	
+		testaconexao();
+		ad.editar("Estudo de caso engenharia da qualidade","engenharia de software");
+		fecharConexao();
 		
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testPesquisar() throws SQLException  {
 		AnaisDao ad = new AnaisDao();
 		
@@ -97,19 +110,23 @@ public class AnaisTest {
 		assertTrue(ad.pesquisar("engenharia de software"));
 		fecharConexao();
 
-	
+		testaconexao();
+		ad.pesquisar("engenharia de software");
+		fecharConexao();
 		
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testExcluir() throws SQLException  {
 		AnaisDao ad = new AnaisDao();
 		
 		testaconexao();
-		//assertTrue(ad.excluir("engenharia de software"));
+		assertTrue(ad.excluir("engenharia de software"));
 		fecharConexao();
 
-	
+		testaconexao();
+		ad.excluir("engenharia de software");
+		fecharConexao();
 		
 	}
 

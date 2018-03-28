@@ -53,7 +53,7 @@ public class MidiasTest {
 
 	
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testCriar() throws SQLException   {
 		MidiasDao md= new MidiasDao();
 		Midias m = new Midias();
@@ -66,11 +66,17 @@ public class MidiasTest {
 		assertTrue(md.criar(m));
 		fecharConexao();
 
-	
+		Midias mm = new Midias();
 		
+		mm.setTipo("dvd");
+		mm.setDtgravacao("20/03/2000");
+		
+		testaconexao();
+		assertTrue(md.criar(mm));
+		fecharConexao();
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testEditar() throws SQLException  {
 		MidiasDao md = new MidiasDao();
 		
@@ -78,11 +84,13 @@ public class MidiasTest {
 		assertTrue(md.editar("Telecurso 2000","Telecurso 1999"));
 		fecharConexao();
 
-	
+		testaconexao();
+		md.editar("Telecurso 2000","Telecurso 1999");
+		fecharConexao();
 		
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testPesquisar() throws SQLException  {
 		MidiasDao md = new MidiasDao();
 		
@@ -90,11 +98,13 @@ public class MidiasTest {
 		assertTrue(md.pesquisar("Telecurso 1999"));
 		fecharConexao();
 
-	
+		testaconexao();
+		md.pesquisar("Telecurso 1999");
+		fecharConexao();
 		
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testExcluir() throws SQLException  {
 		MidiasDao md = new MidiasDao();
 		
@@ -102,8 +112,9 @@ public class MidiasTest {
 		assertTrue(md.excluir("Telecurso 1999"));
 		fecharConexao();
 
-	
-		
+		testaconexao();
+		md.excluir("Telecurso 1999");
+		fecharConexao();
 	}
 
 }

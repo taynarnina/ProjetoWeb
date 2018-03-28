@@ -98,9 +98,11 @@ public class TccTest {
 		
 		testaconexao();
 		assertTrue(td.pesquisar("BancoDeDados"));
-		td.pesquisar("DeDados");
 		fecharConexao();
 	
+		testaconexao();
+		td.pesquisar("DeDados");
+		fecharConexao();
 	}
 	
 	@Test(expected = Exception.class)
@@ -109,6 +111,9 @@ public class TccTest {
 		
 		testaconexao();
 		assertTrue(td.excluir("BancoDeDados"));
+		fecharConexao();
+		
+		testaconexao();
 		td.excluir("Banco");
 		fecharConexao();
 	

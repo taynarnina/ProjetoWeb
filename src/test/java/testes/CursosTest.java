@@ -49,7 +49,7 @@ public class CursosTest {
 		}
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testCriar() throws SQLException   {
 		CursosDao cd = new CursosDao();
 		Cursos c = new Cursos();
@@ -62,9 +62,19 @@ public class CursosTest {
 		assertTrue(cd.criar(c));
 		fecharConexao();
 		
+		Cursos cc = new Cursos();
+		
+		cc.setNome("Computação");
+		cc.setArea("TCC");
+		cc.setTipo("Graduacao");
+		
+		testaconexao();
+		cd.criar(cc);
+		fecharConexao();
+		
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testEditar() throws SQLException  {
 		CursosDao cd = new CursosDao();
 		
@@ -72,14 +82,22 @@ public class CursosTest {
 		assertTrue(cd.editar("Computacao","CC"));
 		fecharConexao();
 		
+		testaconexao();
+		cd.editar("Computacao","CC");
+		fecharConexao();
+		
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testPesquisar() throws SQLException  {
 		CursosDao cd = new CursosDao();
 		
 		testaconexao();
 		assertTrue(cd.pesquisar("CC"));
+		fecharConexao();
+		
+		testaconexao();
+		cd.pesquisar("CC");
 		fecharConexao();
 
 	}

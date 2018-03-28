@@ -54,7 +54,7 @@ public class JornalTest {
 	}
 	
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testCriar() throws SQLException  {
 		JornalDao jd = new JornalDao();
 		
@@ -67,11 +67,17 @@ public class JornalTest {
 		assertTrue(jd.criar(j1));
 		fecharConexao();
 
-	
+		Jornal j2 = new Jornal();
+		j2.setDtpublic("10/07/2014");
+		j2.setEdicao(3);
+		
+		testaconexao();
+		//jd.criar(j2);
+		fecharConexao();
 		
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testEditar() throws SQLException  {
 		JornalDao jd = new JornalDao();
 		
@@ -79,11 +85,13 @@ public class JornalTest {
 		assertTrue(jd.editar("jornal da pb","jornal da manha"));
 		fecharConexao();
 
-	
+		testaconexao();
+		jd.editar("jornal da pb","jornal da manha");
+		fecharConexao();
 		
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testPesquisar() throws SQLException  {
 		JornalDao jd = new JornalDao();
 		
@@ -91,11 +99,13 @@ public class JornalTest {
 		assertTrue(jd.pesquisar("jornal da manha"));
 		fecharConexao();
 
-	
+		testaconexao();
+		jd.pesquisar("jornal da manha");
+		fecharConexao();
 		
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testExcluir() throws SQLException  {
 		JornalDao jd = new JornalDao();
 		
@@ -103,7 +113,9 @@ public class JornalTest {
 		assertTrue(jd.excluir("jornal da manha"));
 		fecharConexao();
 
-	
+		testaconexao();
+		jd.excluir("jornal da manha");
+		fecharConexao();
 		
 	}
 

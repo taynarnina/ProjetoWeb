@@ -52,7 +52,7 @@ public class RevistaTest {
 
 	
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testCriar() throws SQLException   {
 		RevistaDao rd = new RevistaDao();
 		Revista r = new Revista();
@@ -66,12 +66,22 @@ public class RevistaTest {
 		testaconexao();
 		assertTrue(rd.criar(r));
 		fecharConexao();
-
+		
+		Revista rr = new Revista();
+		
+		rr.setEditora("Abril");
+		rr.setDtpublicacao("09/04/2017");
+		rr.setEdicao(5);
+		rr.setNumpaginas(113);
+		
+		testaconexao();
+		assertTrue(rd.criar(rr));
+		fecharConexao();
 	
 		
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testEditar() throws SQLException  {
 		RevistaDao rd = new RevistaDao();
 		
@@ -79,11 +89,13 @@ public class RevistaTest {
 		assertTrue(rd.editar("Caras e bocas","Caras Brasil"));
 		fecharConexao();
 
-	
+		testaconexao();
+		rd.editar("Caras e bocas","Caras Brasil");
+		fecharConexao();
 		
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testPesquisar() throws SQLException  {
 		RevistaDao rd = new RevistaDao();
 		
@@ -91,11 +103,13 @@ public class RevistaTest {
 		assertTrue(rd.pesquisar("Caras Brasil"));
 		fecharConexao();
 
-	
+		testaconexao();
+		rd.pesquisar("Caras Brasil");
+		fecharConexao();
 		
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testExcluir() throws SQLException  {
 		RevistaDao rd = new RevistaDao();
 		
@@ -103,8 +117,9 @@ public class RevistaTest {
 		assertTrue(rd.excluir("Caras Brasil"));
 		fecharConexao();
 
-	
-		
+		testaconexao();
+		rd.excluir("Caras Brasil");
+		fecharConexao();
 	}
 
 }
