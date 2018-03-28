@@ -15,6 +15,7 @@ import com.mysql.jdbc.PreparedStatement;
 
 import DAO.Conexao;
 import DAO.CursosDao;
+import DAO.CursosDao;
 import biblio.Cursos;
 
 public class CursosTest {
@@ -49,7 +50,7 @@ public class CursosTest {
 		}
 	}
 	
-	@Test(expected = Exception.class)
+	@Test
 	public void testCriar() throws SQLException   {
 		CursosDao cd = new CursosDao();
 		Cursos c = new Cursos();
@@ -62,15 +63,7 @@ public class CursosTest {
 		assertTrue(cd.criar(c));
 		fecharConexao();
 		
-		Cursos cc = new Cursos();
-		
-		cc.setNome("Computação");
-		cc.setArea("TCC");
-		cc.setTipo("Graduacao");
-		
-		testaconexao();
-		cd.criar(cc);
-		fecharConexao();
+	
 		
 	}
 	
@@ -79,12 +72,14 @@ public class CursosTest {
 		CursosDao cd = new CursosDao();
 		
 		testaconexao();
-		assertTrue(cd.editar("Computacao","CC"));
+		assertTrue(cd.editar("Computação","Ciência da computação"));
+		fecharConexao();
+
+		testaconexao();
+		cd.editar("Computação","Ciência da computação");
 		fecharConexao();
 		
-		testaconexao();
-		cd.editar("Computacao","CC");
-		fecharConexao();
+		assertFalse(cd.editar("Comp","Ciência da computação"));
 		
 	}
 	
@@ -93,13 +88,34 @@ public class CursosTest {
 		CursosDao cd = new CursosDao();
 		
 		testaconexao();
-		assertTrue(cd.pesquisar("CC"));
+		assertTrue(cd.pesquisar("Ciência da computação"));
+		fecharConexao();
+
+		testaconexao();
+		cd.pesquisar("Ciência da computação");
 		fecharConexao();
 		
 		testaconexao();
-		cd.pesquisar("CC");
+		assertFalse(cd.pesquisar("comp"));
 		fecharConexao();
 
+	}
+	
+	@Test(expected = Exception.class)
+	public void testExcluir() throws SQLException  {
+		CursosDao cd = new CursosDao();
+		
+		testaconexao();
+		assertTrue(cd.excluir("Ciência da computação"));
+		fecharConexao();
+
+		testaconexao();
+		cd.excluir("Ciência da computação");
+		fecharConexao();
+		
+		testaconexao();
+		assertFalse(cd.excluir("comp"));
+		fecharConexao();
 	}
 
 }

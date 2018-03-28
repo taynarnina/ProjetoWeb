@@ -14,6 +14,7 @@ import org.junit.Test;
 import com.mysql.jdbc.PreparedStatement;
 
 import DAO.Conexao;
+import DAO.JornalDao;
 import DAO.MidiasDao;
 import DAO.RevistaDao;
 import biblio.Midias;
@@ -79,14 +80,16 @@ public class MidiasTest {
 	@Test(expected = Exception.class)
 	public void testEditar() throws SQLException  {
 		MidiasDao md = new MidiasDao();
-		
+
 		testaconexao();
-		assertTrue(md.editar("Telecurso 2000","Telecurso 1999"));
+		assertTrue(md.editar("Jornal da pb","Jornal da manha"));
 		fecharConexao();
 
 		testaconexao();
-		md.editar("Telecurso 2000","Telecurso 1999");
+		md.editar("Jornal da pb","Jornal da manha");
 		fecharConexao();
+		
+		assertFalse(md.editar("jorn","jornal da manha"));
 		
 	}
 	
@@ -95,11 +98,15 @@ public class MidiasTest {
 		MidiasDao md = new MidiasDao();
 		
 		testaconexao();
-		assertTrue(md.pesquisar("Telecurso 1999"));
+		assertTrue(md.pesquisar("jornal da manha"));
 		fecharConexao();
 
 		testaconexao();
-		md.pesquisar("Telecurso 1999");
+		md.pesquisar("jornal da manha");
+		fecharConexao();
+		
+		testaconexao();
+		assertFalse(md.pesquisar("jorn"));
 		fecharConexao();
 		
 	}

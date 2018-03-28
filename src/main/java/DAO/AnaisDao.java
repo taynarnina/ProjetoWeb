@@ -4,6 +4,7 @@ package DAO;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.mysql.jdbc.Connection;
@@ -20,6 +21,7 @@ public  class AnaisDao implements Acervo<Anais> {
 		conexion = Conexao.fazconexao();
 	}
 	
+	@SuppressWarnings("finally")
 	public boolean criar(Anais a) throws SQLException {
 		
 		PreparedStatement sql =null;
@@ -35,34 +37,33 @@ public  class AnaisDao implements Acervo<Anais> {
 			 
 			 sql.close();
 			 conexion.close();
-			
+			 
 			 return true;
 		}catch(SQLException e){
 
 			logger.error(e.getMessage());
-			
+			sql.close();
+			conexion.close();
+			return false;
 		}
-		sql.close();
-		conexion.close();
+			
 		
-		return false;
 	}
 
 	public boolean editar(String titulo_negocio,String troca_titulo)throws SQLException {
 		PreparedStatement sql =null;
+		AnaisDao ad = new AnaisDao();
 		try {
+			if(ad.pesquisar(titulo_negocio)==true) {
 			sql = conexion.prepareStatement("UPDATE anais SET titulo = ?  WHERE titulo = ?");
 			sql.setString(1, troca_titulo);
 			sql.setString(2, titulo_negocio);
 			sql.execute();
-			
-			sql.close();
-			conexion.close();
-			
 			return true;
+			}
 		} catch (SQLException e) {
 			logger.error("falha ao editar!");
-			e.printStackTrace();
+			
 		}
 		sql.close();
 		conexion.close();
@@ -74,37 +75,44 @@ public  class AnaisDao implements Acervo<Anais> {
 
 	public boolean pesquisar(String titulo_negocio) throws SQLException {
 		PreparedStatement sql =null;
+		
 		try {
 			sql = conexion.prepareStatement("SELECT * FROM anais WHERE titulo = ?");
 			sql.setString(1, titulo_negocio);
-			sql.execute();
+			ResultSet result =sql.executeQuery();
 			
-			sql.close();
-			conexion.close();
+
 			
-			return true;
+			return result.next();
 		} catch (SQLException e) {
 			logger.error("falha na pesquisa!");
-			e.printStackTrace();
+			return false;
+			
+		}finally {
+			sql.close();
+			conexion.close();
 		}
-		sql.close();
-		conexion.close();
 		
-		return false;
+		
+		
 	}
 
 
 	public boolean excluir(String titulo_negocio) throws SQLException {
+		AnaisDao ad = new AnaisDao();
 		PreparedStatement sql =null;
 		try {
+			if(ad.pesquisar(titulo_negocio) == true) {
 			sql = conexion.prepareStatement("DELETE FROM anais WHERE titulo = ?");
 			sql.setString(1, titulo_negocio);
-			sql.execute();
+			sql.executeUpdate();
 			
-			sql.close();
-			conexion.close();
+			boolean result = ad.pesquisar(titulo_negocio);
+			if(result == false) {
+				return true;
+			}
+			}
 			
-			return true;
 		} catch (SQLException e) {
 			logger.error("falha!");
 			e.printStackTrace();

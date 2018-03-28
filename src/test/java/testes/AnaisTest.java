@@ -56,7 +56,7 @@ public class AnaisTest {
 	@Before
 	
 	
-	@Test(expected = Exception.class)
+	@Test
 	public void testCriar() throws SQLException  {
 		AnaisDao ad = new AnaisDao();
 		Anais a = new Anais();
@@ -68,9 +68,9 @@ public class AnaisTest {
 		a.setAnopublic(2018);
 		a.setLocal("Campina grande-PB");
 		
-		
 		testaconexao();
-		assertTrue(ad.criar(a));
+		boolean result = ad.criar(a);
+		assertTrue(result);
 		fecharConexao();
 
 		Anais aa = new Anais();
@@ -100,6 +100,8 @@ public class AnaisTest {
 		ad.editar("Estudo de caso engenharia da qualidade","engenharia de software");
 		fecharConexao();
 		
+		assertFalse(ad.editar("eng","engenharia"));
+		
 	}
 	
 	@Test(expected = Exception.class)
@@ -112,6 +114,10 @@ public class AnaisTest {
 
 		testaconexao();
 		ad.pesquisar("engenharia de software");
+		fecharConexao();
+		
+		testaconexao();
+		assertFalse(ad.pesquisar("eng"));
 		fecharConexao();
 		
 	}
@@ -127,6 +133,12 @@ public class AnaisTest {
 		testaconexao();
 		ad.excluir("engenharia de software");
 		fecharConexao();
+		
+		testaconexao();
+		assertFalse(ad.excluir("engenharia "));
+		fecharConexao();
+		
+		
 		
 	}
 
