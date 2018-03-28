@@ -52,7 +52,6 @@ public class JornalTest {
 			e.printStackTrace();
 		}
 	}
-	@Before
 	
 	
 	@Test

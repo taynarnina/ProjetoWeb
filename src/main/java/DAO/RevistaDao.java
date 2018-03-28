@@ -20,7 +20,7 @@ import biblio.Revista;
 public  class RevistaDao implements Acervo<Revista> {
 	
 	private Connection conexion;
-	private static final Logger logger = LogManager.getLogger(LivroDao.class);
+	private static final Logger logger = LogManager.getLogger(RevistaDao.class);
 	
 	
 	public RevistaDao() throws SQLException {

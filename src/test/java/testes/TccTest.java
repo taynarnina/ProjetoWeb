@@ -14,15 +14,15 @@ import org.junit.Test;
 import com.mysql.jdbc.PreparedStatement;
 
 import DAO.Conexao;
-import DAO.LivroDao;
-import biblio.Livro;
+import DAO.TccDao;
+import biblio.Tcc;
 
+public class TccTest {
 
-public class LivroTest {
 	private static Connection con;
 	private PreparedStatement sql;
 	
-	private static final Logger logger = LogManager.getLogger(LivroTest.class);
+	private static final Logger logger = LogManager.getLogger(TccTest.class);
 	
 	@BeforeClass
 	public static void testaconexao(){
@@ -50,61 +50,67 @@ public class LivroTest {
 	}
 	
 	
-	@Test
-	public void testCriar() throws SQLException   {
-		LivroDao ld = new LivroDao();
-		Livro l = new Livro();
+	@Test(expected = Exception.class)
+	public void testCriar() throws SQLException  {
+		TccDao td = new TccDao();
 		
-		l.setTitulo("Programação web para leigos");
-		l.setAutor("Thiago Batista");
-		l.setIsbn(78945);
-		l.setEditora("Novatec");
-		l.setAnopublic(2017);
-		l.setNumpaginas(300);
-		l.setArea_conhecimento("programação");
-		l.setTema("programação web");
+		Tcc t1 = new Tcc();
+		t1.setTitulo("DateBase");
+		t1.setAutor("Jk DBC");
+		t1.setOrientador("Alan DW");
+		t1.setTipo("Monografia");
+		t1.setAnodefesa(2017);
+		t1.setLocal("CG");
 		
 		testaconexao();
-		assertTrue(ld.criar(l));
+		assertTrue(td.criar(t1));
 		fecharConexao();
 		
+		
+		Tcc t2 = new Tcc();
+		t2.setAutor("Jk");
+		t2.setOrientador("DW"); 
+		t2.setTipo("Monografia");
+		t2.setAnodefesa(2017);
+		t2.setLocal("CG");
+		
+		testaconexao();
+		td.criar(t2);
+		fecharConexao();
 	}
-	
-	@Test
+
+	@Test(expected = Exception.class)
 	public void testEditar() throws SQLException  {
-		LivroDao ld = new LivroDao();
+		TccDao td = new TccDao();
 		
 		testaconexao();
-		assertTrue(ld.editar("Programação web para leigos","Programação para leigos"));
+		assertTrue(td.editar("DateBase", "BancoDeDados"));
 		fecharConexao();
-
-	
 		
+		testaconexao();
+		td.editar("DateBase", "BancoDeDados");
+		fecharConexao();
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testPesquisar() throws SQLException  {
-		LivroDao ld = new LivroDao();
+		TccDao td = new TccDao();
 		
 		testaconexao();
-		assertTrue(ld.pesquisar("Programação para leigos"));
+		assertTrue(td.pesquisar("BancoDeDados"));
+		td.pesquisar("DeDados");
 		fecharConexao();
-
 	
-		
 	}
 	
-	@Test
+	@Test(expected = Exception.class)
 	public void testExcluir() throws SQLException  {
-		LivroDao ld = new LivroDao();
-		
+		TccDao td = new TccDao();
 		
 		testaconexao();
-		assertTrue(ld.excluir("Programação para leigos"));
+		assertTrue(td.excluir("BancoDeDados"));
+		td.excluir("Banco");
 		fecharConexao();
-
 	
-		
 	}
-
 }

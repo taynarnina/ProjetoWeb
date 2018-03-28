@@ -16,7 +16,7 @@ import biblio.Cursos;
 public  class CursosDao {
 		
 		private Connection conexion;
-		private static final Logger logger = LogManager.getLogger(LivroDao.class);
+		private static final Logger logger = LogManager.getLogger(CursosDao.class);
 		
 		
 		public CursosDao() throws SQLException {
@@ -52,7 +52,7 @@ public  class CursosDao {
 		public boolean editar(String troca_nome, String nome_novo) throws SQLException {
 			PreparedStatement sql =null;
 			try {
-				sql = conexion.prepareStatement("UPDATE jornal	SET titulo = ?  WHERE titulo = ?");
+				sql = conexion.prepareStatement("UPDATE cursos SET nome = ?  WHERE nome = ?");
 				sql.setString(1, nome_novo);
 				sql.setString(2, troca_nome);
 				sql.execute();
@@ -70,6 +70,26 @@ public  class CursosDao {
 			
 			return false;
 			
+		}
+		
+		public boolean pesquisar(String nome) throws SQLException {
+			PreparedStatement sql =null;
+			try {
+				sql = conexion.prepareStatement("SELECT * FROM cursos WHERE nome = ?");
+				sql.setString(1, nome);
+				sql.execute();
+				sql.close();
+				conexion.close();
+				
+				return true;
+			} catch (SQLException e) {
+				logger.error("falha na pesquisa!");
+				e.printStackTrace();
+			}
+			sql.close();
+			conexion.close();
+			
+			return false;
 		}
 
 

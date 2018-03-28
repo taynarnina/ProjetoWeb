@@ -9,12 +9,11 @@ import java.sql.SQLException;
 import com.mysql.jdbc.Connection;
 
 import biblio.Anais;
-import biblio.Livro;
 
 public  class AnaisDao implements Acervo<Anais> {
 	
 	private Connection conexion;
-	private static final Logger logger = LogManager.getLogger(LivroDao.class);
+	private static final Logger logger = LogManager.getLogger(AnaisDao.class);
 	
 	
 	public AnaisDao() throws SQLException {

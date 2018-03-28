@@ -24,7 +24,7 @@ public class MidiasTest {
 	private static Connection con;
 	private PreparedStatement sql;
 	
-	private static final Logger logger = LogManager.getLogger(JornalTest.class);
+	private static final Logger logger = LogManager.getLogger(MidiasTest.class);
 
 	@BeforeClass
 	public static void testaconexao(){

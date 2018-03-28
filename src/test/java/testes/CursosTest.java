@@ -14,15 +14,15 @@ import org.junit.Test;
 import com.mysql.jdbc.PreparedStatement;
 
 import DAO.Conexao;
-import DAO.LivroDao;
-import biblio.Livro;
+import DAO.CursosDao;
+import biblio.Cursos;
 
+public class CursosTest {
 
-public class LivroTest {
 	private static Connection con;
 	private PreparedStatement sql;
 	
-	private static final Logger logger = LogManager.getLogger(LivroTest.class);
+	private static final Logger logger = LogManager.getLogger(CursosTest.class);
 	
 	@BeforeClass
 	public static void testaconexao(){
@@ -49,62 +49,39 @@ public class LivroTest {
 		}
 	}
 	
-	
 	@Test
 	public void testCriar() throws SQLException   {
-		LivroDao ld = new LivroDao();
-		Livro l = new Livro();
+		CursosDao cd = new CursosDao();
+		Cursos c = new Cursos();
 		
-		l.setTitulo("Programação web para leigos");
-		l.setAutor("Thiago Batista");
-		l.setIsbn(78945);
-		l.setEditora("Novatec");
-		l.setAnopublic(2017);
-		l.setNumpaginas(300);
-		l.setArea_conhecimento("programação");
-		l.setTema("programação web");
+		c.setNome("Computação");
+		c.setArea("TCC");
+		c.setTipo("Graduacao");
 		
 		testaconexao();
-		assertTrue(ld.criar(l));
+		assertTrue(cd.criar(c));
 		fecharConexao();
 		
 	}
 	
 	@Test
 	public void testEditar() throws SQLException  {
-		LivroDao ld = new LivroDao();
+		CursosDao cd = new CursosDao();
 		
 		testaconexao();
-		assertTrue(ld.editar("Programação web para leigos","Programação para leigos"));
+		assertTrue(cd.editar("Computacao","CC"));
 		fecharConexao();
-
-	
 		
 	}
 	
 	@Test
 	public void testPesquisar() throws SQLException  {
-		LivroDao ld = new LivroDao();
+		CursosDao cd = new CursosDao();
 		
 		testaconexao();
-		assertTrue(ld.pesquisar("Programação para leigos"));
+		assertTrue(cd.pesquisar("CC"));
 		fecharConexao();
 
-	
-		
-	}
-	
-	@Test
-	public void testExcluir() throws SQLException  {
-		LivroDao ld = new LivroDao();
-		
-		
-		testaconexao();
-		assertTrue(ld.excluir("Programação para leigos"));
-		fecharConexao();
-
-	
-		
 	}
 
 }

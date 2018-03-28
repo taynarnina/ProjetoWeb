@@ -19,7 +19,7 @@ import biblio.Jornal;
 public  class JornalDao implements Acervo<Jornal> {
 	
 	private Connection conexion;
-	private static final Logger logger = LogManager.getLogger(LivroDao.class);
+	private static final Logger logger = LogManager.getLogger(JornalDao.class);
 	private static Date d;
 	
 	

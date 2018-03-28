@@ -17,7 +17,7 @@ import biblio.Tcc;
 public  class TccDao implements Acervo<Tcc> {
 	
 	private Connection conexion;
-	private static final Logger logger = LogManager.getLogger(LivroDao.class);
+	private static final Logger logger = LogManager.getLogger(TccDao.class);
 	
 	
 	public TccDao() throws SQLException {
@@ -29,7 +29,7 @@ public  class TccDao implements Acervo<Tcc> {
 		PreparedStatement sql =null;
 		
 		try {
-			 sql = conexion.prepareStatement("INSERT INTO tcc(titulo,autor,orientador,tipo,anodefesa,local) VALUES(?,?,?,?,?)");
+			 sql = conexion.prepareStatement("INSERT INTO tcc(titulo,autor,orientador,tipo,anodefesa,local) VALUES(?,?,?,?,?,?)");
 			 sql.setString(1,t.getTitulo());		
 			 sql.setString(2,t.getAutor());
 			 sql.setString(3,t.getOrientador());

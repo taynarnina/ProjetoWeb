@@ -18,7 +18,7 @@ import biblio.Midias;
 public  class MidiasDao implements Acervo<Midias>{
 	
 	private Connection conexion;
-	private static final Logger logger = LogManager.getLogger(LivroDao.class);
+	private static final Logger logger = LogManager.getLogger(MidiasDao.class);
 	
 	
 	public MidiasDao() throws SQLException {
