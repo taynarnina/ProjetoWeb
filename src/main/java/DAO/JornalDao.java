@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import java.util.Date;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.mysql.jdbc.Connection;
@@ -38,7 +39,8 @@ public  class JornalDao implements Acervo<Jornal> {
 			d = new java.sql.Date(fmt.parse(dataString).getTime());
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			logger.error("erro ao transformar"+ e1.getMessage());
+			
 		}
 		
 		try {
@@ -53,7 +55,8 @@ public  class JornalDao implements Acervo<Jornal> {
 		 
 		}catch(SQLException e){
 			
-			logger.error(e.getMessage());
+			logger.error("erro ao inserir"+e.getMessage());
+			
 			
 		}
 		sql.close();
@@ -63,20 +66,18 @@ public  class JornalDao implements Acervo<Jornal> {
 
 	public boolean editar(String titulo_jornal,String troca_titulo)throws SQLException {
 		PreparedStatement sql =null;
+		JornalDao jd = new JornalDao();
 		try {
-			sql = conexion.prepareStatement("UPDATE jornal SET titulo = ? WHERE titulo = ?");
+			if(jd.pesquisar(titulo_jornal)==true) {
+			sql = conexion.prepareStatement("UPDATE jornal SET titulo = ?  WHERE titulo = ?");
 			sql.setString(1, troca_titulo);
 			sql.setString(2, titulo_jornal);
 			sql.execute();
-			System.out.println("alterado");
-			
-			sql.close();
-			conexion.close();
-			
 			return true;
+			}
 		} catch (SQLException e) {
-			logger.error("falha ao editar!");
-			e.printStackTrace();
+			logger.error("falha ao editar!"+e.getMessage());
+			
 		}
 		sql.close();
 		conexion.close();
@@ -87,38 +88,42 @@ public  class JornalDao implements Acervo<Jornal> {
 
 	public boolean pesquisar(String titulo_jornal) throws SQLException {
 		PreparedStatement sql =null;
+		
 		try {
 			sql = conexion.prepareStatement("SELECT * FROM jornal WHERE titulo = ?");
 			sql.setString(1, titulo_jornal);
-			sql.execute();
-			System.out.println("eu encontrei");
+			ResultSet result =sql.executeQuery();
 			
+
+			
+			return result.next();
+		} catch (SQLException e) {
+			logger.error("falha na pesquisa!"+ e.getMessage());
+			
+		}finally {
 			sql.close();
 			conexion.close();
-			
-			return true;
-		} catch (SQLException e) {
-			logger.error("falha na pesquisa!");
-			e.printStackTrace();
 		}
-		sql.close();
-		conexion.close();
+		
 		
 		return false;
 	}
 
 	public boolean excluir(String titulo_jornal) throws SQLException {
+		JornalDao jd = new JornalDao();
 		PreparedStatement sql =null;
 		try {
+			if(jd.pesquisar(titulo_jornal) == true) {
 			sql = conexion.prepareStatement("DELETE FROM jornal WHERE titulo = ?");
 			sql.setString(1, titulo_jornal);
-			sql.execute();
-			System.out.println("excluido");
+			sql.executeUpdate();
 			
-			sql.close();
-			conexion.close();
+			boolean result = jd.pesquisar(titulo_jornal);
+			if(result == false) {
+				return true;
+			}
+			}
 			
-			return true;
 		} catch (SQLException e) {
 			logger.error("falha!");
 			e.printStackTrace();
@@ -127,5 +132,6 @@ public  class JornalDao implements Acervo<Jornal> {
 		conexion.close();
 		
 		return false;
+		
 	}
 }

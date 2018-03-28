@@ -90,6 +90,11 @@ public class TccTest {
 		testaconexao();
 		td.editar("DateBase", "BancoDeDados");
 		fecharConexao();
+		
+		testaconexao();
+		assertFalse(td.editar("DateBase", "BancoDeDados"));
+		fecharConexao();
+		
 	}
 	
 	@Test(expected = Exception.class)
@@ -103,6 +108,10 @@ public class TccTest {
 		testaconexao();
 		td.pesquisar("DeDados");
 		fecharConexao();
+		
+		testaconexao();
+		assertFalse(td.pesquisar("DeDados"));
+		fecharConexao();
 	}
 	
 	@Test(expected = Exception.class)
@@ -115,6 +124,10 @@ public class TccTest {
 		
 		testaconexao();
 		td.excluir("Banco");
+		fecharConexao();
+		
+		testaconexao();
+		assertFalse(td.excluir("Banco"));
 		fecharConexao();
 	
 	}

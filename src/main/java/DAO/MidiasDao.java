@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.mysql.jdbc.Connection;
@@ -63,19 +64,18 @@ public  class MidiasDao implements Acervo<Midias>{
 
 	public boolean editar(String titulo_midia,String troca_titulo)throws SQLException {
 		PreparedStatement sql =null;
+		MidiasDao md = new MidiasDao();
 		try {
-			sql = conexion.prepareStatement("UPDATE midias	SET titulo = ?  WHERE titulo = ?");
+			if(md.pesquisar(titulo_midia)==true) {
+			sql = conexion.prepareStatement("UPDATE midias SET titulo = ?  WHERE titulo = ?");
 			sql.setString(1, troca_titulo);
 			sql.setString(2, titulo_midia);
 			sql.execute();
-			
-			sql.close();
-			conexion.close();
-			
 			return true;
+			}
 		} catch (SQLException e) {
-			logger.error("falha ao editar!");
-			e.printStackTrace();
+			logger.error("falha ao editar!"+e.getMessage());
+			
 		}
 		sql.close();
 		conexion.close();
@@ -86,37 +86,43 @@ public  class MidiasDao implements Acervo<Midias>{
 		
 
 	public boolean pesquisar(String titulo_midia) throws SQLException {
-		PreparedStatement sql =null;
+PreparedStatement sql =null;
+		
 		try {
 			sql = conexion.prepareStatement("SELECT * FROM midias WHERE titulo = ?");
 			sql.setString(1, titulo_midia);
-			sql.execute();
+			ResultSet result =sql.executeQuery();
 			
+
+			
+			return result.next();
+		} catch (SQLException e) {
+			logger.error("falha na pesquisa!"+ e.getMessage());
+			
+		}finally {
 			sql.close();
 			conexion.close();
-			
-			return true;
-		} catch (SQLException e) {
-			logger.error("falha na pesquisa!");
-			e.printStackTrace();
 		}
-		sql.close();
-		conexion.close();
+		
 		
 		return false;
 	}
 
 	public boolean excluir(String titulo_midia) throws SQLException {
+		MidiasDao md = new MidiasDao();
 		PreparedStatement sql =null;
 		try {
+			if(md.pesquisar(titulo_midia) == true) {
 			sql = conexion.prepareStatement("DELETE FROM midias WHERE titulo = ?");
 			sql.setString(1, titulo_midia);
-			sql.execute();
+			sql.executeUpdate();
 			
-			sql.close();
-			conexion.close();
+			boolean result = md.pesquisar(titulo_midia);
+			if(result == false) {
+				return true;
+			}
+			}
 			
-			return true;
 		} catch (SQLException e) {
 			logger.error("falha!");
 			e.printStackTrace();
@@ -125,7 +131,6 @@ public  class MidiasDao implements Acervo<Midias>{
 		conexion.close();
 		
 		return false;
-		
 	}
 
 }

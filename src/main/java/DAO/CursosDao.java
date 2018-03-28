@@ -2,6 +2,7 @@ package DAO;
 
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.log4j.LogManager;
@@ -51,19 +52,18 @@ public  class CursosDao {
 
 		public boolean editar(String troca_nome, String nome_novo) throws SQLException {
 			PreparedStatement sql =null;
+			CursosDao cd = new CursosDao();
 			try {
+				if(cd.pesquisar(troca_nome)==true) {
 				sql = conexion.prepareStatement("UPDATE cursos SET nome = ?  WHERE nome = ?");
 				sql.setString(1, nome_novo);
 				sql.setString(2, troca_nome);
 				sql.execute();
-				
-				sql.close();
-				conexion.close();
-				
 				return true;
+				}
 			} catch (SQLException e) {
-				logger.error("falha ao editar!");
-				e.printStackTrace();
+				logger.error("falha ao editar!"+e.getMessage());
+				
 			}
 			sql.close();
 			conexion.close();
@@ -74,39 +74,46 @@ public  class CursosDao {
 		
 		public boolean pesquisar(String nome) throws SQLException {
 			PreparedStatement sql =null;
+			
 			try {
 				sql = conexion.prepareStatement("SELECT * FROM cursos WHERE nome = ?");
 				sql.setString(1, nome);
-				sql.execute();
+				ResultSet result =sql.executeQuery();
+				
+		
+				return result.next();
+				
+			} catch (SQLException e) {
+				logger.error("falha na pesquisa!"+ e.getMessage());
+				
+			}finally {
 				sql.close();
 				conexion.close();
-				
-				return true;
-			} catch (SQLException e) {
-				logger.error("falha na pesquisa!");
-				e.printStackTrace();
 			}
-			sql.close();
-			conexion.close();
+			
 			
 			return false;
 		}
 
 
 		public boolean excluir(String nome_curso) throws SQLException {
+			CursosDao cd = new CursosDao();
 			PreparedStatement sql =null;
 			try {
-				sql = conexion.prepareStatement("DELETE FROM jornal WHERE titulo = ?");
+				if(cd.pesquisar(nome_curso) == true) {
+				sql = conexion.prepareStatement("DELETE FROM cursos WHERE nome = ?");
 				sql.setString(1, nome_curso);
-				sql.execute();
+				sql.executeUpdate();
 				
-				sql.close();
-				conexion.close();
+				boolean result = cd.pesquisar(nome_curso);
+				if(result == false) {
+					return true;
+				}
+				}
 				
-				return true;
 			} catch (SQLException e) {
-				logger.error("falha!");
-				e.printStackTrace();
+				logger.error("falha!"+e.getMessage());
+				
 			}
 			sql.close();
 			conexion.close();

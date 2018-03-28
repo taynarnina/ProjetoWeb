@@ -16,6 +16,7 @@ import com.mysql.jdbc.PreparedStatement;
 
 import DAO.Conexao;
 import DAO.RevistaDao;
+import DAO.RevistaDao;
 import biblio.Revista;
 
 public class RevistaTest {
@@ -52,7 +53,7 @@ public class RevistaTest {
 
 	
 	
-	@Test(expected = Exception.class)
+	@Test
 	public void testCriar() throws SQLException   {
 		RevistaDao rd = new RevistaDao();
 		Revista r = new Revista();
@@ -86,12 +87,14 @@ public class RevistaTest {
 		RevistaDao rd = new RevistaDao();
 		
 		testaconexao();
-		assertTrue(rd.editar("Caras e bocas","Caras Brasil"));
+		assertTrue(rd.editar("Jornal da pb","Jornal da manha"));
 		fecharConexao();
 
 		testaconexao();
-		rd.editar("Caras e bocas","Caras Brasil");
+		rd.editar("Jornal da pb","Jornal da manha");
 		fecharConexao();
+		
+		assertFalse(rd.editar("jorn","jornal da manha"));
 		
 	}
 	
@@ -100,11 +103,15 @@ public class RevistaTest {
 		RevistaDao rd = new RevistaDao();
 		
 		testaconexao();
-		assertTrue(rd.pesquisar("Caras Brasil"));
+		assertTrue(rd.pesquisar("jornal da manha"));
 		fecharConexao();
 
 		testaconexao();
-		rd.pesquisar("Caras Brasil");
+		rd.pesquisar("jornal da manha");
+		fecharConexao();
+		
+		testaconexao();
+		assertFalse(rd.pesquisar("jorn"));
 		fecharConexao();
 		
 	}
@@ -114,11 +121,15 @@ public class RevistaTest {
 		RevistaDao rd = new RevistaDao();
 		
 		testaconexao();
-		assertTrue(rd.excluir("Caras Brasil"));
+		assertTrue(rd.excluir("jornal da manha"));
 		fecharConexao();
 
 		testaconexao();
-		rd.excluir("Caras Brasil");
+		rd.excluir("jornal da manha");
+		fecharConexao();
+		
+		testaconexao();
+		assertFalse(rd.excluir("jorn"));
 		fecharConexao();
 	}
 

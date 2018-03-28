@@ -15,6 +15,7 @@ import com.mysql.jdbc.PreparedStatement;
 
 import DAO.Conexao;
 import DAO.LivroDao;
+import DAO.LivroDao;
 import biblio.Livro;
 
 
@@ -88,12 +89,14 @@ public class LivroTest {
 		LivroDao ld = new LivroDao();
 		
 		testaconexao();
-		assertTrue(ld.editar("Programação web para leigos","Programação para leigos"));
+		assertTrue(ld.editar("Programação web para leigos","Programação web"));
 		fecharConexao();
 
 		testaconexao();
-		ld.pesquisar("Programação para leigos");
+		ld.editar("Programação web para leigos","Programação web");
 		fecharConexao();
+		
+		assertFalse(ld.editar("POG","Programação web"));
 		
 	}
 	
@@ -102,11 +105,15 @@ public class LivroTest {
 		LivroDao ld = new LivroDao();
 		
 		testaconexao();
-		assertTrue(ld.pesquisar("Programação para leigos"));
+		assertTrue(ld.pesquisar("Programação web"));
 		fecharConexao();
 
 		testaconexao();
-		ld.pesquisar("Programação para leigos");
+		ld.pesquisar("Programação web");
+		fecharConexao();
+		
+		testaconexao();
+		assertFalse(ld.pesquisar("POG"));
 		fecharConexao();
 		
 	}
@@ -116,11 +123,15 @@ public class LivroTest {
 		LivroDao ld = new LivroDao();
 		
 		testaconexao();
-		assertTrue(ld.excluir("Programação para leigos"));
+		assertTrue(ld.excluir("Programação web"));
 		fecharConexao();
 
 		testaconexao();
-		ld.excluir("Programação para leigos");
+		ld.excluir("Programação web");
+		fecharConexao();
+		
+		testaconexao();
+		assertFalse(ld.excluir("POG"));
 		fecharConexao();
 	}
 

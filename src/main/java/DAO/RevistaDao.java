@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.mysql.jdbc.Connection;
@@ -64,16 +65,18 @@ public  class RevistaDao implements Acervo<Revista> {
 
 	public boolean editar(String titulo_revista,String troca_titulo)throws SQLException {
 		PreparedStatement sql =null;
+		RevistaDao jd = new RevistaDao();
 		try {
+			if(jd.pesquisar(titulo_revista)==true) {
 			sql = conexion.prepareStatement("UPDATE revista SET titulo = ?  WHERE titulo = ?");
 			sql.setString(1, troca_titulo);
 			sql.setString(2, titulo_revista);
 			sql.execute();
-			
 			return true;
+			}
 		} catch (SQLException e) {
-			logger.error("falha ao editar!");
-			e.printStackTrace();
+			logger.error("falha ao editar!"+e.getMessage());
+			
 		}
 		sql.close();
 		conexion.close();
@@ -86,38 +89,43 @@ public  class RevistaDao implements Acervo<Revista> {
 
 	public boolean pesquisar(String titulo_revista) throws SQLException {
 		PreparedStatement sql =null;
+		
 		try {
 			sql = conexion.prepareStatement("SELECT * FROM revista WHERE titulo = ?");
 			sql.setString(1, titulo_revista);
-			sql.execute();
+			ResultSet result =sql.executeQuery();
 			
+
+			
+			return result.next();
+		} catch (SQLException e) {
+			logger.error("falha na pesquisa!"+ e.getMessage());
+			
+		}finally {
 			sql.close();
 			conexion.close();
-			
-			return true;
-		} catch (SQLException e) {
-			logger.error("falha na pesquisa!");
-			e.printStackTrace();
-			
 		}
-		sql.close();
-		conexion.close();
+		
 		
 		return false;
 	}
 
 
 	public boolean excluir(String titulo_revista) throws SQLException {
+		RevistaDao rd = new RevistaDao();
 		PreparedStatement sql =null;
 		try {
+			if(rd.pesquisar(titulo_revista) == true) {
 			sql = conexion.prepareStatement("DELETE FROM revista WHERE titulo = ?");
 			sql.setString(1, titulo_revista);
-			sql.execute();
+			sql.executeUpdate();
 			
-			sql.close();
-			conexion.close();
+			boolean result = rd.pesquisar(titulo_revista);
+			if(result == false) {
+				return true;
+			}
+			}
 			
-			return true;
 		} catch (SQLException e) {
 			logger.error("falha!");
 			e.printStackTrace();
