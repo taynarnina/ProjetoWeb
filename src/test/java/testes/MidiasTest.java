@@ -82,7 +82,7 @@ public class MidiasTest {
 		MidiasDao md = new MidiasDao();
 
 		testaconexao();
-		assertTrue(md.editar("Jornal da pb","Jornal da manha"));
+		assertTrue(md.editar("Telecurso 2000","Telecurso 1999"));
 		fecharConexao();
 
 		testaconexao();
@@ -98,7 +98,7 @@ public class MidiasTest {
 		MidiasDao md = new MidiasDao();
 		
 		testaconexao();
-		assertTrue(md.pesquisar("jornal da manha"));
+		assertTrue(md.pesquisar("Telecurso 1999"));
 		fecharConexao();
 
 		testaconexao();

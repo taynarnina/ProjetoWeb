@@ -86,7 +86,7 @@ public  class MidiasDao implements Acervo<Midias>{
 		
 
 	public boolean pesquisar(String titulo_midia) throws SQLException {
-PreparedStatement sql =null;
+		PreparedStatement sql =null;
 		
 		try {
 			sql = conexion.prepareStatement("SELECT * FROM midias WHERE titulo = ?");

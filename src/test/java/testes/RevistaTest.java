@@ -87,7 +87,7 @@ public class RevistaTest {
 		RevistaDao rd = new RevistaDao();
 		
 		testaconexao();
-		assertTrue(rd.editar("Jornal da pb","Jornal da manha"));
+		assertTrue(rd.editar("Caras e bocas","Cobras"));
 		fecharConexao();
 
 		testaconexao();
@@ -103,7 +103,7 @@ public class RevistaTest {
 		RevistaDao rd = new RevistaDao();
 		
 		testaconexao();
-		assertTrue(rd.pesquisar("jornal da manha"));
+		assertTrue(rd.pesquisar("Cobras"));
 		fecharConexao();
 
 		testaconexao();
@@ -121,7 +121,7 @@ public class RevistaTest {
 		RevistaDao rd = new RevistaDao();
 		
 		testaconexao();
-		assertTrue(rd.excluir("jornal da manha"));
+		assertTrue(rd.excluir("Cobras"));
 		fecharConexao();
 
 		testaconexao();

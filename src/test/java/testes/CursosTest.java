@@ -72,7 +72,7 @@ public class CursosTest {
 		CursosDao cd = new CursosDao();
 		
 		testaconexao();
-		assertTrue(cd.editar("Computação","Ciência da computação"));
+		assertTrue(cd.editar("Computação","CC"));
 		fecharConexao();
 
 		testaconexao();
@@ -88,11 +88,11 @@ public class CursosTest {
 		CursosDao cd = new CursosDao();
 		
 		testaconexao();
-		assertTrue(cd.pesquisar("Ciência da computação"));
+		assertTrue(cd.pesquisar("CC"));
 		fecharConexao();
 
 		testaconexao();
-		cd.pesquisar("Ciência da computação");
+		cd.pesquisar("Computação");
 		fecharConexao();
 		
 		testaconexao();

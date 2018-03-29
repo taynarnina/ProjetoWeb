@@ -106,7 +106,7 @@ public  class LivroDao implements Acervo<Livro> {
 			sql = conexion.prepareStatement("DELETE FROM livro WHERE titulo = ?");
 			sql.setString(1, titulo_livro);
 			sql.executeUpdate();
-			
+			 
 			boolean result = ld.pesquisar(titulo_livro);
 			if(result == false) {
 				return true;
