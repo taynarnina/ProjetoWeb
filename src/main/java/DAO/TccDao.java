@@ -92,26 +92,32 @@ public  class TccDao implements Acervo<Tcc> {
 		} catch (SQLException e) {
 			logger.error("falha na pesquisa!");
 			e.printStackTrace();
-		}
-		
+			
+		}finally {
 		sql.close();
 		conexion.close();
-		
-		return false;
+	}
+	
+	return false;
 	}
 
 
 	public boolean excluir(String titulo_tcc) throws SQLException {
+		TccDao td = new TccDao();
 		PreparedStatement sql =null;
 		try {
+			if(td.pesquisar(titulo_tcc) == true) {
 			sql = conexion.prepareStatement("DELETE FROM tcc WHERE titulo = ?");
 			sql.setString(1, titulo_tcc);
 			sql.execute();
 			
-			sql.close();
-			conexion.close();
-			
-			return true;
+			sql.executeUpdate();
+			 
+			boolean result = td.pesquisar(titulo_tcc);
+			if(result == false) {
+				return true;
+			}
+			}
 		} catch (SQLException e) {
 			logger.error("falha!");
 			e.printStackTrace();

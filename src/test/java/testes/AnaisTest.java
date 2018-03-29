@@ -137,11 +137,7 @@ public class AnaisTest {
 		testaconexao();
 		assertFalse(ad.excluir("engenharia "));
 		fecharConexao();
-		
-		
-		
+			
 	}
-
-
 
 }

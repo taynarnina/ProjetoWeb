@@ -10,7 +10,6 @@ public class Livro {
 	private int numpaginas;
 	private String area_conhecimento;
 	private String tema;
-	private static String con;
 	
 	public String getTitulo() {
 		return titulo;
@@ -60,13 +59,5 @@ public class Livro {
 	public void setTema(String tema) {
 		this.tema = tema;
 	}
-	public static String getCon() {
-		return con;
-	}
-	public static void setCon(String con) {
-		Livro.con = con;
-	}
-	
-
 	
 }
