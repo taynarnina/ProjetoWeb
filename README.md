@@ -1,4 +1,4 @@
-# ProjetoWeb
+﻿# ProjetoWeb
 
 
 Projeto da disciplina de programação web do professor Thiago Batista
@@ -17,7 +17,6 @@ Tutorial para a execução do projeto:
 
 Como ainda não temos uma interface para que sejam testados todos os métodos, fizemos a validação através dos testes de unidade. Dessa forma será necessário executar apenas as classes de teste com o Junit. Se a barrinha ficar verde, é porque os testes foram validados corretamente. Se não, é porque algo no código está incorreto e algum método não foi validado.
 
-Lemrando que é necessário fazer o import do banco de dados para que sejam feitos os relacionamentos.
-
+Lemrando que é necessário fazer o import do banco de dados para que sejam feitos os relacionamentos. O nome da pasta onde estão todas as classes é Maven-projeto.
 
 
