@@ -10,16 +10,26 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import br.edu.ufab.modelo.itens.Jornal;
-
+/**
+ * Classe que vai relacionar os dados de Jornal com o banco de dados.
+ * @author Murilo Gutavo e Taynar Sousa
+ * */
 public class JornalDao {
 
 	private Connection connection;
 	private static final Logger logger = LogManager.getLogger(JornalDao.class);
-	
+	/**
+	 * Método que inicializa a conexão com o banco de dados.
+	 * @param connection
+	 * */
 	public JornalDao(Connection connection) {
 		this.connection = connection;
 	}
-	
+	/**
+	 * Método que recebe um objeto do tipo jornal como parâmetro
+	 * e adiciona no banco de dados.
+	 * @param jornal
+	 * */
 	public boolean adiciona(Jornal jornal) throws SQLException {
 		String sql = "INSERT INTO jornais(titulo,editora,data,edicao,numero_paginas)"
 				+ " VALUES(?,?,?,?,?)";
@@ -49,7 +59,10 @@ public class JornalDao {
 		return null;
 		
 	}
-	
+	/**
+	 * Método que recebe um id do jornal e realiza a pesquisa do jornal a partir dele.
+	 * @param id
+	 * */
 	public Jornal pesquisa(int id) throws SQLException {
 		String sql = "select * from jornais where idjornal = ?";
 		PreparedStatement stmt = null;
@@ -83,7 +96,11 @@ public class JornalDao {
 		}
 		return null;
 	}
-	
+	/**
+	 * Método que recebe um objeto do tipo jornal e realiza
+	 * as alterações de jornal.
+	 * @param jornal
+	 * */
 	public boolean altera(Jornal jornal) throws SQLException {
 		String sql = "update jornais set titulo=?, editora=?, data=?,"
 				+ "edicao=?, numero_paginas=? where idjornal=?";
@@ -108,7 +125,10 @@ public class JornalDao {
 		}
 		return false;
 	}
-	
+	/**
+	 * Método que recebe um objeto do tipo Jornal e realiza a remoção do mesmo.
+	 * @param jornal
+	 * */
 	public boolean remove(Jornal jornal) throws SQLException {
 		String sql = "delete from jornais where idjornal=?";
 		PreparedStatement stmt = null;

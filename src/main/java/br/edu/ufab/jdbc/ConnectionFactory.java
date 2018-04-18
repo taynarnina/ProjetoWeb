@@ -6,7 +6,10 @@ import java.sql.SQLException;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-
+/**
+ * Classe responsável por gerenciar a conexão com o banco de dados
+ * @author Murilo Gustavo e Taynar Sousa
+ * */
 public class ConnectionFactory {
 	
 	private static String url = "jdbc:mysql://localhost:3306/biblioteca_ufab";
@@ -15,6 +18,10 @@ public class ConnectionFactory {
 	private static Connection connection = null;
 	private static final Logger logger = LogManager.getLogger(ConnectionFactory.class);
 	
+	/**
+	 * Método que vai pegar os dados de acesso ao banco de dados e realizar um conexão.
+	 * 
+	 * */
 	public static Connection getConnection() {
 		try	{
 			Class.forName("com.mysql.jdbc.Driver");

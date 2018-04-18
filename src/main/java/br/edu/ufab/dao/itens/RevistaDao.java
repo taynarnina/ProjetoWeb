@@ -10,16 +10,25 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import br.edu.ufab.modelo.itens.Revista;
-
+/**
+ * Classe responsável por fazer a relação dos dados de Revista com o banco de dados
+ * @author Murilo Gustavo e Taynar Sousa
+ * */
 public class RevistaDao {
 	
 	private Connection connection;
 	private static final Logger logger = LogManager.getLogger(RevistaDao.class);
-	
+	/**
+	 * Método que inicializa a conexão com o banco de dados.
+	 * @param connection
+	 * */
 	public RevistaDao(Connection connection) {
 		this.connection = connection;
 	}
-	
+	/**
+	 * Método que recebe os dados de revista e realiza um insert no banco de dados.
+	 * @param revista
+	 * */
 	public boolean adiciona(Revista revista) throws SQLException {
 		String sql = "INSERT INTO revistas(titulo,editora,data_publicacao,edicao,numero_paginas)"
 				+ " VALUES(?,?,?,?,?)";
@@ -44,12 +53,18 @@ public class RevistaDao {
 		}
 		return false;
 	}
-	
+	/**
+	 * Método que vai listar todas as revistas cadastradas no banco de dados.
+	 * 
+	 * */
 	public List<Revista> lista(){
 		return null;
 		
 	}
-	
+	/**
+	 * Método que a apartir do id da revista faz a pesquisa no banco de dados.
+	 * @param id
+	 * */
 	public Revista pesquisa(int id) throws SQLException {
 		String sql = "select * from revistas where idrevista = ?";
 		PreparedStatement stmt = null;
@@ -83,7 +98,10 @@ public class RevistaDao {
 		}
 		return null;
 	}
-	
+	/**
+	 * Método que faz a alteração no banco de dados a partir do recebimento de um objeto Revista.
+	 * @param revista
+	 * */
 	public boolean altera(Revista revista) throws SQLException {
 		String sql = "update revistas set titulo=?, editora=?, data_publicacao=?,"
 				+ "edicao=?, numero_paginas=? where idrevista=?";
@@ -108,7 +126,10 @@ public class RevistaDao {
 		}
 		return false;
 	}
-	
+	/**
+	 * Método que recebe uma revista como parâmetro e realiza a remoção dos seus dados no banco de dados.
+	 * @param revista
+	 * */
 	public boolean remove(Revista revista) throws SQLException {
 		String sql = "delete from revistas where idrevista=?";
 		PreparedStatement stmt = null;

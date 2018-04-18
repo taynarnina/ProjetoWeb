@@ -10,16 +10,25 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import br.edu.ufab.modelo.itens.Livro;
-
+/**
+ * Classe responsável por fazer a relação dos dados de Livro com o banco de dados
+ * @author Murilo Gustavo e Taynar Sousa
+ * */
 public class LivroDao {
 
 	private Connection connection;
 	private static final Logger logger = LogManager.getLogger(LivroDao.class);
-	
+	/**
+	 * Método que inicializa a conexão com o banco de dados.
+	 * @param connection
+	 * */
 	public LivroDao(Connection connection) {
 		this.connection = connection;
 	}
-	
+	/**
+	 * Método que recebe um objeto do tipo Livro e realiza um insert no banco de dados.
+	 * @param livro
+	 * */
 	public boolean adiciona(Livro livro) throws SQLException {
 		String sql = "INSERT INTO livros(isbn,titulo,autores,editora,ano_publicacao,edicao,numero_paginas,"
 				+"area,tema) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -48,12 +57,18 @@ public class LivroDao {
 		}
 		return false;
 	}
-	
+	/**
+	 * Método que vai listar todos os livros cadastrados no banco de dados.
+	 * 
+	 * */
 	public List<Livro> lista(){
 		return null;
 		
 	}
-	
+	/**
+	 * Método que realiza a pesquisa dos dados de um livro a partir do seu id.
+	 * @param id
+	 * */
 	public Livro pesquisa(int id) throws SQLException {
 		String sql = "select * from livros where idlivro = ?";
 		PreparedStatement stmt = null;
@@ -91,7 +106,10 @@ public class LivroDao {
 		}
 		return null;
 	}
-	
+	/**
+	 * Método que recebe um objeto do tipo Livro  e faz a alteração no banco de dados.
+	 * @param livro
+	 * */
 	public boolean altera(Livro livro) throws SQLException {
 		String sql = "update livros set isbn=?, titulo=?, autores=?, editora=?, ano_publicacao=?,"
 				+ "edicao=?, numero_paginas=?, area=?, tema=? where idlivro=?";
@@ -120,7 +138,10 @@ public class LivroDao {
 		}
 		return false;
 	}
-	
+	/**
+	 * Método que recebe um livro como parâmetro e realiza a remoção do livro no banco de dados.
+	 * @param livro
+	 * */
 	public boolean remove(Livro livro) throws SQLException {
 		String sql = "delete from livros where idlivro=?";
 		PreparedStatement stmt = null;

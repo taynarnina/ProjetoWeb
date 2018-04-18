@@ -10,16 +10,27 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import br.edu.ufab.modelo.itens.Anal;
-
+/**
+ * Classe responsável por fazer o relacionamento dos dados de Alunos
+ * com o banco de dados
+ * 
+ * @author Murilo Gustavo e Taynar Sousa
+ * */
 public class AnalDao {
 	
 	private Connection connection;
 	private static final Logger logger = LogManager.getLogger(AnalDao.class);
-	
+	/**
+	 * Método que inicializa a conexão com o banco de dados.
+	 * @param connection
+	 * */
 	public AnalDao(Connection connection) {
 		this.connection = connection;
 	}
-	
+	/**
+	 * Método que recebe um objeto do tipo Anal e a partir dele adiciona os dados no banco.
+	 * @param anal
+	 * */
 	public boolean adiciona(Anal anal) throws SQLException {
 		String sql = "INSERT INTO anais(titulo,tipo,autores,nome_congresso,ano_publicacao, local)"
 				+ " VALUES(?,?,?,?,?.?)";
@@ -50,7 +61,10 @@ public class AnalDao {
 		return null;
 		
 	}
-	
+	/**
+	 * Método que recebe um id e a partir dele realiza a pesquisa de determinado.
+	 * @param id
+	 * */
 	public Anal pesquisa(int id) throws SQLException {
 		String sql = "select * from anais where idanal = ?";
 		PreparedStatement stmt = null;
@@ -85,7 +99,10 @@ public class AnalDao {
 		}
 		return null;
 	}
-	
+	/**
+	 * Método que recebe um objeto do tipo Anal e faz a alteração no banco de dados.
+	 * @param anal
+	 * */
 	public boolean altera(Anal anal) throws SQLException {
 		String sql = "update anais set titulo=?, tipo=?, autores=?,"
 				+ "nome_congresso=?, ano_publicacao=?, local=? where idanal=?";
@@ -111,7 +128,10 @@ public class AnalDao {
 		}
 		return false;
 	}
-	
+	/**
+	 * Método que realiza a remoção de um anal no banco de dados .
+	 * @param anal
+	 * */
 	public boolean remove(Anal anal) throws SQLException {
 		String sql = "delete from anais where idanal=?";
 		PreparedStatement stmt = null;

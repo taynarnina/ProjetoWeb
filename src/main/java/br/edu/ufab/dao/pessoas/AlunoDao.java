@@ -10,16 +10,25 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import br.edu.ufab.modelo.pessoas.Aluno;
-
+/**
+ * Classe responsável por fazer a relação dos dados de Aluno com o banco de dados
+ * @author Murilo Gustavo e Taynar Sousa
+ * */
 public class AlunoDao {
 
 	private Connection connection;
 	private static final Logger logger = LogManager.getLogger(AlunoDao.class);
-	
+	/**
+	 * Método que inicializa a conexão com o banco de dados.
+	 * @param connection
+	 * */
 	public AlunoDao(Connection connection) {
 		this.connection = connection;
 	}
-	
+	/**
+	 * Método que recebe um objeto do tipo Aluno e realiza um insert no banco de dados.
+	 * @param aluno
+	 * */
 	public boolean adiciona(Aluno aluno) throws SQLException {
 		String sql = "INSERT INTO alunos(matricula,cpf,rg,naturalidade,nome,nome_da_mae,endereco,"
 		 		+ "telefone,curso,ano,periodo_ingresso,senha) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -50,12 +59,18 @@ public class AlunoDao {
 		}
 		return false;
 	}
-	
+	/**
+	 * Método que vai listar todos os alunos cadastrados no banco de dados.
+	 * 
+	 * */
 	public List<Aluno> lista() {
 		return null;
 		
 	}
-	
+	/**
+	 * Método que realiza a pesquisa dos dados de aluno a partir do seu id.
+	 * @param id
+	 * */
 	public Aluno pesquisa(int id) throws SQLException {
 		String sql = "select * from alunos where idaluno = ?";
 		PreparedStatement stmt = null;
@@ -96,7 +111,11 @@ public class AlunoDao {
 		}
 		return null;
 	}
-	
+	/**
+	 * Método que recebe um objeto do tipo Aluno e faz a alteração
+	 * dos seus dados no banco de dados.
+	 * @param aluno
+	 * */
 	public boolean altera(Aluno aluno) throws SQLException {
 		String sql = "update alunos set matricula=?, cpf=?, rg=?, naturalidade=?, nome=?,"
 				+ "nome_da_mae=?, endereco=?, telefone=?, curso=?, ano=?, periodo_ingresso=?,"
@@ -129,7 +148,10 @@ public class AlunoDao {
 		}
 		return false;
 	}
-	
+	/**
+	 * Método que recebe um Aluno como parâmetro e realiza a remoção dos seus dados no banco de dados.
+	 * @param aluno
+	 * */
 	public boolean remove(Aluno aluno) throws SQLException {
 		String sql = "delete from alunos where idaluno=?";
 		PreparedStatement stmt = null;

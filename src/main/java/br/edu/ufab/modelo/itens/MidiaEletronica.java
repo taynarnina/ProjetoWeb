@@ -1,5 +1,10 @@
 package br.edu.ufab.modelo.itens;
-
+/**
+ * Classe responsável por pegar os dados de mídia. Esta classe herda da
+ * classe Acervo, pois MidiaEletronica é um item do acervo da biblioteca.
+ * 
+ * @author Murilo Gustavo e Taynar Sousa
+ * */
 public class MidiaEletronica extends Acervo {
 	private String tipo;
 	private String data_gravacao;
