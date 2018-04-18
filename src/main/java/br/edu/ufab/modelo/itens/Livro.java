@@ -1,5 +1,10 @@
 package br.edu.ufab.modelo.itens;
-
+/**
+ * Classe responsável por pegar os dados de livro. Esta classe herda 
+ * da classe Impressos, pois livro é um item de acervo que é impresso.
+ * 
+ * @author Murilo Gustavo e Taynar Sousa
+ * */
 public class Livro extends Impressos{
 	private String ISBN;
 	private String autores;

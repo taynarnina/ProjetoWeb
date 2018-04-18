@@ -1,5 +1,8 @@
 package br.edu.ufab.modelo;
-
+/**
+ * Classe responsável por gerar os dados de curso.
+ * @author Murilo Gustavo e Taynar Sousa
+ * */
 public class Curso {
 	private int id;
 	private String nome;

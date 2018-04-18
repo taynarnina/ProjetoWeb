@@ -1,5 +1,9 @@
 package br.edu.ufab.modelo.pessoas;
-
+/**
+ * Classe responsável por pegar os dados de aluno. Esta classe herda da
+ * 
+ * @author Murilo Gustavo e Taynar Sousa
+ * */
 public class Aluno {
 	private int id;
 	private String matricula;
