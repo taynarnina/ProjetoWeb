@@ -3,6 +3,7 @@ package br.edu.ufab.modelo.itens;
 public class Livro extends Impressos{
 	private String ISBN;
 	private String autores;
+	private int ano_publicacao;
 	private String area;
 	private String tema;
 	
@@ -17,6 +18,12 @@ public class Livro extends Impressos{
 	}
 	public void setAutores(String autores) {
 		this.autores = autores;
+	}
+	public int getAno_publicacao() {
+		return ano_publicacao;
+	}
+	public void setAno_publicacao(int ano_publicacao) {
+		this.ano_publicacao = ano_publicacao;
 	}
 	public String getArea() {
 		return area;
