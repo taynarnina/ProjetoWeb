@@ -10,7 +10,11 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import br.edu.ufab.modelo.pessoas.Administrador;
-
+/**
+ * Classe que vai fazer as ações com os dados de administrador no banco de dados.
+ * 
+ * @author Murilo Gustavo e Taynar Sousa
+ */
 public class AdministradorDao {
 	
 	private Connection connection;
@@ -20,6 +24,10 @@ public class AdministradorDao {
 		this.connection = connection;
 	}
 	
+	/**
+     * Metodo que que adiciona administrador ao banco de dados.
+     * @param administrador
+     */
 	public boolean adiciona(Administrador administrador) throws SQLException {
 		String sql = "INSERT INTO administradores(cpf,rg,nome,naturalidade,endereco,telefone,"
 				+ "email,usuario,senha) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -48,11 +56,18 @@ public class AdministradorDao {
 		return false;
 	}
 	
+	/**
+     * Metodo que lista os cadastros de administrador que estão no banco de dados.
+     */
 	public List<Administrador> lista() {
 		return null;
 		
 	}
-	
+	/**
+     * Metodo que retorna um objeto do tipo administrador com todos os dados
+     * de administrador que um usuário deseja, de acordo com o id.
+     * @param id
+     */
 	public Administrador pesquisa(int id) throws SQLException {
 		String sql = "select * from administradores where idadministradores = ?";
 		PreparedStatement stmt = null;
@@ -91,7 +106,10 @@ public class AdministradorDao {
 		}
 		return null;	
 	}
-	
+	/**
+     * Metodo que faz a alteração dos dados de administrador no banco de dados.
+     * @param administrador
+     */
 	public boolean altera(Administrador administrador) throws SQLException {
 		String sql = "update administradores set cpf=?, rg=?, nome=?, naturalidade=?,"
 				+ "endereco=?, telefone=?, email=?, usuario=?, senha=?"
@@ -121,7 +139,10 @@ public class AdministradorDao {
 		}
 		return false;
 	}
-	
+	/**
+     * Metodo que vai remover um cadastro de administrador no banco de dados.
+     * @param administrador
+     */
 	public boolean remove(Administrador administrador) throws SQLException {
 		String sql = "delete from administradores where idadministradores=?";
 		PreparedStatement stmt = null;

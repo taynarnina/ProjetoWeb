@@ -1,4 +1,9 @@
 package br.edu.ufab.modelo.itens;
+/**
+ * Classe abstrata responsável por pegar o id e título de todos os itens do acervo
+ *
+ * @author Murilo Gustavo dos Santos
+ */
 
 public abstract class Acervo {
 	private int id;

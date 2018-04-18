@@ -1,5 +1,9 @@
 package br.edu.ufab.modelo.pessoas;
-
+/**
+ * Classe responsável por pegar dados de Funcionario.
+ * 
+ * @author Murilo Gustavo dos Santos e Taynar Sousa
+ */
 public class Funcionario {
 	private int id;
 	private String cpf;

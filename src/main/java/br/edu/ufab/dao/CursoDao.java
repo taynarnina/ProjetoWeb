@@ -10,7 +10,11 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import br.edu.ufab.modelo.Curso;
-
+/**
+ * Classe responsável por fazer a relação dos dados de Curso com o banco de dados.
+ * 
+ * @author Murilo Gustavo e Taynar Sousa
+ */
 public class CursoDao {
 
 	private Connection connection;
@@ -19,7 +23,10 @@ public class CursoDao {
 	public CursoDao(Connection connection) {
 		this.connection = connection;
 	}
-	
+	/**
+	 * Método que recebe dados do tipo Curso e adiciona no banco de dados.
+	 * @param curso
+	 */
 	public boolean adiciona(Curso curso) throws SQLException {
 		String sql = "INSERT INTO cursos(nome, codigo, area, tipo) VALUES(?,?,?,?)";
 		PreparedStatement stmt = null;
@@ -45,7 +52,10 @@ public class CursoDao {
 		return null;
 		
 	}
-	
+	/**
+	 * Método que pesquisa um curso a partir do id do curso.
+	 * @param id
+	 */
 	public Curso pesquisa(int id) throws SQLException {
 		String sql = "select * from cursos where idcurso = ?";
 		PreparedStatement stmt = null;
@@ -78,7 +88,10 @@ public class CursoDao {
 		}
 		return null;
 	}
-	
+	/**
+	 * Método que faz alteração dos dados de Curso no banco de dados
+	 * @param curso
+	 */
 	public boolean altera(Curso curso) throws SQLException {
 		String sql = "update cursos set nome=?, codigo=?, area=?, tipo=? where idcurso=?";
 		PreparedStatement stmt = null;
@@ -101,7 +114,10 @@ public class CursoDao {
 		}
 		return false;
 	}
-	
+	/**
+	 * Método que remove todos os dados de Curso no banco de dados
+	 * @param curso
+	 */
 	public boolean remove(Curso curso) throws SQLException {
 		String sql = "delete from cursos where idcurso=?";
 		PreparedStatement stmt = null;

@@ -1,5 +1,9 @@
 package br.edu.ufab.modelo;
-
+/**
+ * Classe responsável por pegar os dados dos cursos da UFAB.
+ *
+ * @author Murilo Gustavo e Taynar Sousa
+ */
 public class Curso {
 	private int id;
 	private String nome;

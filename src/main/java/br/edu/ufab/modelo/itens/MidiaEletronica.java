@@ -1,7 +1,12 @@
 package br.edu.ufab.modelo.itens;
 
 import java.util.Date;
-
+/**
+ * Classe responsável por pegar o tipo de mjídia e a data de gravação.
+ * Essa classe herda objetos da classe Acervo, pois Midia é um item de acervo.
+ *
+ * @author Murilo Gustavo e Taynar Sousa
+ */
 public class MidiaEletronica extends Acervo {
 	private String tipo;
 	private Date data_gravacao;

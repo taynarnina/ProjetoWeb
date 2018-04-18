@@ -10,7 +10,10 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import br.edu.ufab.modelo.pessoas.Funcionario;
-
+/**
+ * Classe responsável por relacionar os dados de Funcionario com o banco de dados
+ * @author Taynar Sousa e Murilo Gustavo
+ */
 public class FuncionarioDao {
 	
 	private Connection connection;
@@ -19,7 +22,11 @@ public class FuncionarioDao {
 	public FuncionarioDao(Connection connection) {
 		this.connection = connection;
 	}
-	
+	/**
+     * Metodo que irá adicionar um funcionário, onde esses dados de funcionário serão
+     * guardados no banco de dados.
+     * @param funcionario
+     */
 	public boolean adiciona(Funcionario funcionario) throws SQLException {
 		String sql = "INSERT INTO funcionarios(cpf,rg,nome,naturalidade,endereco,telefone,"
 				+ "email,usuario,senha) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -52,7 +59,10 @@ public class FuncionarioDao {
 		return null;
 		
 	}
-	
+	/**
+     * Metodo que pesquisa um funcionário no banco de dados de acordo com o seu id.
+     * @param id
+     */
 	public Funcionario pesquisa(int id) throws SQLException {
 		String sql = "select * from funcionarios where idfuncionario = ?";
 		PreparedStatement stmt = null;
@@ -91,7 +101,10 @@ public class FuncionarioDao {
 		}
 		return null;	
 	}
-	
+	/**
+     * Metodo que altera os dados de funcionário no banco de dados.
+     * @param funcionario
+     */
 	public boolean altera(Funcionario funcionario) throws SQLException {
 		String sql = "update funcionarios set cpf=?, rg=?, nome=?, naturalidade=?,"
 				+ "endereco=?, telefone=?, email=?, usuario=?, senha=?"
@@ -121,7 +134,10 @@ public class FuncionarioDao {
 		}
 		return false;
 	}
-	
+	/**
+     * Metodo que remove um funcionário do banco de dados.
+     * @param funcionario
+     */
 	public boolean remove(Funcionario funcionario) throws SQLException {
 		String sql = "delete from funcionarios where idfuncionario=?";
 		PreparedStatement stmt = null;

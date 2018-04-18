@@ -1,4 +1,11 @@
 package br.edu.ufab.modelo.itens;
+/**
+ * Classe responsável por pegar dados de Anuais.
+ * Essa classe herda de trabalho acadêmico, pois anuais dão tipos de trabalhos academicos, 
+ * e trabalhos academicos são itens que fazem parte do acervo.
+ *
+ * @author Murilo Gustavo dos Santos e Taynar Sousa
+ */
 
 public class Anal extends TrabalhoAcademico{
 	private String nome_congresso;

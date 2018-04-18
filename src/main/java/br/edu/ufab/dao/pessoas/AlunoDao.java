@@ -10,7 +10,9 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import br.edu.ufab.modelo.pessoas.Aluno;
-
+/**
+ * Classe que é responsável por fazer as ações com os dados de aluno no banco de dados.
+ */
 public class AlunoDao {
 
 	private Connection connection;
@@ -19,7 +21,10 @@ public class AlunoDao {
 	public AlunoDao(Connection connection) {
 		this.connection = connection;
 	}
-	
+	/**
+     * Metodo que adiciona um objeto do tipo Aluno ao banco de dados.
+     * @param aluno
+     */
 	public boolean adiciona(Aluno aluno) throws SQLException {
 		String sql = "INSERT INTO alunos(matricula,cpf,rg,naturalidade,nome,nome_da_mae,endereco,"
 		 		+ "telefone,curso,ano,periodo_ingresso,senha) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -55,7 +60,10 @@ public class AlunoDao {
 		return null;
 		
 	}
-	
+	/**
+     * Metodo que pesquisa no banco de dados um aluno de acordo com o sue id.
+     * @param id
+     */
 	public Aluno pesquisa(int id) throws SQLException {
 		String sql = "select * from alunos where idaluno = ?";
 		PreparedStatement stmt = null;
@@ -96,7 +104,10 @@ public class AlunoDao {
 		}
 		return null;
 	}
-	
+	/**
+     * Metodo que faz a alteração dos dados de aluno no banco de dados.
+     * @param aluno
+     */
 	public boolean altera(Aluno aluno) throws SQLException {
 		String sql = "update alunos set matricula=?, cpf=?, rg=?, naturalidade=?, nome=?,"
 				+ "nome_da_mae=?, endereco=?, telefone=?, curso=?, ano=?, periodo_ingresso=?,"
@@ -129,7 +140,10 @@ public class AlunoDao {
 		}
 		return false;
 	}
-	
+	/**
+     * Metodo que remove um aluno do banco de dados.
+     * @param aluno
+     */
 	public boolean remove(Aluno aluno) throws SQLException {
 		String sql = "delete from alunos where idaluno=?";
 		PreparedStatement stmt = null;

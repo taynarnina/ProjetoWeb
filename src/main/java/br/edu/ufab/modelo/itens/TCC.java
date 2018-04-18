@@ -1,5 +1,9 @@
 package br.edu.ufab.modelo.itens;
-
+/**
+ * Classe responsável por pegar os dados de Tcc.
+ *
+ * @author Murilo Gustavo e Taynar Sousa
+ */
 public class TCC {
 	private String orientador;
 	private int ano_defesa;
