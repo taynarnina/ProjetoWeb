@@ -54,7 +54,7 @@ public class AdministradorDao {
 	}
 	
 	public Administrador pesquisa(int id) throws SQLException {
-		String sql = "select * from administradores where idadministradores = ?";
+		String sql = "select * from administradores where idadministrador = ?";
 		PreparedStatement stmt = null;
 		try {
 			stmt = connection.prepareStatement(sql);
@@ -65,8 +65,8 @@ public class AdministradorDao {
 			
 			while(rs.next()){
 				
-				//criando o objeto Funcionario
-				administrador.setId(rs.getInt("idfuncionario"));
+				//criando o objeto Admistrador
+				administrador.setId(rs.getInt("idadministrador"));
 				administrador.setCpf(rs.getString("cpf"));
 				administrador.setRg(rs.getString("rg"));
 				administrador.setNome(rs.getString("nome"));
@@ -95,7 +95,7 @@ public class AdministradorDao {
 	public boolean altera(Administrador administrador) throws SQLException {
 		String sql = "update administradores set cpf=?, rg=?, nome=?, naturalidade=?,"
 				+ "endereco=?, telefone=?, email=?, usuario=?, senha=?"
-				+ "where idadministradores=?";
+				+ "where idadministrador=?";
 		PreparedStatement stmt = null;
 		try {
 			stmt = connection.prepareStatement(sql);
@@ -123,7 +123,7 @@ public class AdministradorDao {
 	}
 	
 	public boolean remove(Administrador administrador) throws SQLException {
-		String sql = "delete from administradores where idadministradores=?";
+		String sql = "delete from administradores where idadministrador=?";
 		PreparedStatement stmt = null;
 		try {
 			stmt = connection.prepareStatement(sql);

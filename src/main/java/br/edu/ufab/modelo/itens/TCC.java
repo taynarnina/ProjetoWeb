@@ -1,6 +1,6 @@
 package br.edu.ufab.modelo.itens;
 
-public class TCC {
+public class TCC extends TrabalhoAcademico{
 	private String orientador;
 	private int ano_defesa;
 	

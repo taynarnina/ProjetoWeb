@@ -1,15 +1,12 @@
 package br.edu.ufab.modelo.itens;
 
-import java.util.Date;
-
 public class Jornal extends Impressos{
-	private Date data;
+	private String data;
 
-	public Date getData() {
+	public String getData() {
 		return data;
 	}
-
-	public void setData(Date data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 }
