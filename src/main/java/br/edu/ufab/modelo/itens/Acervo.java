@@ -1,8 +1,5 @@
 package br.edu.ufab.modelo.itens;
-/**
- * Classe abstrata responsável por gerar os dados de acervo.
- * @author Murilo Gustavo e Taynar Sousa
- * */
+
 public abstract class Acervo {
 	private int id;
 	private String titulo;

@@ -10,25 +10,17 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import br.edu.ufab.modelo.itens.TCC;
-/**
- * Classe responsável por fazer a relação dos dados de TCC com o banco de dados
- * @author Murilo Gustavo e Taynar Sousa
- * */
+
 public class TCCDao {
 
 	private Connection connection;
 	private static final Logger logger = LogManager.getLogger(TCCDao.class);
-	/**
-	 * Método que inicializa a conexão com o banco de dados.
-	 * @param connection
-	 * */
+	
 	public TCCDao(Connection connection) {
 		this.connection = connection;
+		logger.info("iniciando conexão...");
 	}
-	/**
-	 * Método que recebe um objeto do tipo TCC e realiza um insert no banco de dados.
-	 * @param tcc
-	 * */
+	
 	public boolean adiciona(TCC tcc) throws SQLException {
 		String sql = "INSERT INTO tcc(titulo,tipo,autores,orientador,ano_defesa, local)"
 				+ " VALUES(?,?,?,?,?.?)";
@@ -43,7 +35,7 @@ public class TCCDao {
 			stmt.setString(6, tcc.getLocal());
 			
 			stmt.execute();
-
+			logger.info("Tcc adicionado com sucesso!");
 			return true;
 			
 		} catch (SQLException e){
@@ -51,21 +43,17 @@ public class TCCDao {
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
-	/**
-	 * Método que vai listar todos os TCC's cadastrados no banco de dados.
-	 * 
-	 * */
+	
 	public List<TCC> lista(){
+		logger.info("listando...");
 		return null;
 		
 	}
-	/**
-	 * Método que a a partir do id de TCC faz a pesquisa no banco de dados.
-	 * @param id
-	 * */
+	
 	public TCC pesquisa(int id) throws SQLException {
 		String sql = "select * from tcc where idtcc = ?";
 		PreparedStatement stmt = null;
@@ -89,7 +77,7 @@ public class TCCDao {
 			}
 			
 			rs.close();
-			
+			logger.info("Pesquisa concluída com sucesso!");
 			return	tcc;
 			
 		} catch (SQLException e){
@@ -97,13 +85,11 @@ public class TCCDao {
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("Conexão encerrada");
 		}
 		return null;
 	}
-	/**
-	 * Método que realiza a alteração dos dados de um tcc .
-	 * @param tcc
-	 * */
+	
 	public boolean altera(TCC tcc) throws SQLException {
 		String sql = "update tcc set titulo=?, tipo=?, autores=?,"
 				+ "orientador=?, ano_defesa=?, local=? where idtcc=?";
@@ -118,7 +104,7 @@ public class TCCDao {
 			stmt.setString(6, tcc.getLocal());
 			stmt.setInt(7, tcc.getId());
 			stmt.execute();
-
+			logger.info("Dados alterados com sucesso!");
 			return true;
 			
 		} catch (SQLException e){
@@ -126,14 +112,11 @@ public class TCCDao {
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
-	/**
-	 * Método que recebe um objeto do tipo TCC como parâmetro e realiza a 
-	 * remoção do tcc no banco de dados.
-	 * @param tcc
-	 * */
+	
 	public boolean remove(TCC tcc) throws SQLException {
 		String sql = "delete from tcc where idtcc=?";
 		PreparedStatement stmt = null;
@@ -141,14 +124,15 @@ public class TCCDao {
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, tcc.getId());
 			stmt.execute();
-			
+			logger.info("TCC removido com sucesso!");
 			return true;
 			
 		} catch (SQLException e){
 			logger.error("Erro ao excluir tcc",e);
 		} finally {
 			stmt.close();
-			connection.close();	
+			connection.close();
+			logger.info("Conexão encerrada");
 		}
 		return false;
 	}

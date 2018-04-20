@@ -51,7 +51,7 @@ public class Curso_Testes {
 		Curso c = new Curso();
 		
 		c.setId(28);
-		c.setNome("Letras-Ingles");
+		c.setNome("LetrasIngles");
 		c.setCodigo("LI");
 		c.setArea("Ciencias Humanas");
 		c.setTipo("G");
@@ -70,7 +70,7 @@ public class Curso_Testes {
 		
 		Curso cursoesperado = new Curso();
 		cursoesperado.setId(28);
-		cursoesperado.setNome("Letras-Ingles");
+		cursoesperado.setNome("LetrasIngles");
 		cursoesperado.setCodigo("LI");
 		cursoesperado.setArea("Ciencias Humanas");
 		cursoesperado.setTipo("G");
