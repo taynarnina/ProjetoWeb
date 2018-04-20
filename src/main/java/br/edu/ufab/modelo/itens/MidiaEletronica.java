@@ -1,6 +1,6 @@
 package br.edu.ufab.modelo.itens;
 
-public class MidiaEletronica extends Acervo {
+public class MidiaEletronica extends Acervo implements ItemIF{
 	private String tipo;
 	private String data_gravacao;
 	

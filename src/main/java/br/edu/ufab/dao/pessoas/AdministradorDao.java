@@ -18,7 +18,6 @@ public class AdministradorDao {
 	
 	public AdministradorDao(Connection connection) {
 		this.connection = connection;
-		logger.info("iniciand conexão...");
 	}
 	
 	public boolean adiciona(Administrador administrador) throws SQLException {
@@ -37,7 +36,7 @@ public class AdministradorDao {
 			stmt.setString(8, administrador.getUsuario());
 			stmt.setString(9, administrador.getSenha());
 			stmt.execute();
-			logger.info("Administrador incluído com sucesso!");
+			
 			return true;
 			
 		} catch (SQLException e){
@@ -45,13 +44,11 @@ public class AdministradorDao {
 		} finally {
 			stmt.close();
 			connection.close();
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
 	
 	public List<Administrador> lista() {
-		logger.info("listando...");
 		return null;
 		
 	}
@@ -83,7 +80,7 @@ public class AdministradorDao {
 			}
 			
 			rs.close();
-			logger.info("Pesquisa concluída com sucesso!!");
+			
 			return administrador;
 			
 		} catch (SQLException e){
@@ -91,7 +88,6 @@ public class AdministradorDao {
 		} finally {
 			stmt.close();
 			connection.close();
-			logger.info("Conexão encerrada");
 		}
 		return null;	
 	}
@@ -114,7 +110,7 @@ public class AdministradorDao {
 			stmt.setString(9, administrador.getSenha());
 			stmt.setInt(10, administrador.getId());
 			stmt.execute();
-			logger.info("Dados alterados!!");
+
 			return true;
 			
 		} catch (SQLException e){
@@ -122,7 +118,6 @@ public class AdministradorDao {
 		} finally {
 			stmt.close();
 			connection.close();	
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
@@ -134,7 +129,7 @@ public class AdministradorDao {
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, administrador.getId());
 			stmt.execute();
-			logger.info("Administrador removido com sucesso!!");
+			
 			return true;
 			
 		} catch (SQLException e){
@@ -142,7 +137,6 @@ public class AdministradorDao {
 		} finally {
 			stmt.close();
 			connection.close();	
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}

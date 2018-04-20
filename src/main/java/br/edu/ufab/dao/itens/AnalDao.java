@@ -9,34 +9,35 @@ import java.util.List;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import br.edu.ufab.modelo.itens.Acervo;
 import br.edu.ufab.modelo.itens.Anal;
+import br.edu.ufab.modelo.itens.TrabalhoAcademico;
 
-public class AnalDao {
+public class AnalDao implements ItemDaoIF{
 	
 	private Connection connection;
 	private static final Logger logger = LogManager.getLogger(AnalDao.class);
 	
 	public AnalDao(Connection connection) {
 		this.connection = connection;
-		logger.info("iniciando a conexão...");
-		logger.debug("debug");
 	}
-	
-	public boolean adiciona(Anal anal) throws SQLException {
-		String sql = "INSERT INTO anais(titulo,tipo,autores,nome_congresso,ano_publicacao, local)"
-				+ " VALUES(?,?,?,?,?.?)";
+
+	@Override
+	public boolean adiciona(Object o) throws SQLException {
+		String sql = "INSERT INTO anais(titulo,tipo,autores,nome_congresso,ano_publicacao,local)"
+				+ " VALUES(?,?,?,?,?,?)";
 		PreparedStatement stmt = null;
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setString(1, anal.getTitulo());
-			stmt.setString(2, anal.getTipo());
-			stmt.setString(3, anal.getAutores());
-			stmt.setString(4, anal.getNome_congresso());
-			stmt.setInt(5, anal.getAno_publicacao());
-			stmt.setString(6, anal.getLocal());
+			stmt.setString(1, ((Acervo) o).getTitulo());
+			stmt.setString(2, ((TrabalhoAcademico) o).getTipo());
+			stmt.setString(3, ((TrabalhoAcademico) o).getAutores());
+			stmt.setString(4, ((Anal) o).getNome_congresso());
+			stmt.setInt(5, ((Anal) o).getAno_publicacao());
+			stmt.setString(6, ((TrabalhoAcademico) o).getLocal());
 			
 			stmt.execute();
-			logger.info("Anal incluído com sucesso!");
+
 			return true;
 			
 		} catch (SQLException e){
@@ -44,17 +45,17 @@ public class AnalDao {
 		} finally {
 			stmt.close();
 			connection.close();
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
 	
-	public List<Anal> lista(){
-		logger.info("listando...");
+	@Override
+	public List<Object> lista(){
 		return null;
 		
 	}
 	
+	@Override
 	public Anal pesquisa(int id) throws SQLException {
 		String sql = "select * from anais where idanal = ?";
 		PreparedStatement stmt = null;
@@ -78,7 +79,6 @@ public class AnalDao {
 			}
 			
 			rs.close();
-			logger.info("Pesquisa concluída com sucesso!!!");
 			
 			return	anal;
 			
@@ -87,26 +87,26 @@ public class AnalDao {
 		} finally {
 			stmt.close();
 			connection.close();
-			logger.info("Conexão encerrada");
 		}
 		return null;
 	}
 	
-	public boolean altera(Anal anal) throws SQLException {
+	@Override
+	public boolean altera(Object o) throws SQLException {
 		String sql = "update anais set titulo=?, tipo=?, autores=?,"
 				+ "nome_congresso=?, ano_publicacao=?, local=? where idanal=?";
 		PreparedStatement stmt = null;
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setString(1, anal.getTitulo());
-			stmt.setString(2, anal.getTipo());
-			stmt.setString(3, anal.getAutores());
-			stmt.setString(4, anal.getNome_congresso());
-			stmt.setInt(5, anal.getAno_publicacao());
-			stmt.setString(6, anal.getLocal());
-			stmt.setInt(7, anal.getId());
+			stmt.setString(1, ((Acervo) o).getTitulo());
+			stmt.setString(2, ((TrabalhoAcademico) o).getTipo());
+			stmt.setString(3, ((TrabalhoAcademico) o).getAutores());
+			stmt.setString(4, ((Anal) o).getNome_congresso());
+			stmt.setInt(5, ((Anal) o).getAno_publicacao());
+			stmt.setString(6, ((TrabalhoAcademico) o).getLocal());
+			stmt.setInt(7, ((Acervo) o).getId());
 			stmt.execute();
-			logger.info("Dados alterados com sucesso!");
+
 			return true;
 			
 		} catch (SQLException e){
@@ -114,19 +114,19 @@ public class AnalDao {
 		} finally {
 			stmt.close();
 			connection.close();	
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
 	
-	public boolean remove(Anal anal) throws SQLException {
+	@Override
+	public boolean remove(Object o) throws SQLException {
 		String sql = "delete from anais where idanal=?";
 		PreparedStatement stmt = null;
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, anal.getId());
+			stmt.setInt(1, ((Acervo) o).getId());
 			stmt.execute();
-			logger.info("Dado removido!!!");
+			
 			return true;
 			
 		} catch (SQLException e){
@@ -134,7 +134,6 @@ public class AnalDao {
 		} finally {
 			stmt.close();
 			connection.close();	
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}

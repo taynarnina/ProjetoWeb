@@ -6,25 +6,34 @@ import static org.junit.Assert.assertTrue;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
-import br.edu.ufab.dao.pessoas.FuncionarioDao;
+import br.edu.ufab.dao.CursoDao;
+import br.edu.ufab.dao.pessoas.AlunoDao;
 import br.edu.ufab.jdbc.ConnectionFactory;
+import br.edu.ufab.modelo.Curso;
+import br.edu.ufab.modelo.pessoas.Aluno;
 import br.edu.ufab.modelo.pessoas.Funcionario;
 
 public class Funcionario_Testes {
 
 	static Connection connection;
+	static Funcionario funcionario;
 	
-	@BeforeClass
-	public static void testaconexao() throws SQLException{
+	@Before
+	public void testaconexao() throws SQLException{
 		connection = ConnectionFactory.getConnection();	
 	}
 	
-	@AfterClass
-	public  static void fecharConexao() {
+	@Before
+	public void instacia(){
+		funcionario = new Funcionario();
+	}
+	
+	@After
+	public void fecharConexao() {
 		try {
 			if(!connection.isClosed()) {
 				connection.close();
@@ -35,82 +44,131 @@ public class Funcionario_Testes {
 	}
 	
 	@Test
-	public void adicionaFuncionario() throws SQLException{
-		FuncionarioDao fd = new FuncionarioDao(connection);
-		Funcionario f = new Funcionario();
+	public void AdicionaCurso() throws SQLException {
+		CursoDao cursodao = new CursoDao(connection);
+		Curso curso = new Curso();
+		curso.setNome("Musica");
+		curso.setCodigo("MU");
+		curso.setArea("Ciencias Humanas");
+		curso.setTipo("G");
 		
-		f.setCpf("09215345678");
-		f.setRg("14345578");
-		f.setNome("Roberto Freire");
-		f.setNaturalidade("Moca");
-		f.setEndereco("Rua do Lobos");
-		f.setTelefone("08399921222");
-		f.setEmail("roberto@mail.com");
-		f.setUsuario("Robe");
-		f.setSenha("12345");
-		
-		assertTrue(fd.adiciona(f));
+		assertTrue(funcionario.AdicionarCurso(curso,cursodao));
 	}
 	
 	@Test
-	public void alteraFuncionario() throws SQLException {
-		Funcionario f = new Funcionario();
+	public void PesquisaCurso() throws SQLException {
+		CursoDao cursodao = new CursoDao(connection);
+		Curso cursopesquisado = new Curso();
 		
-		f.setId(1);
-		f.setCpf("09215345679");
-		f.setRg("14345578");
-		f.setNome("Roberto Freire");
-		f.setNaturalidade("Soledade");
-		f.setEndereco("Rua do Lobos");
-		f.setTelefone("08399921222");
-		f.setEmail("robertof@mail.com");
-		f.setUsuario("RobeF");
-		f.setSenha("12345");
+		cursopesquisado = funcionario.PesquisarCurso(28, cursodao);
 		
-		FuncionarioDao fd = new FuncionarioDao(connection);
+		Curso cursoesperado = new Curso();
+		cursoesperado.setId(28);
+		cursoesperado.setNome("Letras-Ingles");
+		cursoesperado.setCodigo("LI");
+		cursoesperado.setArea("Ciencias Humanas");
+		cursoesperado.setTipo("G");
 		
-		assertTrue(fd.altera(f));
+		assertEquals(cursoesperado.getId(),cursopesquisado.getId());
+		assertEquals(cursoesperado.getNome(),cursopesquisado.getNome());
+		assertEquals(cursoesperado.getCodigo(),cursopesquisado.getCodigo());
+		assertEquals(cursoesperado.getArea(),cursopesquisado.getArea());
+		assertEquals(cursoesperado.getTipo(),cursopesquisado.getTipo());
 	}
 	
 	@Test
-	public void pesquisaFuncionario() throws SQLException {
-		FuncionarioDao fd = new FuncionarioDao(connection);
-		Funcionario funcionariopequisado = new Funcionario();
+	public void AlteraCurso() throws SQLException {
+		Curso curso = new Curso();
 		
-		funcionariopequisado = fd.pesquisa(1);
+		curso.setId(29);
+		curso.setNome("Letras-Espanhol");
+		curso.setCodigo("LE");
+		curso.setArea("Ciencias Humanas");
+		curso.setTipo("G");
 		
-		Funcionario funcionarioesperado = new Funcionario();
+		CursoDao cursodao = new CursoDao(connection);
 		
-		funcionarioesperado.setId(1);
-		funcionarioesperado.setCpf("09215345679");
-		funcionarioesperado.setRg("14345578");
-		funcionarioesperado.setNome("Roberto Freire");
-		funcionarioesperado.setNaturalidade("Soledade");
-		funcionarioesperado.setEndereco("Rua do Lobos");
-		funcionarioesperado.setTelefone("08399921222");
-		funcionarioesperado.setEmail("robertof@mail.com");
-		funcionarioesperado.setUsuario("RobeF");
-		funcionarioesperado.setSenha("12345");
-		
-		assertEquals(funcionarioesperado.getId(),funcionariopequisado.getId());
-		assertEquals(funcionarioesperado.getCpf(),funcionariopequisado.getCpf());
-		assertEquals(funcionarioesperado.getRg(),funcionariopequisado.getRg());
-		assertEquals(funcionarioesperado.getNome(),funcionariopequisado.getNome());
-		assertEquals(funcionarioesperado.getNaturalidade(),funcionariopequisado.getNaturalidade());
-		assertEquals(funcionarioesperado.getEndereco(),funcionariopequisado.getEndereco());
-		assertEquals(funcionarioesperado.getTelefone(),funcionariopequisado.getTelefone());
-		assertEquals(funcionarioesperado.getEmail(),funcionariopequisado.getEmail());
-		assertEquals(funcionarioesperado.getUsuario(),funcionariopequisado.getUsuario());
-		assertEquals(funcionarioesperado.getSenha(),funcionariopequisado.getSenha());
+		assertTrue(funcionario.AlterarCurso(curso, cursodao));
 	}
 	
 	@Test
-	public void removeFuncionario() throws SQLException {
-		Funcionario f = new Funcionario();
-		FuncionarioDao fd = new FuncionarioDao(connection);
+	public void AdicionaAluno() throws SQLException {
+		AlunoDao alunodao = new AlunoDao(connection);
+		Aluno aluno = new Aluno();
+		aluno.setMatricula("GAD-141004");
+		aluno.setCpf("09112345678");
+		aluno.setRg("12345678");
+		aluno.setNaturalidade("Pocinhos");
+		aluno.setNome("Pedro da Silva");
+		aluno.setNomedamae("Joana da Silva");
+		aluno.setEndereco("Avenida do Campo");
+		aluno.setTelefone("08399992222");
+		aluno.setCurso(1); //referencia a tabela curso
+		aluno.setAno(2014);
+		aluno.setPeriodo_ingresso("1");
+		aluno.setSenha("4321");
 		
-		f = fd.pesquisa(3);
+		assertTrue(funcionario.AdicionarAluno(aluno,alunodao));
+	}
+	
+	@Test
+	public void PesquisaAluno() throws SQLException {
+		AlunoDao alunodao = new AlunoDao(connection);
+		Aluno alunopesquisado = new Aluno();
 		
-		assertTrue(fd.remove(f));
+		alunopesquisado = funcionario.PesquisarAluno(2, alunodao);
+		
+		Aluno alunoesperado = new Aluno();
+		
+		alunoesperado.setId(2);
+		alunoesperado.setMatricula("GAD-141002");
+		alunoesperado.setCpf("09112345678");
+		alunoesperado.setRg("12345678");
+		alunoesperado.setNaturalidade("Olivedos");
+		alunoesperado.setNome("João dos Santos");
+		alunoesperado.setNomedamae("Joana dos Santos");
+		alunoesperado.setEndereco("Avenida do Campo");
+		alunoesperado.setTelefone("08399992222");
+		alunoesperado.setCurso(1); //referencia a tabela curso
+		alunoesperado.setAno(2014);
+		alunoesperado.setPeriodo_ingresso("1");
+		alunoesperado.setSenha("4321");
+		
+		assertEquals(alunoesperado.getId(),alunopesquisado.getId());
+		assertEquals(alunoesperado.getMatricula(),alunopesquisado.getMatricula());
+		assertEquals(alunoesperado.getCpf(),alunopesquisado.getCpf());
+		assertEquals(alunoesperado.getRg(),alunopesquisado.getRg());
+		assertEquals(alunoesperado.getNaturalidade(),alunopesquisado.getNaturalidade());
+		assertEquals(alunoesperado.getNome(),alunopesquisado.getNome());
+		assertEquals(alunoesperado.getNomedamae(),alunopesquisado.getNomedamae());
+		assertEquals(alunoesperado.getEndereco(),alunopesquisado.getEndereco());
+		assertEquals(alunoesperado.getTelefone(),alunopesquisado.getTelefone());
+		assertEquals(alunoesperado.getCurso(),alunopesquisado.getCurso());
+		assertEquals(alunoesperado.getAno(),alunopesquisado.getAno());
+		assertEquals(alunoesperado.getPeriodo_ingresso(),alunopesquisado.getPeriodo_ingresso());
+		assertEquals(alunoesperado.getSenha(),alunopesquisado.getSenha());
+	}
+	
+	@Test
+	public void AlteraAluno() throws SQLException {
+		Aluno aluno = new Aluno();
+		
+		aluno.setId(3);
+		aluno.setMatricula("GAD-151002");
+		aluno.setCpf("09112345678");
+		aluno.setRg("12345678");
+		aluno.setNaturalidade("Olivedos");
+		aluno.setNome("Flavio dos Santos");
+		aluno.setNomedamae("Maria dos Santos");
+		aluno.setEndereco("Avenida do Cabo");
+		aluno.setTelefone("08399792822");
+		aluno.setCurso(1); //referencia a tabela curso
+		aluno.setAno(2015);
+		aluno.setPeriodo_ingresso("1");
+		aluno.setSenha("4321");
+		
+		AlunoDao alunodao = new AlunoDao(connection);
+		
+		assertTrue(funcionario.AlterarAluno(aluno, alunodao));
 	}
 }

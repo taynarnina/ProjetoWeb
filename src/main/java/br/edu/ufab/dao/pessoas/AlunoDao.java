@@ -18,7 +18,6 @@ public class AlunoDao {
 	
 	public AlunoDao(Connection connection) {
 		this.connection = connection;
-		logger.info("iniciando conexão...");
 	}
 	
 	public boolean adiciona(Aluno aluno) throws SQLException {
@@ -40,7 +39,7 @@ public class AlunoDao {
 			stmt.setString(11, aluno.getPeriodo_ingresso());
 			stmt.setString(12, aluno.getSenha());
 			stmt.execute();
-			logger.info("Aluno adicionado com sucesso!!");
+
 			return true;
 			
 		} catch (SQLException e){
@@ -48,13 +47,11 @@ public class AlunoDao {
 		} finally {
 			stmt.close();
 			connection.close();
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
 	
 	public List<Aluno> lista() {
-		logger.info("listando...");
 		return null;
 		
 	}
@@ -88,7 +85,7 @@ public class AlunoDao {
 			}
 			
 			rs.close();
-			logger.info("Pesquisa concluída com sucesso!");
+			
 			return	aluno;
 			
 		} catch (SQLException e){
@@ -96,7 +93,6 @@ public class AlunoDao {
 		} finally {
 			stmt.close();
 			connection.close();
-			logger.info("Conexão encerrada");
 		}
 		return null;
 	}
@@ -122,7 +118,7 @@ public class AlunoDao {
 			stmt.setString(12, aluno.getSenha());
 			stmt.setInt(13, aluno.getId());
 			stmt.execute();
-			logger.info("Dados alterados com sucesso!!");
+
 			return true;
 			
 		} catch (SQLException e){
@@ -130,7 +126,6 @@ public class AlunoDao {
 		} finally {
 			stmt.close();
 			connection.close();	
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
@@ -142,7 +137,7 @@ public class AlunoDao {
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, aluno.getId());
 			stmt.execute();
-			logger.info("Aluno removido!");
+			
 			return true;
 			
 		} catch (SQLException e){
@@ -150,7 +145,6 @@ public class AlunoDao {
 		} finally {
 			stmt.close();
 			connection.close();	
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}

@@ -1,6 +1,6 @@
 package br.edu.ufab.modelo.itens;
 
-public class Livro extends Impressos{
+public class Livro extends Impressos implements ItemIF{
 	private String ISBN;
 	private String autores;
 	private int ano_publicacao;
