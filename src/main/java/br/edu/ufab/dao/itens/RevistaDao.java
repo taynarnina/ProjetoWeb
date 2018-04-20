@@ -10,25 +10,17 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import br.edu.ufab.modelo.itens.Revista;
-/**
- * Classe responsável por fazer a relação dos dados de Revista com o banco de dados
- * @author Murilo Gustavo e Taynar Sousa
- * */
+
 public class RevistaDao {
 	
 	private Connection connection;
 	private static final Logger logger = LogManager.getLogger(RevistaDao.class);
-	/**
-	 * Método que inicializa a conexão com o banco de dados.
-	 * @param connection
-	 * */
+	
 	public RevistaDao(Connection connection) {
 		this.connection = connection;
+		logger.info("iniciando conexão...");
 	}
-	/**
-	 * Método que recebe os dados de revista e realiza um insert no banco de dados.
-	 * @param revista
-	 * */
+	
 	public boolean adiciona(Revista revista) throws SQLException {
 		String sql = "INSERT INTO revistas(titulo,editora,data_publicacao,edicao,numero_paginas)"
 				+ " VALUES(?,?,?,?,?)";
@@ -42,7 +34,7 @@ public class RevistaDao {
 			stmt.setInt(5, revista.getNumero_paginas());
 			
 			stmt.execute();
-
+			logger.info("Revista adicionada com sucesso!");
 			return true;
 			
 		} catch (SQLException e){
@@ -50,21 +42,17 @@ public class RevistaDao {
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
-	/**
-	 * Método que vai listar todas as revistas cadastradas no banco de dados.
-	 * 
-	 * */
+	
 	public List<Revista> lista(){
+		logger.info("listando...");
 		return null;
 		
 	}
-	/**
-	 * Método que a apartir do id da revista faz a pesquisa no banco de dados.
-	 * @param id
-	 * */
+	
 	public Revista pesquisa(int id) throws SQLException {
 		String sql = "select * from revistas where idrevista = ?";
 		PreparedStatement stmt = null;
@@ -87,7 +75,7 @@ public class RevistaDao {
 			}
 			
 			rs.close();
-			
+			logger.info("Pesquisa concluída com sucesso!");
 			return	revista;
 			
 		} catch (SQLException e){
@@ -95,13 +83,11 @@ public class RevistaDao {
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("Conexão encerrada");
 		}
 		return null;
 	}
-	/**
-	 * Método que faz a alteração no banco de dados a partir do recebimento de um objeto Revista.
-	 * @param revista
-	 * */
+	
 	public boolean altera(Revista revista) throws SQLException {
 		String sql = "update revistas set titulo=?, editora=?, data_publicacao=?,"
 				+ "edicao=?, numero_paginas=? where idrevista=?";
@@ -115,7 +101,7 @@ public class RevistaDao {
 			stmt.setInt(5, revista.getNumero_paginas());
 			stmt.setInt(6, revista.getId());
 			stmt.execute();
-
+			logger.info("Dados alterados com sucesso!");
 			return true;
 			
 		} catch (SQLException e){
@@ -123,13 +109,11 @@ public class RevistaDao {
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
-	/**
-	 * Método que recebe uma revista como parâmetro e realiza a remoção dos seus dados no banco de dados.
-	 * @param revista
-	 * */
+	
 	public boolean remove(Revista revista) throws SQLException {
 		String sql = "delete from revistas where idrevista=?";
 		PreparedStatement stmt = null;
@@ -137,7 +121,7 @@ public class RevistaDao {
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, revista.getId());
 			stmt.execute();
-			
+			logger.info("Revista excluida!");
 			return true;
 			
 		} catch (SQLException e){
@@ -145,6 +129,7 @@ public class RevistaDao {
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("Conexão encerrada");
 		}
 		return false;
 	}

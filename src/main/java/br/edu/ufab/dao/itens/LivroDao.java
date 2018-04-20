@@ -10,25 +10,17 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import br.edu.ufab.modelo.itens.Livro;
-/**
- * Classe responsável por fazer a relação dos dados de Livro com o banco de dados
- * @author Murilo Gustavo e Taynar Sousa
- * */
+
 public class LivroDao {
 
 	private Connection connection;
 	private static final Logger logger = LogManager.getLogger(LivroDao.class);
-	/**
-	 * Método que inicializa a conexão com o banco de dados.
-	 * @param connection
-	 * */
+	
 	public LivroDao(Connection connection) {
 		this.connection = connection;
+		logger.info("iniciando conexão...");
 	}
-	/**
-	 * Método que recebe um objeto do tipo Livro e realiza um insert no banco de dados.
-	 * @param livro
-	 * */
+	
 	public boolean adiciona(Livro livro) throws SQLException {
 		String sql = "INSERT INTO livros(isbn,titulo,autores,editora,ano_publicacao,edicao,numero_paginas,"
 				+"area,tema) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -46,7 +38,7 @@ public class LivroDao {
 			stmt.setString(9, livro.getTema());
 			
 			stmt.execute();
-
+			logger.info("Livro adicionado com sucesso!");
 			return true;
 			
 		} catch (SQLException e){
@@ -54,21 +46,17 @@ public class LivroDao {
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
-	/**
-	 * Método que vai listar todos os livros cadastrados no banco de dados.
-	 * 
-	 * */
+	
 	public List<Livro> lista(){
+		logger.info("listando...");
 		return null;
 		
 	}
-	/**
-	 * Método que realiza a pesquisa dos dados de um livro a partir do seu id.
-	 * @param id
-	 * */
+	
 	public Livro pesquisa(int id) throws SQLException {
 		String sql = "select * from livros where idlivro = ?";
 		PreparedStatement stmt = null;
@@ -95,7 +83,7 @@ public class LivroDao {
 			}
 			
 			rs.close();
-			
+			logger.info("pesquisa concluída com sucesso!!");
 			return	livro;
 			
 		} catch (SQLException e){
@@ -103,13 +91,11 @@ public class LivroDao {
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("Conexão encerrada");
 		}
 		return null;
 	}
-	/**
-	 * Método que recebe um objeto do tipo Livro  e faz a alteração no banco de dados.
-	 * @param livro
-	 * */
+	
 	public boolean altera(Livro livro) throws SQLException {
 		String sql = "update livros set isbn=?, titulo=?, autores=?, editora=?, ano_publicacao=?,"
 				+ "edicao=?, numero_paginas=?, area=?, tema=? where idlivro=?";
@@ -127,7 +113,7 @@ public class LivroDao {
 			stmt.setString(9, livro.getTema());
 			stmt.setInt(10, livro.getId());
 			stmt.execute();
-
+			logger.info("dados alterados com sucesso!");
 			return true;
 			
 		} catch (SQLException e){
@@ -135,13 +121,11 @@ public class LivroDao {
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
-	/**
-	 * Método que recebe um livro como parâmetro e realiza a remoção do livro no banco de dados.
-	 * @param livro
-	 * */
+	
 	public boolean remove(Livro livro) throws SQLException {
 		String sql = "delete from livros where idlivro=?";
 		PreparedStatement stmt = null;
@@ -149,7 +133,7 @@ public class LivroDao {
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, livro.getId());
 			stmt.execute();
-			
+			logger.info("Dados removidos!");
 			return true;
 			
 		} catch (SQLException e){
@@ -157,6 +141,7 @@ public class LivroDao {
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("Conexão encerrada");
 		}
 		return false;
 	}

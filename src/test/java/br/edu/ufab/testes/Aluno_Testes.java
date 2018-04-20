@@ -38,7 +38,7 @@ public class Aluno_Testes {
 		AlunoDao ad = new AlunoDao(connection);
 		Aluno a = new Aluno();
 		
-		a.setMatricula("GAD-142002");
+		a.setMatricula("GAD142002");
 		a.setCpf("09112345678");
 		a.setRg("12345678");
 		a.setNaturalidade("Pocinhos");
@@ -59,7 +59,7 @@ public class Aluno_Testes {
 		Aluno a = new Aluno();
 		
 		a.setId(3);
-		a.setMatricula("GAD-141002");
+		a.setMatricula("GAD141002");
 		a.setCpf("09112345678");
 		a.setRg("12345678");
 		a.setNaturalidade("Olivedos");
@@ -87,7 +87,7 @@ public class Aluno_Testes {
 		Aluno alunoesperado = new Aluno();
 		
 		alunoesperado.setId(2);
-		alunoesperado.setMatricula("GAD-141002");
+		alunoesperado.setMatricula("GAD141002");
 		alunoesperado.setCpf("09112345678");
 		alunoesperado.setRg("12345678");
 		alunoesperado.setNaturalidade("Olivedos");

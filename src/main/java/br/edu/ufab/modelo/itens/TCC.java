@@ -1,10 +1,5 @@
 package br.edu.ufab.modelo.itens;
-/**
- * Classe responsável por pegar os dados de Tcc. Esta classe herda da classe
- * TrabalhoAcademico, pois tcc é um tipo de trabalho acadêmico e é um item do acervo.
- * 
- * @author Murilo Gustavo e Taynar Sousa
- * */
+
 public class TCC extends TrabalhoAcademico{
 	private String orientador;
 	private int ano_defesa;

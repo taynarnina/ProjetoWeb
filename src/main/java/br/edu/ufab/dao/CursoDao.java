@@ -10,12 +10,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import br.edu.ufab.modelo.Curso;
-/**
- * Classe responsável por relacionar os dados de curso com o banco de dados
- * 
- * @author Taynar Sousa e Murilo Gustavo
- *
- */
+
 public class CursoDao {
 
 	private Connection connection;
@@ -23,11 +18,9 @@ public class CursoDao {
 	
 	public CursoDao(Connection connection) {
 		this.connection = connection;
+		logger.info("iniciando conexão...");
 	}
-	/**
-	 * Método que adiciona um objeto do tipo Curso no banco de dados
-	 * @param curso
-	 * */
+	
 	public boolean adiciona(Curso curso) throws SQLException {
 		String sql = "INSERT INTO cursos(nome, codigo, area, tipo) VALUES(?,?,?,?)";
 		PreparedStatement stmt = null;
@@ -38,25 +31,24 @@ public class CursoDao {
 			stmt.setString(3, curso.getArea());
 			stmt.setString(4, curso.getTipo());
 			stmt.execute();
-			
+			logger.info("Dados incluídos com sucesso!");
 			return true;
 		} catch (SQLException e){
 			logger.error("Erro ao adicionar novo curso",e);
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("Conexão encerrada!");
 		}
 		return false;
 	}
 	
 	public List<Curso> lista() {
+		logger.info("listando...");
 		return null;
 		
 	}
-	/**
-	 * Método que realiza a pesquisa de um curso a partir do seu id.
-	 * @param id
-	 * */
+	
 	public Curso pesquisa(int id) throws SQLException {
 		String sql = "select * from cursos where idcurso = ?";
 		PreparedStatement stmt = null;
@@ -78,7 +70,7 @@ public class CursoDao {
 			}
 			
 			rs.close();
-		
+			logger.info("pesquisa concluída com sucesso!");
 			return curso;
 			
 		} catch (SQLException e){
@@ -86,16 +78,11 @@ public class CursoDao {
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("Conexão encerrada!");
 		}
 		return null;
 	}
 	
-	/**
-	 * Método que recebe um objeto do tipo Curso e realiza as alterações dos 
-	 * dados de curso no banco de dados.
-	 * 
-	 * @param curso
-	 * */
 	public boolean altera(Curso curso) throws SQLException {
 		String sql = "update cursos set nome=?, codigo=?, area=?, tipo=? where idcurso=?";
 		PreparedStatement stmt = null;
@@ -107,7 +94,7 @@ public class CursoDao {
 			stmt.setString(4, curso.getTipo());
 			stmt.setInt(5, curso.getId());
 			stmt.execute();
-
+			logger.info("Dados alterados com sucesso!");
 			return true;
 			
 		} catch (SQLException e){
@@ -115,13 +102,11 @@ public class CursoDao {
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
-	/**
-	 * Método que recebe um objeto do tipo Curso e  realiza a remoção de um curso.
-	 * @param curso
-	 * */
+	
 	public boolean remove(Curso curso) throws SQLException {
 		String sql = "delete from cursos where idcurso=?";
 		PreparedStatement stmt = null;
@@ -129,7 +114,7 @@ public class CursoDao {
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, curso.getId());
 			stmt.execute();
-			
+			logger.info("Excluído com sucesso!");
 			return true;
 			
 		} catch (SQLException e){
@@ -137,6 +122,7 @@ public class CursoDao {
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("Conexão encerrada");
 		}
 		return false;
 	}

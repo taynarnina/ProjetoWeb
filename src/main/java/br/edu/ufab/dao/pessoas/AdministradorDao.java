@@ -10,26 +10,17 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import br.edu.ufab.modelo.pessoas.Administrador;
-/**
- * Classe que vai relacionar os dados de Adiministrador com o banco de dados.
- * @author Murilo Gutavo e Taynar Sousa
- * */
+
 public class AdministradorDao {
 	
 	private Connection connection;
 	private static final Logger logger = LogManager.getLogger(FuncionarioDao.class);
-	/**
-	 * Método que inicializa a conexão com o banco de dados.
-	 * @param connection
-	 * */
+	
 	public AdministradorDao(Connection connection) {
 		this.connection = connection;
+		logger.info("iniciand conexão...");
 	}
-	/**
-	 * Método que recebe os dados de Administrador como parâmetro
-	 * e adiciona no banco de dados.
-	 * @param administrador
-	 * */
+	
 	public boolean adiciona(Administrador administrador) throws SQLException {
 		String sql = "INSERT INTO administradores(cpf,rg,nome,naturalidade,endereco,telefone,"
 				+ "email,usuario,senha) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -46,7 +37,7 @@ public class AdministradorDao {
 			stmt.setString(8, administrador.getUsuario());
 			stmt.setString(9, administrador.getSenha());
 			stmt.execute();
-			
+			logger.info("Administrador incluído com sucesso!");
 			return true;
 			
 		} catch (SQLException e){
@@ -54,18 +45,17 @@ public class AdministradorDao {
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
 	
 	public List<Administrador> lista() {
+		logger.info("listando...");
 		return null;
 		
 	}
-	/**
-	 * Método que recebe um id do admiinistrador e realiza a pesquisa dos seus dados.
-	 * @param id
-	 * */
+	
 	public Administrador pesquisa(int id) throws SQLException {
 		String sql = "select * from administradores where idadministrador = ?";
 		PreparedStatement stmt = null;
@@ -93,7 +83,7 @@ public class AdministradorDao {
 			}
 			
 			rs.close();
-			
+			logger.info("Pesquisa concluída com sucesso!!");
 			return administrador;
 			
 		} catch (SQLException e){
@@ -101,14 +91,11 @@ public class AdministradorDao {
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("Conexão encerrada");
 		}
 		return null;	
 	}
-	/**
-	 * Método que recebe um objeto do tipo Administrador e realiza
-	 * as alterações no banco de dados.
-	 * @param administrador
-	 * */
+	
 	public boolean altera(Administrador administrador) throws SQLException {
 		String sql = "update administradores set cpf=?, rg=?, nome=?, naturalidade=?,"
 				+ "endereco=?, telefone=?, email=?, usuario=?, senha=?"
@@ -127,7 +114,7 @@ public class AdministradorDao {
 			stmt.setString(9, administrador.getSenha());
 			stmt.setInt(10, administrador.getId());
 			stmt.execute();
-
+			logger.info("Dados alterados!!");
 			return true;
 			
 		} catch (SQLException e){
@@ -135,13 +122,11 @@ public class AdministradorDao {
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
-	/**
-	 * Método que recebe um objeto do tipo Administrador e realiza a remoção do mesmo.
-	 * @param administrador
-	 * */
+	
 	public boolean remove(Administrador administrador) throws SQLException {
 		String sql = "delete from administradores where idadministrador=?";
 		PreparedStatement stmt = null;
@@ -149,7 +134,7 @@ public class AdministradorDao {
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, administrador.getId());
 			stmt.execute();
-			
+			logger.info("Administrador removido com sucesso!!");
 			return true;
 			
 		} catch (SQLException e){
@@ -157,6 +142,7 @@ public class AdministradorDao {
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("Conexão encerrada");
 		}
 		return false;
 	}

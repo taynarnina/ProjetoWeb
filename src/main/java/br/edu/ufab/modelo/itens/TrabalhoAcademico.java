@@ -1,10 +1,5 @@
 package br.edu.ufab.modelo.itens;
-/**
- * Classe responsável por pegar os dados de trabalhos acadêmicos. Esta classe herda da classe
- * Acervo, pois TrabalhoAcademico é um item que está contido no acervo.
- * 
- * @author Murilo Gustavo e Taynar Sousa
- * */
+
 public abstract class TrabalhoAcademico extends Acervo {
 	private String tipo;
 	private String autores;
