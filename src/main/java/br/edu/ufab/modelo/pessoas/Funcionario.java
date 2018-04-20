@@ -1,59 +1,41 @@
 package br.edu.ufab.modelo.pessoas;
 
-public class Funcionario {
-	private int id;
-	private String cpf;
-	private String rg;
-	private String nome;
-	private String naturalidade;
-	private String endereco;
-	private String telefone;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import br.edu.ufab.dao.CursoDao;
+import br.edu.ufab.dao.pessoas.AlunoDao;
+import br.edu.ufab.modelo.Curso;
+
+public class Funcionario extends Pessoa{
 	private String email;
 	private String usuario;
-	private String senha;
+	Connection connection;
 	
-	public int getId() {
-		return id;
+	public boolean AdicionarCurso(Curso curso, CursoDao cursodao) throws SQLException {
+		return cursodao.adiciona(curso);
 	}
-	public void setId(int id) {
-		this.id = id;
+	
+	public Curso PesquisarCurso(int id, CursoDao cursodao) throws SQLException {
+		return cursodao.pesquisa(id);
 	}
-	public String getCpf() {
-		return cpf;
+	
+	public boolean AlterarCurso(Curso curso, CursoDao cursodao) throws SQLException {
+		return cursodao.altera(curso);
 	}
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	
+	public boolean AdicionarAluno(Aluno aluno, AlunoDao alunodao) throws SQLException {
+		return alunodao.adiciona(aluno);
 	}
-	public String getRg() {
-		return rg;
+	
+	public Aluno PesquisarAluno(int id, AlunoDao alunodao) throws SQLException {
+		return alunodao.pesquisa(id);
 	}
-	public void setRg(String rg) {
-		this.rg = rg;
+	
+	public boolean AlterarAluno(Aluno aluno, AlunoDao alunodao) throws SQLException {
+		return alunodao.altera(aluno);
 	}
-	public String getNome() {
-		return nome;
-	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	public String getNaturalidade() {
-		return naturalidade;
-	}
-	public void setNaturalidade(String naturalidade) {
-		this.naturalidade = naturalidade;
-	}
-	public String getEndereco() {
-		return endereco;
-	}
-	public void setEndereco(String endereço) {
-		this.endereco = endereço;
-	}
-	public String getTelefone() {
-		return telefone;
-	}
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
+	
 	public String getEmail() {
 		return email;
 	}
@@ -65,11 +47,5 @@ public class Funcionario {
 	}
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
-	}
-	public String getSenha() {
-		return senha;
-	}
-	public void setSenha(String senha) {
-		this.senha = senha;
 	}
 }

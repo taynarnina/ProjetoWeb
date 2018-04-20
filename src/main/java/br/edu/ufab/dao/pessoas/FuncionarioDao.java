@@ -36,7 +36,7 @@ public class FuncionarioDao {
 			stmt.setString(8, funcionario.getUsuario());
 			stmt.setString(9, funcionario.getSenha());
 			stmt.execute();		
-			logger.info("Funcionario adicionado com sucesso!");
+
 			return true;
 			
 		} catch (SQLException e){
@@ -44,13 +44,11 @@ public class FuncionarioDao {
 		} finally {
 			stmt.close();
 			connection.close();
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
 	
 	public List<Funcionario> lista() {
-		logger.info("Conexão encerrada");
 		return null;
 		
 	}
@@ -82,7 +80,7 @@ public class FuncionarioDao {
 			}
 			
 			rs.close();
-			logger.info("Pesquisa concluída com sucesso!");
+			
 			return funcionario;
 			
 		} catch (SQLException e){
@@ -90,7 +88,6 @@ public class FuncionarioDao {
 		} finally {
 			stmt.close();
 			connection.close();
-			logger.info("Conexão encerrada");
 		}
 		return null;	
 	}
@@ -113,7 +110,7 @@ public class FuncionarioDao {
 			stmt.setString(9, funcionario.getSenha());
 			stmt.setInt(10, funcionario.getId());
 			stmt.execute();
-			logger.info("Dados de funcionário foram alterados!");
+
 			return true;
 			
 		} catch (SQLException e){
@@ -121,7 +118,6 @@ public class FuncionarioDao {
 		} finally {
 			stmt.close();
 			connection.close();	
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
@@ -132,8 +128,8 @@ public class FuncionarioDao {
 		try {
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, funcionario.getId());
-			stmt.execute();
-			logger.info("Funcionario removido!");
+			stmt.executeUpdate();
+			
 			return true;
 			
 		} catch (SQLException e){
@@ -141,7 +137,6 @@ public class FuncionarioDao {
 		} finally {
 			stmt.close();
 			connection.close();	
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}

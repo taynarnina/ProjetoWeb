@@ -1,6 +1,6 @@
 package br.edu.ufab.modelo.itens;
 
-public class Revista extends Impressos{
+public class Revista extends Impressos implements ItemIF{
 	private String data_publicacao;
 
 	public String getData_publicacao() {

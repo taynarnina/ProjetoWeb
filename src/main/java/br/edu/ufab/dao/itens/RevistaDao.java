@@ -9,32 +9,34 @@ import java.util.List;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import br.edu.ufab.modelo.itens.Acervo;
+import br.edu.ufab.modelo.itens.Impressos;
 import br.edu.ufab.modelo.itens.Revista;
 
-public class RevistaDao {
+public class RevistaDao implements ItemDaoIF{
 	
 	private Connection connection;
 	private static final Logger logger = LogManager.getLogger(RevistaDao.class);
 	
 	public RevistaDao(Connection connection) {
 		this.connection = connection;
-		logger.info("iniciando conexão...");
 	}
 	
-	public boolean adiciona(Revista revista) throws SQLException {
+	@Override
+	public boolean adiciona(Object o) throws SQLException {
 		String sql = "INSERT INTO revistas(titulo,editora,data_publicacao,edicao,numero_paginas)"
 				+ " VALUES(?,?,?,?,?)";
 		PreparedStatement stmt = null;
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setString(1, revista.getTitulo());
-			stmt.setString(2, revista.getEditora());
-			stmt.setString(3, revista.getData_publicacao());
-			stmt.setString(4, revista.getEdicao());
-			stmt.setInt(5, revista.getNumero_paginas());
+			stmt.setString(1, ((Acervo) o).getTitulo());
+			stmt.setString(2, ((Impressos) o).getEditora());
+			stmt.setString(3, ((Revista) o).getData_publicacao());
+			stmt.setString(4, ((Impressos) o).getEdicao());
+			stmt.setInt(5, ((Impressos) o).getNumero_paginas());
 			
 			stmt.execute();
-			logger.info("Revista adicionada com sucesso!");
+
 			return true;
 			
 		} catch (SQLException e){
@@ -42,17 +44,17 @@ public class RevistaDao {
 		} finally {
 			stmt.close();
 			connection.close();
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
 	
-	public List<Revista> lista(){
-		logger.info("listando...");
+	@Override
+	public List<Object> lista(){
 		return null;
 		
 	}
 	
+	@Override
 	public Revista pesquisa(int id) throws SQLException {
 		String sql = "select * from revistas where idrevista = ?";
 		PreparedStatement stmt = null;
@@ -75,7 +77,7 @@ public class RevistaDao {
 			}
 			
 			rs.close();
-			logger.info("Pesquisa concluída com sucesso!");
+			
 			return	revista;
 			
 		} catch (SQLException e){
@@ -83,25 +85,25 @@ public class RevistaDao {
 		} finally {
 			stmt.close();
 			connection.close();
-			logger.info("Conexão encerrada");
 		}
 		return null;
 	}
 	
-	public boolean altera(Revista revista) throws SQLException {
+	@Override
+	public boolean altera(Object o) throws SQLException {
 		String sql = "update revistas set titulo=?, editora=?, data_publicacao=?,"
 				+ "edicao=?, numero_paginas=? where idrevista=?";
 		PreparedStatement stmt = null;
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setString(1, revista.getTitulo());
-			stmt.setString(2, revista.getEditora());
-			stmt.setString(3, revista.getData_publicacao());
-			stmt.setString(4, revista.getEdicao());
-			stmt.setInt(5, revista.getNumero_paginas());
-			stmt.setInt(6, revista.getId());
+			stmt.setString(1, ((Acervo) o).getTitulo());
+			stmt.setString(2, ((Impressos) o).getEditora());
+			stmt.setString(3, ((Revista) o).getData_publicacao());
+			stmt.setString(4, ((Impressos) o).getEdicao());
+			stmt.setInt(5, ((Impressos) o).getNumero_paginas());
+			stmt.setInt(6, ((Acervo) o).getId());
 			stmt.execute();
-			logger.info("Dados alterados com sucesso!");
+
 			return true;
 			
 		} catch (SQLException e){
@@ -109,19 +111,19 @@ public class RevistaDao {
 		} finally {
 			stmt.close();
 			connection.close();	
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
 	
-	public boolean remove(Revista revista) throws SQLException {
+	@Override
+	public boolean remove(Object o) throws SQLException {
 		String sql = "delete from revistas where idrevista=?";
 		PreparedStatement stmt = null;
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, revista.getId());
+			stmt.setInt(1, ((Acervo) o).getId());
 			stmt.execute();
-			logger.info("Revista excluida!");
+			
 			return true;
 			
 		} catch (SQLException e){
@@ -129,7 +131,6 @@ public class RevistaDao {
 		} finally {
 			stmt.close();
 			connection.close();	
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}

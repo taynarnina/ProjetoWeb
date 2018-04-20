@@ -9,28 +9,29 @@ import java.util.List;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import br.edu.ufab.modelo.itens.Acervo;
 import br.edu.ufab.modelo.itens.MidiaEletronica;
 
-public class MidiaEletronicaDao {
+public class MidiaEletronicaDao implements ItemDaoIF{
 
 	private Connection connection;
 	private static final Logger logger = LogManager.getLogger(MidiaEletronicaDao.class);
 	
 	public MidiaEletronicaDao(Connection connection) {
 		this.connection = connection;
-		logger.info("iniciando conexão...");
 	}
 	
-	public boolean adiciona(MidiaEletronica midia) throws SQLException {
+	@Override
+	public boolean adiciona(Object o) throws SQLException {
 		String sql = "INSERT INTO midias(titulo,tipo,data_gravacao) VALUES(?,?,?)";
 		PreparedStatement stmt = null;
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setString(1, midia.getTitulo());
-			stmt.setString(2, midia.getTipo());
-			stmt.setString(3, midia.getData_gravacao());
+			stmt.setString(1, ((Acervo) o).getTitulo());
+			stmt.setString(2, ((MidiaEletronica) o).getTipo());
+			stmt.setString(3, ((MidiaEletronica) o).getData_gravacao());
 			stmt.execute();
-			logger.info("Dados adicionados com sucesso!");
+
 			return true;
 			
 		} catch (SQLException e){
@@ -38,16 +39,17 @@ public class MidiaEletronicaDao {
 		} finally {
 			stmt.close();
 			connection.close();
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
 	
-	public List<MidiaEletronica> lista(){
+	@Override
+	public List<Object> lista(){
 		return null;
 		
 	}
 	
+	@Override
 	public MidiaEletronica pesquisa(int id) throws SQLException {
 		String sql = "select * from midias where idmidia = ?";
 		PreparedStatement stmt = null;
@@ -68,7 +70,7 @@ public class MidiaEletronicaDao {
 			}
 			
 			rs.close();
-			logger.info("Pesquisa concluída com sucesso!");
+			
 			return	midia;
 			
 		} catch (SQLException e){
@@ -76,22 +78,22 @@ public class MidiaEletronicaDao {
 		} finally {
 			stmt.close();
 			connection.close();
-			logger.info("Conexão encerrada");
 		}
 		return null;
 	}
 	
-	public boolean altera(MidiaEletronica midia) throws SQLException {
+	@Override
+	public boolean altera(Object o) throws SQLException {
 		String sql = "update midias set titulo=?, tipo=?, data_gravacao=? where idmidia=?";
 		PreparedStatement stmt = null;
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setString(1, midia.getTitulo());
-			stmt.setString(2, midia.getTipo());
-			stmt.setString(3, midia.getData_gravacao());
-			stmt.setInt(4, midia.getId());
+			stmt.setString(1, ((Acervo) o).getTitulo());
+			stmt.setString(2, ((MidiaEletronica) o).getTipo());
+			stmt.setString(3, ((MidiaEletronica) o).getData_gravacao());
+			stmt.setInt(4, ((Acervo) o).getId());
 			stmt.execute();
-			logger.info("Dados alterados com sucesso!");
+
 			return true;
 			
 		} catch (SQLException e){
@@ -99,19 +101,19 @@ public class MidiaEletronicaDao {
 		} finally {
 			stmt.close();
 			connection.close();	
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
 	
-	public boolean remove(MidiaEletronica midia) throws SQLException {
+	@Override
+	public boolean remove(Object o) throws SQLException {
 		String sql = "delete from tcc where idmidia=?";
 		PreparedStatement stmt = null;
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, midia.getId());
+			stmt.setInt(1, ((Acervo) o).getId());
 			stmt.execute();
-			logger.info("Dados removidos!");
+			
 			return true;
 			
 		} catch (SQLException e){
@@ -119,7 +121,6 @@ public class MidiaEletronicaDao {
 		} finally {
 			stmt.close();
 			connection.close();	
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}

@@ -1,6 +1,6 @@
 package br.edu.ufab.modelo.itens;
 
-public class Anal extends TrabalhoAcademico{
+public class Anal extends TrabalhoAcademico implements ItemIF{
 	private String nome_congresso;
 	private int ano_publicacao;
 	

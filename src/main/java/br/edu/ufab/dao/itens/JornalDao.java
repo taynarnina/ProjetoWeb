@@ -9,32 +9,34 @@ import java.util.List;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import br.edu.ufab.modelo.itens.Acervo;
+import br.edu.ufab.modelo.itens.Impressos;
 import br.edu.ufab.modelo.itens.Jornal;
 
-public class JornalDao {
+public class JornalDao implements ItemDaoIF{
 
 	private Connection connection;
 	private static final Logger logger = LogManager.getLogger(JornalDao.class);
 	
 	public JornalDao(Connection connection) {
 		this.connection = connection;
-		logger.info("Iniciando conexão...");
 	}
 	
-	public boolean adiciona(Jornal jornal) throws SQLException {
+	@Override
+	public boolean adiciona(Object o) throws SQLException {
 		String sql = "INSERT INTO jornais(titulo,editora,data,edicao,numero_paginas)"
 				+ " VALUES(?,?,?,?,?)";
 		PreparedStatement stmt = null;
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setString(1, jornal.getTitulo());
-			stmt.setString(2, jornal.getEditora());
-			stmt.setString(3, jornal.getData());
-			stmt.setString(4, jornal.getEdicao());
-			stmt.setInt(5, jornal.getNumero_paginas());
+			stmt.setString(1, ((Acervo) o).getTitulo());
+			stmt.setString(2, ((Impressos) o).getEditora());
+			stmt.setString(3, ((Jornal) o).getData());
+			stmt.setString(4, ((Impressos) o).getEdicao());
+			stmt.setInt(5, ((Impressos) o).getNumero_paginas());
 			
 			stmt.execute();
-			logger.info("Dados adicionados com sucesso!");
+
 			return true;
 			
 		} catch (SQLException e){
@@ -42,17 +44,17 @@ public class JornalDao {
 		} finally {
 			stmt.close();
 			connection.close();
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
 	
-	public List<Jornal> lista(){
-		logger.info("listando...");
+	@Override
+	public List<Object> lista(){
 		return null;
 		
 	}
 	
+	@Override
 	public Jornal pesquisa(int id) throws SQLException {
 		String sql = "select * from jornais where idjornal = ?";
 		PreparedStatement stmt = null;
@@ -75,7 +77,7 @@ public class JornalDao {
 			}
 			
 			rs.close();
-			logger.info("pesquisa concluída com sucesso!");
+			
 			return	jornal;
 			
 		} catch (SQLException e){
@@ -83,25 +85,25 @@ public class JornalDao {
 		} finally {
 			stmt.close();
 			connection.close();
-			logger.info("Conexão encerrada");
 		}
 		return null;
 	}
 	
-	public boolean altera(Jornal jornal) throws SQLException {
+	@Override
+	public boolean altera(Object o) throws SQLException {
 		String sql = "update jornais set titulo=?, editora=?, data=?,"
 				+ "edicao=?, numero_paginas=? where idjornal=?";
 		PreparedStatement stmt = null;
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setString(1, jornal.getTitulo());
-			stmt.setString(2, jornal.getEditora());
-			stmt.setString(3, jornal.getData());
-			stmt.setString(4, jornal.getEdicao());
-			stmt.setInt(5, jornal.getNumero_paginas());
-			stmt.setInt(6, jornal.getId());
+			stmt.setString(1, ((Acervo) o).getTitulo());
+			stmt.setString(2, ((Impressos) o).getEditora());
+			stmt.setString(3, ((Jornal) o).getData());
+			stmt.setString(4, ((Impressos) o).getEdicao());
+			stmt.setInt(5, ((Impressos) o).getNumero_paginas());
+			stmt.setInt(6, ((Acervo) o).getId());
 			stmt.execute();
-			logger.info("Dados alterados com sucesso!!");
+
 			return true;
 			
 		} catch (SQLException e){
@@ -109,19 +111,19 @@ public class JornalDao {
 		} finally {
 			stmt.close();
 			connection.close();	
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
 	
-	public boolean remove(Jornal jornal) throws SQLException {
+	@Override
+	public boolean remove(Object o) throws SQLException {
 		String sql = "delete from jornais where idjornal=?";
 		PreparedStatement stmt = null;
 		try {
 			stmt = connection.prepareStatement(sql);
-			stmt.setInt(1, jornal.getId());
+			stmt.setInt(1, ((Acervo) o).getId());
 			stmt.execute();
-			logger.info("Dados removidos!");
+			
 			return true;
 			
 		} catch (SQLException e){
@@ -129,7 +131,6 @@ public class JornalDao {
 		} finally {
 			stmt.close();
 			connection.close();	
-			logger.info("Conexão encerrada");
 		}
 		return false;
 	}
