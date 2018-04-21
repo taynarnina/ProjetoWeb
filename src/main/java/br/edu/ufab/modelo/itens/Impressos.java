@@ -1,5 +1,12 @@
 package br.edu.ufab.modelo.itens;
 
+/**
+ * Classe responsável por recuperar o nome de edição e editora e número de páginas de um impresso.
+ * Essa classe herda dados de Acervo.
+ * 
+ * @author Taynar Sousa e Murilo Gustavo
+ * */
+
 public abstract class Impressos extends Acervo {
 	private String edicao;
 	private String editora;

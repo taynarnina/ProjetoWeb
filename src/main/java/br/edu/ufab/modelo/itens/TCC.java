@@ -1,6 +1,14 @@
 package br.edu.ufab.modelo.itens;
 
-public class TCC extends TrabalhoAcademico implements ItemIF{
+/**
+ * Classe responsável por recuperar o orientador e o ano de defesa de um tcc.
+ * 
+ * Essa classe herda dados de TrabalhoAcademico.
+ * 
+ * @author Taynar Sousa e Murilo Gustavo
+ * */
+
+public class TCC extends TrabalhoAcademico{
 	private String orientador;
 	private int ano_defesa;
 	

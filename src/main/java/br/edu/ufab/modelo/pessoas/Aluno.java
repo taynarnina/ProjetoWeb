@@ -1,5 +1,10 @@
 package br.edu.ufab.modelo.pessoas;
-
+/**
+ * Classe responsável por recuperar a matricula, o nome da mãe, curso ano e o periodo do curso
+ * 
+ * 
+ * @author Taynar Sousa e Murilo Gustavo
+ * */
 public class Aluno extends Pessoa{
 	private String matricula;
 	private String nomedamae;

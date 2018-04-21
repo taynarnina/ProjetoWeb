@@ -6,7 +6,12 @@ import java.sql.SQLException;
 import br.edu.ufab.dao.CursoDao;
 import br.edu.ufab.dao.pessoas.AlunoDao;
 import br.edu.ufab.modelo.Curso;
-
+/**
+ * Classe responsável por recuperar o email, usuario e a conexão do banco de dados.
+ * Essa classe herda dados de Pessoa.
+ * 
+ * @author Taynar Sousa e Murilo Gustavo
+ * */
 public class Funcionario extends Pessoa{
 	private String email;
 	private String usuario;

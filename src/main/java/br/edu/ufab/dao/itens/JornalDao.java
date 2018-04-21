@@ -9,18 +9,35 @@ import java.util.List;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import br.edu.ufab.jdbc.ConnectionFactory;
 import br.edu.ufab.modelo.itens.Acervo;
 import br.edu.ufab.modelo.itens.Impressos;
 import br.edu.ufab.modelo.itens.Jornal;
-
+/**
+ * Classe que faz a relação entre Jornal e a tabela jornais do banco de dados.
+ * Essa classe herda os métodos de ItemDaoIF.
+ * 
+ * @author Taynar Sousa e Murilo Gustavo
+ * */
 public class JornalDao implements ItemDaoIF{
 
 	private Connection connection;
 	private static final Logger logger = LogManager.getLogger(JornalDao.class);
 	
+	/**
+	 * Método que abre a conexão com o banco de dados
+	 * @param connection
+	 * */
+	
 	public JornalDao(Connection connection) {
 		this.connection = connection;
 	}
+	
+	/**
+	 * Método que recebe um objeto e adiciona seus dados no banco de dados.
+	 * 
+	 * @param o
+	 * */
 	
 	@Override
 	public boolean adiciona(Object o) throws SQLException {
@@ -36,7 +53,7 @@ public class JornalDao implements ItemDaoIF{
 			stmt.setInt(5, ((Impressos) o).getNumero_paginas());
 			
 			stmt.execute();
-
+			logger.info("Jornal inserido com sucesso!!");
 			return true;
 			
 		} catch (SQLException e){
@@ -44,15 +61,28 @@ public class JornalDao implements ItemDaoIF{
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("conexão encerrada!");
 		}
 		return false;
 	}
-	
+	/**
+	 * Método que lista todos os jornais cadastrados no banco de dados.
+	 * 
+	 * @param o
+	 * */
 	@Override
 	public List<Object> lista(){
+		logger.info("gerando lista...");
 		return null;
 		
 	}
+	
+	/**
+	 * Método que recebe um id e retorna um objeto do tipo Jornal 
+	 * (retorna dados de Jornal).
+	 * 
+	 * @param id
+	 * */
 	
 	@Override
 	public Jornal pesquisa(int id) throws SQLException {
@@ -77,7 +107,7 @@ public class JornalDao implements ItemDaoIF{
 			}
 			
 			rs.close();
-			
+			logger.info("Pesquisa concluída com sucesso!");
 			return	jornal;
 			
 		} catch (SQLException e){
@@ -85,9 +115,16 @@ public class JornalDao implements ItemDaoIF{
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("conexão encerrada!");
 		}
 		return null;
 	}
+	
+	/**
+	 * Método que recebe um objeto e altera seus dados no banco de dados.
+	 * 
+	 * @param o
+	 * */
 	
 	@Override
 	public boolean altera(Object o) throws SQLException {
@@ -103,7 +140,7 @@ public class JornalDao implements ItemDaoIF{
 			stmt.setInt(5, ((Impressos) o).getNumero_paginas());
 			stmt.setInt(6, ((Acervo) o).getId());
 			stmt.execute();
-
+			logger.info("Alterações em jornal concluídas!!");
 			return true;
 			
 		} catch (SQLException e){
@@ -111,19 +148,28 @@ public class JornalDao implements ItemDaoIF{
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("conexão encerrada");
 		}
 		return false;
 	}
+	
+	/**
+	 * Método que recebe um objeto e faz a remoção dos seus dados 
+	 * no banco de dados.
+	 * 
+	 * @param o
+	 * */
 	
 	@Override
 	public boolean remove(Object o) throws SQLException {
 		String sql = "delete from jornais where idjornal=?";
 		PreparedStatement stmt = null;
 		try {
+			connection = ConnectionFactory.getConnection();
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, ((Acervo) o).getId());
 			stmt.execute();
-			
+			logger.info("Exclusão de jornal concluída!");
 			return true;
 			
 		} catch (SQLException e){
@@ -131,6 +177,7 @@ public class JornalDao implements ItemDaoIF{
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("conexão encerrada");
 		}
 		return false;
 	}

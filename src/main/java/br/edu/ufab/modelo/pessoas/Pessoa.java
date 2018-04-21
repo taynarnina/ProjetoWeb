@@ -1,5 +1,10 @@
 package br.edu.ufab.modelo.pessoas;
-
+/**
+ * Classe responsável por recuperar o id,cpf,rg,nome,naturalidade,endereço,telefone e senha de uma pessoa.
+ * Essa classe herda dados de TrabalhoAcademico.
+ * 
+ * @author Taynar Sousa e Murilo Gustavo
+ * */
 public abstract class Pessoa {
 	private int id;
 	private String cpf;

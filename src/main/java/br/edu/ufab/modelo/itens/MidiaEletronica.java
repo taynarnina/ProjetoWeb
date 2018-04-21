@@ -1,6 +1,11 @@
 package br.edu.ufab.modelo.itens;
-
-public class MidiaEletronica extends Acervo implements ItemIF{
+/**
+ * Classe responsável por recuperar o tipo e data de gravação da midia.
+ * Essa classe herda dados de Acervo.
+ * 
+ * @author Taynar Sousa e Murilo Gustavo
+ * */
+public class MidiaEletronica extends Acervo {
 	private String tipo;
 	private String data_gravacao;
 	

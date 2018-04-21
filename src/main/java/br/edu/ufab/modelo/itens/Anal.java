@@ -1,6 +1,13 @@
 package br.edu.ufab.modelo.itens;
 
-public class Anal extends TrabalhoAcademico implements ItemIF{
+/**
+ * Classe responsável por recuperar o nome do congresso e o ano de publicação do mesmo.
+ * Essa classe herda dados de TrabalhoAcademico.
+ * 
+ * @author Taynar Sousa e Murilo Gustavo
+ * */
+
+public class Anal extends TrabalhoAcademico {
 	private String nome_congresso;
 	private int ano_publicacao;
 	

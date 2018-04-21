@@ -9,18 +9,36 @@ import java.util.List;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import br.edu.ufab.jdbc.ConnectionFactory;
 import br.edu.ufab.modelo.itens.Acervo;
 import br.edu.ufab.modelo.itens.Impressos;
 import br.edu.ufab.modelo.itens.Livro;
-
+/**
+ * Classe que faz a relação entre Livro e a tabela livros do banco de dados.
+ * Essa classe herda os métodos de ItemIF.
+ * 
+ * @author Taynar Sousa e Murilo Gustavo
+ * */
 public class LivroDao implements ItemDaoIF{
 
 	private Connection connection;
 	private static final Logger logger = LogManager.getLogger(LivroDao.class);
 	
+	/**
+	 * Método que vai abrir a conexão com o banco de dados
+	 * @param connection
+	 * */
 	public LivroDao(Connection connection) {
 		this.connection = connection;
 	}
+	
+	/**
+	 * Método que vai receber um objeto e vai adicionar seus dados no
+	 * banco de dados.
+	 *  Ela vai receber um objeto e ira tratar o memso dentro do método.
+	 * 
+	 * @param  o
+	 * */
 	
 	@Override
 	public boolean adiciona(Object o) throws SQLException {
@@ -40,7 +58,7 @@ public class LivroDao implements ItemDaoIF{
 			stmt.setString(9, ((Livro) o).getTema());
 			
 			stmt.execute();
-
+			logger.info("Dados de livro inseridos com sucesso!!");
 			return true;
 			
 		} catch (SQLException e){
@@ -48,15 +66,28 @@ public class LivroDao implements ItemDaoIF{
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("conexão encerrada!");
 		}
 		return false;
 	}
 	
+	/**
+	 * Método que vai listar todos os livros cadastrados no banco de dados.
+	 * */
+	
 	@Override
 	public List<Object> lista(){
+		logger.info("gerando lista...");
 		return null;
 		
 	}
+	
+	/**
+	 * Método que vai receber o id de determinado livro e retorna
+	 *  os dados desse livro.
+	 * 
+	 * @param  id
+	 * */
 	
 	@Override
 	public Livro pesquisa(int id) throws SQLException {
@@ -85,7 +116,7 @@ public class LivroDao implements ItemDaoIF{
 			}
 			
 			rs.close();
-			
+			logger.info("Pesquisa concluída com sucesso!");
 			return	livro;
 			
 		} catch (SQLException e){
@@ -93,10 +124,16 @@ public class LivroDao implements ItemDaoIF{
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("conexão encerrada!");
 		}
 		return null;
 	}
-	
+	/**
+	 * Método que vai receber um objeto e vai realizar a alteração de seus dados.
+	 * Ela vai receber um objeto e ira tratar o memso dentro do método.
+	 * 
+	 * @param  o
+	 * */
 	@Override
 	public boolean altera(Object o) throws SQLException {
 		String sql = "update livros set isbn=?, titulo=?, autores=?, editora=?, ano_publicacao=?,"
@@ -115,7 +152,7 @@ public class LivroDao implements ItemDaoIF{
 			stmt.setString(9, ((Livro) o).getTema());
 			stmt.setInt(10, ((Acervo) o).getId());
 			stmt.execute();
-
+			logger.info("Alterações concluídas!!");
 			return true;
 			
 		} catch (SQLException e){
@@ -123,19 +160,28 @@ public class LivroDao implements ItemDaoIF{
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("conexão encerrada");
 		}
 		return false;
 	}
+	
+	/**
+	 * Método que vai receber um objeto e removê-lo do banco de dados.
+	 * Ela vai receber um objeto e ira tratar o memso dentro do método.
+	 * 
+	 * @param  o
+	 * */
 	
 	@Override
 	public boolean remove(Object o) throws SQLException {
 		String sql = "delete from livros where idlivro=?";
 		PreparedStatement stmt = null;
 		try {
+			connection = ConnectionFactory.getConnection();
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, ((Acervo) o).getId());
 			stmt.execute();
-			
+			logger.info("Exclusão do livro concluída!");
 			return true;
 			
 		} catch (SQLException e){
@@ -143,6 +189,7 @@ public class LivroDao implements ItemDaoIF{
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("conexão encerrada");
 		}
 		return false;
 	}
