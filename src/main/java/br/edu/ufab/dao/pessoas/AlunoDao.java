@@ -9,16 +9,32 @@ import java.util.List;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import br.edu.ufab.jdbc.ConnectionFactory;
 import br.edu.ufab.modelo.pessoas.Aluno;
-
+/**
+ * Classe que faz a relação entre Aluno e  tabela alunos do banco de dados.
+ * 
+ * @author Taynar Sousa e Murilo Gustavo
+ * */
 public class AlunoDao {
 
 	private Connection connection;
 	private static final Logger logger = LogManager.getLogger(AlunoDao.class);
 	
+	/**
+	 * Método que vai abrir a conexão com o banco de dados
+	 * @param connection
+	 * */
 	public AlunoDao(Connection connection) {
 		this.connection = connection;
 	}
+	
+	/**
+	 * Método que vai receber um objeto do tipo Aluno e vai adicionar seus dados no 
+	 * banco de dados.
+	 * 
+	 * @param  aluno
+	 * */
 	
 	public boolean adiciona(Aluno aluno) throws SQLException {
 		String sql = "INSERT INTO alunos(matricula,cpf,rg,naturalidade,nome,nome_da_mae,endereco,"
@@ -39,7 +55,7 @@ public class AlunoDao {
 			stmt.setString(11, aluno.getPeriodo_ingresso());
 			stmt.setString(12, aluno.getSenha());
 			stmt.execute();
-
+			logger.info("Aluno inserido com sucesso!!");
 			return true;
 			
 		} catch (SQLException e){
@@ -47,14 +63,26 @@ public class AlunoDao {
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("conexão encerrada!");
 		}
 		return false;
 	}
 	
+	/**
+	 * Método que vai listar todos alunos cadastrados
+	 * 
+	 * */
 	public List<Aluno> lista() {
+		logger.info("gerando lista...");
 		return null;
 		
 	}
+	
+	/**
+	 * Método que vai receber o id de um aluno e irá retornar os seus dados.	 
+	 * 
+	 * @param  id
+	 * */
 	
 	public Aluno pesquisa(int id) throws SQLException {
 		String sql = "select * from alunos where idaluno = ?";
@@ -85,7 +113,7 @@ public class AlunoDao {
 			}
 			
 			rs.close();
-			
+			logger.info("Pesquisa concluída com sucesso!");
 			return	aluno;
 			
 		} catch (SQLException e){
@@ -93,9 +121,16 @@ public class AlunoDao {
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("conexão encerrada!");
 		}
 		return null;
 	}
+	
+	/**
+	 * Método que vai receber um objeto do tipo Aluno e alterar seus dados.
+	 * 
+	 * @param aluno
+	 * */
 	
 	public boolean altera(Aluno aluno) throws SQLException {
 		String sql = "update alunos set matricula=?, cpf=?, rg=?, naturalidade=?, nome=?,"
@@ -118,7 +153,7 @@ public class AlunoDao {
 			stmt.setString(12, aluno.getSenha());
 			stmt.setInt(13, aluno.getId());
 			stmt.execute();
-
+			logger.info("Alterações concluídas!!");
 			return true;
 			
 		} catch (SQLException e){
@@ -126,18 +161,26 @@ public class AlunoDao {
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("conexão encerrada!");
 		}
 		return false;
 	}
+	
+	/**
+	 * Método que vai receber um objeto do tipo Aluno e remover seus dados do banco de dados.
+	 * 
+	 * @param  aluno
+	 * */
 	
 	public boolean remove(Aluno aluno) throws SQLException {
 		String sql = "delete from alunos where idaluno=?";
 		PreparedStatement stmt = null;
 		try {
+			connection = ConnectionFactory.getConnection();
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, aluno.getId());
 			stmt.execute();
-			
+			logger.info("Exclusão de aluno concluída!");
 			return true;
 			
 		} catch (SQLException e){
@@ -145,6 +188,7 @@ public class AlunoDao {
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("conexão encerrada!");
 		}
 		return false;
 	}

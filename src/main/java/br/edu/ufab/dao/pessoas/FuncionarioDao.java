@@ -9,17 +9,33 @@ import java.util.List;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import br.edu.ufab.jdbc.ConnectionFactory;
 import br.edu.ufab.modelo.pessoas.Funcionario;
+/**
+ * Classe que faz a relação entre Funcionario e a tabela funcionario do banco de dados.
+ * 
+ * @author Taynar Sousa e Murilo Gustavo
+ * */
 
 public class FuncionarioDao {
 	
 	private Connection connection;
 	private static final Logger logger = LogManager.getLogger(FuncionarioDao.class);
 	
+	/**
+	 * Método que vai abrir a conexão com o banco de dados
+	 * @param connection
+	 * */
 	public FuncionarioDao(Connection connection) {
 		this.connection = connection;
 	}
 	
+	/**
+	 * Método que vai receber um objeto do tipo Funcionario e vai cadastrar no
+	 * banco de dados. 
+	 * 
+	 * @param  funcionario
+	 * */
 	public boolean adiciona(Funcionario funcionario) throws SQLException {
 		String sql = "INSERT INTO funcionarios(cpf,rg,nome,naturalidade,endereco,telefone,"
 				+ "email,usuario,senha) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -36,7 +52,7 @@ public class FuncionarioDao {
 			stmt.setString(8, funcionario.getUsuario());
 			stmt.setString(9, funcionario.getSenha());
 			stmt.execute();		
-
+			logger.info("Funcionario inserido com sucesso!!");
 			return true;
 			
 		} catch (SQLException e){
@@ -47,11 +63,21 @@ public class FuncionarioDao {
 		}
 		return false;
 	}
-	
+	/**
+	 * Método que vai listar todos funcionarios cadastrados
+	 * 
+	 * */
 	public List<Funcionario> lista() {
+		logger.info("gerando lista...");
 		return null;
 		
 	}
+	
+	/**
+	 * Método que vai receber o id de um funcionario e irá retornar os seus dados.	 
+	 * 
+	 * @param  id
+	 * */
 	
 	public Funcionario pesquisa(int id) throws SQLException {
 		String sql = "select * from funcionarios where idfuncionario = ?";
@@ -80,7 +106,7 @@ public class FuncionarioDao {
 			}
 			
 			rs.close();
-			
+			logger.info("Pesquisa concluída com sucesso!");
 			return funcionario;
 			
 		} catch (SQLException e){
@@ -88,9 +114,17 @@ public class FuncionarioDao {
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("conexão encerrada!");
 		}
 		return null;	
 	}
+	
+	/**
+	 * Método que vai receber um objto do tipo Funcionário e vai realizar a alteração de 
+	 * seus dados no banco de dados. 
+	 * 
+	 * @param  funcionario
+	 * */
 	
 	public boolean altera(Funcionario funcionario) throws SQLException {
 		String sql = "update funcionarios set cpf=?, rg=?, nome=?, naturalidade=?,"
@@ -110,7 +144,7 @@ public class FuncionarioDao {
 			stmt.setString(9, funcionario.getSenha());
 			stmt.setInt(10, funcionario.getId());
 			stmt.execute();
-
+			logger.info("Alterações concluídas!!");
 			return true;
 			
 		} catch (SQLException e){
@@ -118,18 +152,27 @@ public class FuncionarioDao {
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("conexão encerrada");
 		}
 		return false;
 	}
+	
+	/**
+	 * Método que vai receber um objeto do tipo Funcionario e removê-lo do 
+	 * banco de dados.
+	 * 
+	 * @param  funcionario
+	 * */
 	
 	public boolean remove(Funcionario funcionario) throws SQLException {
 		String sql = "delete from funcionarios where idfuncionario=?";
 		PreparedStatement stmt = null;
 		try {
+			connection = ConnectionFactory.getConnection();
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, funcionario.getId());
 			stmt.executeUpdate();
-			
+			logger.info("Exclusão de funcionário concluída!");
 			return true;
 			
 		} catch (SQLException e){
@@ -137,6 +180,7 @@ public class FuncionarioDao {
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("conexão encerrada!");
 		}
 		return false;
 	}

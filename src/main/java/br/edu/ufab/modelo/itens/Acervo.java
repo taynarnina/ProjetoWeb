@@ -1,6 +1,10 @@
 package br.edu.ufab.modelo.itens;
-
-public abstract class Acervo {
+/**
+ * Classe abstrata responsável por recuperar dados como o id e título do acervo.
+ * 
+ * @author Taynar Sousa e Murilo Gustavo
+ * */
+public abstract class Acervo implements ItemIF {
 	private int id;
 	private String titulo;
 	

@@ -5,25 +5,28 @@ import static org.junit.Assert.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.edu.ufab.dao.CursoDao;
 import br.edu.ufab.jdbc.ConnectionFactory;
 import br.edu.ufab.modelo.Curso;
+import br.edu.ufab.modelo.pessoas.Administrador;
 
 public class Curso_Testes {
 	
 	static Connection connection;
 	
-	@BeforeClass
-	public static void testaconexao() throws SQLException{
+	@Before
+	public void testaconexao() throws SQLException{
 		connection = ConnectionFactory.getConnection();	
 	}
 	
-	@AfterClass
-	public  static void fecharConexao() {
+	@After
+	public void fecharConexao() {
 		try {
 			if(!connection.isClosed()) {
 				connection.close();
@@ -35,6 +38,7 @@ public class Curso_Testes {
 
 	@Test
 	public void adicionaCurso() throws SQLException {
+		
 		CursoDao cd = new CursoDao(connection);
 		Curso c = new Curso();
 		
@@ -81,5 +85,6 @@ public class Curso_Testes {
 		assertEquals(cursoesperado.getArea(),cursopesquisado.getArea());
 		assertEquals(cursoesperado.getTipo(),cursopesquisado.getTipo());
 	}
+
 
 }

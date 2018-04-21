@@ -10,6 +10,12 @@ import br.edu.ufab.dao.pessoas.FuncionarioDao;
 import br.edu.ufab.modelo.Curso;
 import br.edu.ufab.modelo.itens.ItemIF;
 
+/**
+ * Classe responsável por cadastrar,excluir,pesquisar e alterar aluno, administrador
+ * e funcionário.
+ * 
+ * @author Taynar Sousa e Murilo Gustavo
+ * */
 
 public class Administrador extends Funcionario{
 

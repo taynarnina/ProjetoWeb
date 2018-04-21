@@ -64,7 +64,7 @@ public class Funcionario_Testes {
 		
 		Curso cursoesperado = new Curso();
 		cursoesperado.setId(28);
-		cursoesperado.setNome("Letras-Ingles");
+		cursoesperado.setNome("LetrasIngles");
 		cursoesperado.setCodigo("LI");
 		cursoesperado.setArea("Ciencias Humanas");
 		cursoesperado.setTipo("G");

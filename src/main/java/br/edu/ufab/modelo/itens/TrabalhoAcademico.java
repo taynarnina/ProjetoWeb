@@ -1,5 +1,11 @@
 package br.edu.ufab.modelo.itens;
-
+/**
+ * Classe abstrata responsável por recuperar o tipo, os autores e o local de um trabalho
+ * acadêmico.
+ * Essa classe herda dados de Acervo.
+ * 
+ * @author Taynar Sousa e Murilo Gustavo
+ * */
 public abstract class TrabalhoAcademico extends Acervo {
 	private String tipo;
 	private String autores;

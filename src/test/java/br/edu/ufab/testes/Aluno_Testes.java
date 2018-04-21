@@ -5,7 +5,9 @@ import static org.junit.Assert.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -17,13 +19,13 @@ public class Aluno_Testes {
 	
 	static Connection connection;
 	
-	@BeforeClass
-	public static void testaconexao() throws SQLException{
+	@Before
+	public void testaconexao() throws SQLException{
 		connection = ConnectionFactory.getConnection();	
 	}
 	
-	@AfterClass
-	public  static void fecharConexao() {
+	@After
+	public  void fecharConexao() {
 		try {
 			if(!connection.isClosed()) {
 				connection.close();
@@ -87,7 +89,7 @@ public class Aluno_Testes {
 		Aluno alunoesperado = new Aluno();
 		
 		alunoesperado.setId(2);
-		alunoesperado.setMatricula("GAD141002");
+		alunoesperado.setMatricula("GAD-141002");
 		alunoesperado.setCpf("09112345678");
 		alunoesperado.setRg("12345678");
 		alunoesperado.setNaturalidade("Olivedos");

@@ -7,9 +7,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import br.edu.ufab.dao.CursoDao;
 import br.edu.ufab.dao.itens.AnalDao;
 import br.edu.ufab.dao.itens.JornalDao;
 import br.edu.ufab.dao.itens.LivroDao;
@@ -17,8 +20,10 @@ import br.edu.ufab.dao.itens.MidiaEletronicaDao;
 import br.edu.ufab.dao.itens.RevistaDao;
 import br.edu.ufab.dao.itens.TCCDao;
 import br.edu.ufab.dao.pessoas.AdministradorDao;
+import br.edu.ufab.dao.pessoas.AlunoDao;
 import br.edu.ufab.dao.pessoas.FuncionarioDao;
 import br.edu.ufab.jdbc.ConnectionFactory;
+import br.edu.ufab.modelo.Curso;
 import br.edu.ufab.modelo.itens.Anal;
 import br.edu.ufab.modelo.itens.Jornal;
 import br.edu.ufab.modelo.itens.Livro;
@@ -26,6 +31,7 @@ import br.edu.ufab.modelo.itens.MidiaEletronica;
 import br.edu.ufab.modelo.itens.Revista;
 import br.edu.ufab.modelo.itens.TCC;
 import br.edu.ufab.modelo.pessoas.Administrador;
+import br.edu.ufab.modelo.pessoas.Aluno;
 import br.edu.ufab.modelo.pessoas.Funcionario;
 
 public class Administrador_Testes {
@@ -85,7 +91,7 @@ public class Administrador_Testes {
 		livroesperado.setEdicao("2º Edição");
 		livroesperado.setEditora("Nova Era");
 		livroesperado.setNumero_paginas(255);
-		livroesperado.setISBN("345678911");
+		livroesperado.setISBN("345678912");
 		livroesperado.setAutores("Freire, João Paulo");
 		livroesperado.setAno_publicacao(2010);
 		livroesperado.setArea("Computacao");
@@ -125,7 +131,12 @@ public class Administrador_Testes {
 	
 	@Test
 	public void RemoveLivro() throws SQLException {
+		Livro livro = new Livro();
+		LivroDao livrodao= new LivroDao(connection);
 		
+		livro= (Livro) administrador.PesquisarItem(4, livrodao);
+		
+		assertTrue(administrador.ExcluirItem(livro, livrodao));
 	}
 	
 	@Test
@@ -153,7 +164,7 @@ public class Administrador_Testes {
 		revistaesperada.setId(1);
 		revistaesperada.setTitulo("TV Escola");
 		revistaesperada.setEdicao("12º Edição");
-		revistaesperada.setEditora("Março");
+		revistaesperada.setEditora("Abril");
 		revistaesperada.setNumero_paginas(25);
 		revistaesperada.setData_publicacao("2016-12-04");
 		
@@ -183,7 +194,12 @@ public class Administrador_Testes {
 	
 	@Test
 	public void RemoveRevista() throws SQLException {
+		Revista revista = new Revista();
+		RevistaDao revistadao= new RevistaDao(connection);
 		
+		revista = (Revista) administrador.PesquisarItem(4, revistadao);
+		
+		assertTrue(administrador.ExcluirItem(revista, revistadao));
 	}
 	
 	@Test
@@ -211,9 +227,9 @@ public class Administrador_Testes {
 		jornalesperado.setId(1);
 		jornalesperado.setTitulo("Jornal Nacional");
 		jornalesperado.setEdicao("1º Edição");
-		jornalesperado.setEditora("Barla");
+		jornalesperado.setEditora("Maio");
 		jornalesperado.setNumero_paginas(12);
-		jornalesperado.setData("2017-10-01");
+		jornalesperado.setData("2017-11-01");
 		
 		assertEquals(jornalesperado.getId(),jornalpesquisado.getId());
 		assertEquals(jornalesperado.getTitulo(),jornalpesquisado.getTitulo());
@@ -241,7 +257,12 @@ public class Administrador_Testes {
 	
 	@Test
 	public void RemoveJornal() throws SQLException {
+		Jornal jornal = new Jornal();
+		JornalDao jornaldao= new JornalDao(connection);
 		
+		jornal= (Jornal) administrador.PesquisarItem(4, jornaldao);
+		
+		assertTrue(administrador.ExcluirItem(jornal, jornaldao));
 	}
 	
 	@Test
@@ -271,7 +292,7 @@ public class Administrador_Testes {
 		analesperado.setTitulo("Seminario Nacional de Literatura");
 		analesperado.setTipo("Artigo");
 		analesperado.setAutores("JK Rowling");
-		analesperado.setLocal("São Paulo");
+		analesperado.setLocal("Brasilia");
 		analesperado.setNome_congresso("Hogwarts Congresso");
 		analesperado.setAno_publicacao(2015);
 		
@@ -303,7 +324,12 @@ public class Administrador_Testes {
 	
 	@Test
 	public void RemoveAnal() throws SQLException {
+		Anal anal = new Anal();
+		AnalDao analdao= new AnalDao(connection);
 		
+		anal= (Anal) administrador.PesquisarItem(4, analdao);
+		
+		assertTrue(administrador.ExcluirItem(anal, analdao));
 	}
 	
 	@Test
@@ -333,7 +359,7 @@ public class Administrador_Testes {
 		tccesperado.setTitulo("UML na pratica");
 		tccesperado.setTipo("Monografia");
 		tccesperado.setAutores("Alan Turing");
-		tccesperado.setLocal("Campinas");
+		tccesperado.setLocal("Campina Grande");
 		tccesperado.setOrientador("Robert Hulk");
 		tccesperado.setAno_defesa(2010);
 		
@@ -365,7 +391,12 @@ public class Administrador_Testes {
 	
 	@Test
 	public void RemoveTCC() throws SQLException {
+		TCC tcc = new TCC();
+		TCCDao tccdao= new TCCDao(connection);
 		
+		tcc= (TCC) administrador.PesquisarItem(4, tccdao);
+		
+		assertTrue(administrador.ExcluirItem(tcc, tccdao));
 	}
 	
 	@Test
@@ -389,7 +420,7 @@ public class Administrador_Testes {
 		
 		MidiaEletronica midiaesperado =  new MidiaEletronica();
 		midiaesperado.setId(1);
-		midiaesperado.setTitulo("Java Doc");
+		midiaesperado.setTitulo("Java Free");
 		midiaesperado.setTipo("DVD");
 		midiaesperado.setData_gravacao("2013-03-23");
 		
@@ -414,20 +445,40 @@ public class Administrador_Testes {
 		
 		assertTrue(administrador.AlterarItem(midia, midiadao));
 	}
-	
 	@Test
 	public void RemoveMidia() throws SQLException {
+
+		MidiaEletronica midia = new MidiaEletronica();
+		MidiaEletronicaDao midiadao = new MidiaEletronicaDao(connection);
+		
+		midia = (MidiaEletronica) administrador.PesquisarItem(30, midiadao);
+		
+		assertTrue(administrador.ExcluirItem(midia, midiadao));
 		
 	}
 	
 	@Test
-	public void RemoveCurso() throws SQLException {
+	public void RemoveCursos() throws SQLException {
+
+		Curso curso = new Curso();
+		CursoDao cursodao = new CursoDao(connection);
+		
+		curso = administrador.PesquisarCurso(30, cursodao);
+		
+		assertTrue(administrador.ExcluirCurso(curso, cursodao));
 		
 	}
+	
+	
 	
 	@Test
 	public void RemoveAluno() throws SQLException {
+		Aluno aluno = new Aluno();
+		AlunoDao alunodao = new AlunoDao(connection);
 		
+		aluno = administrador.PesquisarAluno(30, alunodao);
+		
+		assertTrue(administrador.ExcluirAluno(aluno, alunodao));	
 	}
 	
 	
@@ -503,7 +554,12 @@ public class Administrador_Testes {
 	
 	@Test
 	public void RemoveFuncionario() throws SQLException {
+		Funcionario funcionario = new Funcionario();
+		FuncionarioDao funcionariodao= new FuncionarioDao(connection);
 		
+		funcionario = administrador.PesquisarFuncionario(4, funcionariodao);
+		
+		assertTrue(administrador.ExcluirFuncionario(funcionario, funcionariodao));
 	}
 
 	@Test
@@ -578,7 +634,12 @@ public class Administrador_Testes {
 	
 	@Test
 	public void RemoveAdministrador() throws SQLException {
+		Administrador administrador2 = new Administrador();
+		AdministradorDao administradordao= new AdministradorDao(connection);
 		
+		administrador2= administrador.PesquisarAdministardor(4, administradordao);
+		
+		assertTrue(administrador.ExcluirAdministador(administrador2, administradordao));
 	}
 }
 

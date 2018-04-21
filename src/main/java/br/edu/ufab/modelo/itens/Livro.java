@@ -1,6 +1,13 @@
 package br.edu.ufab.modelo.itens;
-
-public class Livro extends Impressos implements ItemIF{
+/**
+ * Classe responsável por recuperar o ISBN, os autores, o ano de publicação,
+ * a area de conhecimento e o tema de um livro.
+ * 
+ * Essa classe herda dados de Impressos.
+ * 
+ * @author Taynar Sousa e Murilo Gustavo
+ * */
+public class Livro extends Impressos {
 	private String ISBN;
 	private String autores;
 	private int ano_publicacao;

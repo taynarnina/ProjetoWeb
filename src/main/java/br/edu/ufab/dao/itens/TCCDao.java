@@ -9,18 +9,36 @@ import java.util.List;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import br.edu.ufab.jdbc.ConnectionFactory;
 import br.edu.ufab.modelo.itens.Acervo;
 import br.edu.ufab.modelo.itens.TCC;
 import br.edu.ufab.modelo.itens.TrabalhoAcademico;
-
+/**
+ * Classe que faz a relação entre TCC e a tabela tcc do banco de dados.
+ * Essa classe herda os métodos de ItemDaoIF.
+ * 
+ * @author Taynar Sousa e Murilo Gustavo
+ * */
 public class TCCDao implements ItemDaoIF{
 
 	private Connection connection;
 	private static final Logger logger = LogManager.getLogger(TCCDao.class);
 	
+	/**
+	 * Método que vai abrir a conexão com o banco de dados
+	 * @param connection
+	 * */
+	
 	public TCCDao(Connection connection) {
 		this.connection = connection;
 	}
+	
+	/**
+	 * Método que vai receber um tipo de item do acervo que é o tcc e vai cadastrar no
+	 * banco de dados.
+	 * 
+	 * @param  o
+	 * */
 	
 	@Override
 	public boolean adiciona(Object o) throws SQLException {
@@ -35,7 +53,7 @@ public class TCCDao implements ItemDaoIF{
 			stmt.setString(4, ((TCC) o).getOrientador());
 			stmt.setInt(5, ((TCC) o).getAno_defesa());
 			stmt.setString(6, ((TrabalhoAcademico) o).getLocal());
-			
+			logger.info("Tcc inserido com sucesso!!");
 			stmt.execute();
 
 			return true;
@@ -45,15 +63,28 @@ public class TCCDao implements ItemDaoIF{
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("conexão encerrada");
 		}
 		return false;
 	}
 	
+	/**
+	 * Método que vai listar todos os tcc's cadastrados
+	 * 
+	 * */
+	
 	@Override
 	public List<Object> lista(){
+		logger.info("gerando lista...");
 		return null;
 		
 	}
+	
+	/**
+	 * Método que vai receber o id de um tcc e irá retornar os seus dados.	 
+	 * 
+	 * @param  id
+	 * */
 	
 	@Override
 	public TCC pesquisa(int id) throws SQLException {
@@ -79,7 +110,7 @@ public class TCCDao implements ItemDaoIF{
 			}
 			
 			rs.close();
-			
+			logger.info("Pesquisa concluída com sucesso!");
 			return	tcc;
 			
 		} catch (SQLException e){
@@ -87,9 +118,17 @@ public class TCCDao implements ItemDaoIF{
 		} finally {
 			stmt.close();
 			connection.close();
+			logger.info("conexão encerrada");
 		}
 		return null;
 	}
+	
+	/**
+	 * Método que vai receber um tipo de item do acervo que é o tcc e vai realizar a alteração de 
+	 * seus dados no banco de dados. 
+	 * 
+	 * @param  o
+	 * */
 	
 	@Override
 	public boolean altera(Object o) throws SQLException {
@@ -106,7 +145,7 @@ public class TCCDao implements ItemDaoIF{
 			stmt.setString(6, ((TrabalhoAcademico) o).getLocal());
 			stmt.setInt(7, ((Acervo) o).getId());
 			stmt.execute();
-
+			logger.info("Alterações concluídas com sucesso!!");
 			return true;
 			
 		} catch (SQLException e){
@@ -114,19 +153,28 @@ public class TCCDao implements ItemDaoIF{
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("conexão encerrada");
 		}
 		return false;
 	}
+	
+	/**
+	 * Método que vai receber um tipo de item do acervo que é o tcc e 
+	 * vai removê-lo do  banco de dados.
+	 * 
+	 * @param  o
+	 * */
 	
 	@Override
 	public boolean remove(Object o) throws SQLException {
 		String sql = "delete from tcc where idtcc=?";
 		PreparedStatement stmt = null;
 		try {
+			connection = ConnectionFactory.getConnection();
 			stmt = connection.prepareStatement(sql);
 			stmt.setInt(1, ((Acervo) o).getId());
 			stmt.execute();
-			
+			logger.info("Remoção de tcc concluído!");
 			return true;
 			
 		} catch (SQLException e){
@@ -134,6 +182,7 @@ public class TCCDao implements ItemDaoIF{
 		} finally {
 			stmt.close();
 			connection.close();	
+			logger.info("Conexão encerrada!");
 		}
 		return false;
 	}
