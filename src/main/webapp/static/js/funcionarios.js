@@ -16,19 +16,19 @@ var limparModal = function(){
 
 var aplicatListenerBtnSalvar = function(){
 	$('#btn-salvar').on('click', function(){
-		var url = 'curso';
-		var dadosCursos = $('#form-curso').serialize();
+		var url = 'funcionario';
+		var dadosFuncionarios = $('#form-funcionario').serialize();
 		
-		$.post(url, dadosCursos)
+		$.post(url, dadosFuncionarios)
 			.done(function(pagina){	
-				$('#secao-cursos').html(pagina)
+				$('#secao-funcionarios').html(pagina)
 				aplicarListeners();
 			})
 			.fail(function(){
 				alert('Erro ao salvar!');	
 			})
 			.always(function(){
-				$('#modal-curso').modal('hide');
+				$('#modal-funcionario').modal('hide');
 			});
 	});
 }

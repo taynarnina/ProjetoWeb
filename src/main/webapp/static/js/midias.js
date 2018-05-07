@@ -1,4 +1,4 @@
-$(document).ready(function(){	
+$(document).ready(function(){
 	
 	aplicarListeners();
 	
@@ -8,61 +8,59 @@ $(document).ready(function(){
 
 var limparModal = function(){
 	$('#id').val('');
-	$('#nome').val('');
-	$('#codigo').val('');
-	$('#area').val('');
+	$('#titulo').val('');
 	$('#tipo').val('');
+	$('#data').val('');
 };
 
 var aplicatListenerBtnSalvar = function(){
 	$('#btn-salvar').on('click', function(){
-		var url = 'curso';
-		var dadosCursos = $('#form-curso').serialize();
+		var url = 'midia';
+		var dadosMidias= $('#form-midia').serialize();
 		
-		$.post(url, dadosCursos)
+		$.post(url, dadosMidias)
 			.done(function(pagina){	
-				$('#secao-cursos').html(pagina)
+				$('#secao-midias').html(pagina)
 				aplicarListeners();
 			})
 			.fail(function(){
 				alert('Erro ao salvar!');	
 			})
 			.always(function(){
-				$('#modal-curso').modal('hide');
+				$('#modal-midia').modal('hide');
 			});
 	});
 }
 
 var aplicarListeners = function(){
 	
-	$('#modal-curso').on('hide.bs.modal', limparModal);
+	$('#modal-midia').on('hide.bs.modal', limparModal);
 	
 	$('.btn-editar').on('click', function(){
 		var id = $(this).parents('tr').data('id');
-		var url = 'curso/'+id;
+		var url = 'midia/'+id;
 		
 		$.get(url)
-			.done(function(curso){
-				$('#id').val(curso.id);
-				$('#nome').val(curso.nome);
-				$('#codigo').val(curso.codigo);
-				$('#area').val(curso.area);
-				$('#tipo').val(curso.tipo);
+			.done(function(midia){
+				$('#id').val(midia.id);
+				$('#titulo').val(midia.titulo);
+				$('#tipo').val(midia.tipo);
+				$('#data').val(midia.data);
 				
-				$('#modal-curso').modal('show');
+				$('#modal-midia').modal('show');
 			});
 	});
 	
 	$('.btn-deletar').on('click', function(){
 		var id = $(this).parents('tr').data('id');
-		var cursos = $('#quantidade-cursos').text();
+		var midias = $('#quantidade-midias').text();
 		
 		$.ajax({
-			url : "curso/"+id,
+			url : "midia/"+id,
 			type: 'DELETE',
 		    success: function(result) {
 		    	$('tr[data-id="'+id+'"]').remove();
-		    	$('#quantidade-cursos').text(cursos - 1);
+		    	$('#quantidade-midias').text(midias - 1);
 		    }
 	    });
 	});

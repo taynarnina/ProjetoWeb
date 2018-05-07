@@ -15,59 +15,53 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.edu.ufab.exception.Exception;
-import br.edu.ufab.model.entities.Curso;
-import br.edu.ufab.model.enums.AreaDeCurso;
-import br.edu.ufab.model.enums.TipoDeCurso;
-import br.edu.ufab.model.repositories.CursoRepository;
+import br.edu.ufab.model.entities.Autor;
+import br.edu.ufab.model.repositories.AutorRepository;
 
 @Controller
-@RequestMapping("/curso")
-public class CursoController {
+@RequestMapping("/autor")
+public class AutorController {
 
-	@Autowired private CursoRepository cursoRepository;
+	@Autowired private AutorRepository autorRepository;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String listaCursos(Model model) {
-		Iterable<Curso> cursos = cursoRepository.findAll();
-		model.addAttribute("titulo", "Lista de Cursos");
-		model.addAttribute("cursos",cursos);
-		model.addAttribute("areas",AreaDeCurso.values());
-		model.addAttribute("tipos",TipoDeCurso.values());
-		return "curso/lista";
+	public String listaAutores(Model model) {
+		Iterable<Autor> autores = autorRepository.findAll();
+		model.addAttribute("titulo", "Lista de Autores");
+		model.addAttribute("autores",autores);
+		return "autor/lista";
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public String salvarCurso(
-			@Valid @ModelAttribute Curso curso,
+	public String salvarAutor(
+			@Valid @ModelAttribute Autor autor,
 			BindingResult bindingResult,
 			Model model) {
 		
 		if ( bindingResult.hasErrors() ) {
 			throw new Exception();
 		} else {
-			cursoRepository.save(curso);
+			autorRepository.save(autor);
 		}
 		
-		model.addAttribute("cursos",cursoRepository.findAll());
-		model.addAttribute("areas",AreaDeCurso.values());
-		model.addAttribute("tipos",TipoDeCurso.values());
-		return "curso/tabela-cursos";
+		model.addAttribute("autores",autorRepository.findAll());
+		return "autor/tabela-autores";
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
-	public ResponseEntity<String> deletarCurso(@PathVariable Long id) {
+	public ResponseEntity<String> deletarAutor(@PathVariable Long id) {
 		try {
-			cursoRepository.delete(id);
+			autorRepository.delete(id);
 			return new ResponseEntity<String>(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@RequestMapping(method=RequestMethod.GET, value="/{id}")
 	@ResponseBody
-	public Curso buscarCurso(@PathVariable Long id){
-		Curso curso = cursoRepository.findOne(id);
-		return curso;
+	public Autor buscarAutor(@PathVariable Long id){
+		Autor autor = autorRepository.findOne(id);
+		return autor;
 	}
 }

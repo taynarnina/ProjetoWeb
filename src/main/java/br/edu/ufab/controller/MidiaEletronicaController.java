@@ -15,59 +15,56 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.edu.ufab.exception.Exception;
-import br.edu.ufab.model.entities.Curso;
-import br.edu.ufab.model.enums.AreaDeCurso;
-import br.edu.ufab.model.enums.TipoDeCurso;
-import br.edu.ufab.model.repositories.CursoRepository;
+import br.edu.ufab.model.entities.itens.MidiaEletronica;
+import br.edu.ufab.model.enums.TipoDeMidia;
+import br.edu.ufab.model.repositories.itens.MidiaEletronicaRepository;
 
 @Controller
-@RequestMapping("/curso")
-public class CursoController {
-
-	@Autowired private CursoRepository cursoRepository;
+@RequestMapping("/midia")
+public class MidiaEletronicaController {
+	
+	@Autowired private MidiaEletronicaRepository midiaEletronicaRepository;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String listaCursos(Model model) {
-		Iterable<Curso> cursos = cursoRepository.findAll();
-		model.addAttribute("titulo", "Lista de Cursos");
-		model.addAttribute("cursos",cursos);
-		model.addAttribute("areas",AreaDeCurso.values());
-		model.addAttribute("tipos",TipoDeCurso.values());
-		return "curso/lista";
+	public String listaMidias(Model model) {
+		Iterable<MidiaEletronica> midias = midiaEletronicaRepository.findAll();
+		model.addAttribute("titulo", "Lista de Midias Eletronicas");
+		model.addAttribute("midias",midias);
+		model.addAttribute("tipos",TipoDeMidia.values());
+		return "midia/lista";
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public String salvarCurso(
-			@Valid @ModelAttribute Curso curso,
+	public String salvarMidia(
+			@Valid @ModelAttribute MidiaEletronica midiaEletronica,
 			BindingResult bindingResult,
 			Model model) {
 		
 		if ( bindingResult.hasErrors() ) {
 			throw new Exception();
 		} else {
-			cursoRepository.save(curso);
+			midiaEletronicaRepository.save(midiaEletronica);
 		}
 		
-		model.addAttribute("cursos",cursoRepository.findAll());
-		model.addAttribute("areas",AreaDeCurso.values());
-		model.addAttribute("tipos",TipoDeCurso.values());
-		return "curso/tabela-cursos";
+		model.addAttribute("midias",midiaEletronicaRepository.findAll());
+		model.addAttribute("tipos",TipoDeMidia.values());
+		return "midia/tabela-midias";
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
-	public ResponseEntity<String> deletarCurso(@PathVariable Long id) {
+	public ResponseEntity<String> deletarMidia(@PathVariable Long id) {
 		try {
-			cursoRepository.delete(id);
+			midiaEletronicaRepository.delete(id);
 			return new ResponseEntity<String>(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@RequestMapping(method=RequestMethod.GET, value="/{id}")
 	@ResponseBody
-	public Curso buscarCurso(@PathVariable Long id){
-		Curso curso = cursoRepository.findOne(id);
-		return curso;
+	public MidiaEletronica buscarMidia(@PathVariable Long id){
+		MidiaEletronica midia = midiaEletronicaRepository.findOne(id);
+		return midia;
 	}
 }
