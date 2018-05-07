@@ -1,4 +1,4 @@
-$(document).ready(function(){	
+$(document).ready(function(){
 	
 	aplicarListeners();
 	
@@ -9,60 +9,54 @@ $(document).ready(function(){
 var limparModal = function(){
 	$('#id').val('');
 	$('#nome').val('');
-	$('#codigo').val('');
-	$('#area').val('');
-	$('#tipo').val('');
 };
 
 var aplicatListenerBtnSalvar = function(){
 	$('#btn-salvar').on('click', function(){
-		var url = 'curso';
-		var dadosCursos = $('#form-curso').serialize();
+		var url = 'autor';
+		var dadosAutores= $('#form-autor').serialize();
 		
-		$.post(url, dadosCursos)
+		$.post(url, dadosAutores)
 			.done(function(pagina){	
-				$('#secao-cursos').html(pagina)
+				$('#secao-autores').html(pagina)
 				aplicarListeners();
 			})
 			.fail(function(){
 				alert('Erro ao salvar!');	
 			})
 			.always(function(){
-				$('#modal-curso').modal('hide');
+				$('#modal-autor').modal('hide');
 			});
 	});
 }
 
 var aplicarListeners = function(){
 	
-	$('#modal-curso').on('hide.bs.modal', limparModal);
+	$('#modal-autor').on('hide.bs.modal', limparModal);
 	
 	$('.btn-editar').on('click', function(){
 		var id = $(this).parents('tr').data('id');
-		var url = 'curso/'+id;
+		var url = 'autor/'+id;
 		
 		$.get(url)
-			.done(function(curso){
-				$('#id').val(curso.id);
-				$('#nome').val(curso.nome);
-				$('#codigo').val(curso.codigo);
-				$('#area').val(curso.area);
-				$('#tipo').val(curso.tipo);
+			.done(function(autor){
+				$('#id').val(autor.id);
+				$('#nome').val(autor.nome);
 				
-				$('#modal-curso').modal('show');
+				$('#modal-autor').modal('show');
 			});
 	});
 	
 	$('.btn-deletar').on('click', function(){
 		var id = $(this).parents('tr').data('id');
-		var cursos = $('#quantidade-cursos').text();
+		var autores = $('#quantidade-autores').text();
 		
 		$.ajax({
-			url : "curso/"+id,
+			url : "autor/"+id,
 			type: 'DELETE',
 		    success: function(result) {
 		    	$('tr[data-id="'+id+'"]').remove();
-		    	$('#quantidade-cursos').text(cursos - 1);
+		    	$('#quantidade-autores').text(autores - 1);
 		    }
 	    });
 	});

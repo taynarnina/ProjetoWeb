@@ -15,59 +15,53 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.edu.ufab.exception.Exception;
-import br.edu.ufab.model.entities.Curso;
-import br.edu.ufab.model.enums.AreaDeCurso;
-import br.edu.ufab.model.enums.TipoDeCurso;
-import br.edu.ufab.model.repositories.CursoRepository;
+import br.edu.ufab.model.entities.itens.Jornal;
+import br.edu.ufab.model.repositories.itens.JornalRepository;
 
 @Controller
-@RequestMapping("/curso")
-public class CursoController {
+@RequestMapping("/jornal")
+public class JornalController {
 
-	@Autowired private CursoRepository cursoRepository;
+	@Autowired private JornalRepository jornalRepository;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String listaCursos(Model model) {
-		Iterable<Curso> cursos = cursoRepository.findAll();
-		model.addAttribute("titulo", "Lista de Cursos");
-		model.addAttribute("cursos",cursos);
-		model.addAttribute("areas",AreaDeCurso.values());
-		model.addAttribute("tipos",TipoDeCurso.values());
-		return "curso/lista";
+	public String listaJornais(Model model) {
+		Iterable<Jornal> jornais = jornalRepository.findAll();
+		model.addAttribute("titulo", "Lista de Jornais");
+		model.addAttribute("jornais",jornais);
+		return "jornal/lista";
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public String salvarCurso(
-			@Valid @ModelAttribute Curso curso,
+	public String salvarJornal(
+			@Valid @ModelAttribute Jornal jornal,
 			BindingResult bindingResult,
 			Model model) {
 		
 		if ( bindingResult.hasErrors() ) {
 			throw new Exception();
 		} else {
-			cursoRepository.save(curso);
+			jornalRepository.save(jornal);
 		}
 		
-		model.addAttribute("cursos",cursoRepository.findAll());
-		model.addAttribute("areas",AreaDeCurso.values());
-		model.addAttribute("tipos",TipoDeCurso.values());
-		return "curso/tabela-cursos";
+		model.addAttribute("jornais",jornalRepository.findAll());
+		return "jornal/tabela-jornais";
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
-	public ResponseEntity<String> deletarCurso(@PathVariable Long id) {
+	public ResponseEntity<String> deletarJornal(@PathVariable Long id) {
 		try {
-			cursoRepository.delete(id);
+			jornalRepository.delete(id);
 			return new ResponseEntity<String>(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@RequestMapping(method=RequestMethod.GET, value="/{id}")
 	@ResponseBody
-	public Curso buscarCurso(@PathVariable Long id){
-		Curso curso = cursoRepository.findOne(id);
-		return curso;
+	public Jornal buscarJornal(@PathVariable Long id){
+		Jornal jornal = jornalRepository.findOne(id);
+		return jornal;
 	}
 }

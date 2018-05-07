@@ -15,59 +15,56 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.edu.ufab.exception.Exception;
-import br.edu.ufab.model.entities.Curso;
-import br.edu.ufab.model.enums.AreaDeCurso;
-import br.edu.ufab.model.enums.TipoDeCurso;
-import br.edu.ufab.model.repositories.CursoRepository;
+import br.edu.ufab.model.entities.pessoas.Funcionario;
+import br.edu.ufab.model.enums.NivelDeFuncionario;
+import br.edu.ufab.model.repositories.pessoas.FuncionarioRepository;
 
 @Controller
-@RequestMapping("/curso")
-public class CursoController {
+@RequestMapping("/funcionario")
+public class FuncionarioController {
 
-	@Autowired private CursoRepository cursoRepository;
+	@Autowired private FuncionarioRepository funcionarioRepository;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String listaCursos(Model model) {
-		Iterable<Curso> cursos = cursoRepository.findAll();
-		model.addAttribute("titulo", "Lista de Cursos");
-		model.addAttribute("cursos",cursos);
-		model.addAttribute("areas",AreaDeCurso.values());
-		model.addAttribute("tipos",TipoDeCurso.values());
-		return "curso/lista";
+	public String listaFuncionario(Model model) {
+		Iterable<Funcionario> funcionarios = funcionarioRepository.findAll();
+		model.addAttribute("titulo", "Lista de Funcionarios");
+		model.addAttribute("funcionarios",funcionarios);
+		model.addAttribute("niveis",NivelDeFuncionario.values());
+		return "funcionario/lista";
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public String salvarCurso(
-			@Valid @ModelAttribute Curso curso,
+	public String salvarFuncionario(
+			@Valid @ModelAttribute Funcionario funcionario,
 			BindingResult bindingResult,
 			Model model) {
 		
 		if ( bindingResult.hasErrors() ) {
 			throw new Exception();
 		} else {
-			cursoRepository.save(curso);
+			funcionarioRepository.save(funcionario);
 		}
 		
-		model.addAttribute("cursos",cursoRepository.findAll());
-		model.addAttribute("areas",AreaDeCurso.values());
-		model.addAttribute("tipos",TipoDeCurso.values());
-		return "curso/tabela-cursos";
+		model.addAttribute("funcionarios",funcionarioRepository.findAll());
+		model.addAttribute("niveis",NivelDeFuncionario.values());
+		return "funcionario/tabela-funcionarios";
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
-	public ResponseEntity<String> deletarCurso(@PathVariable Long id) {
+	public ResponseEntity<String> deletarFuncionario(@PathVariable Long id) {
 		try {
-			cursoRepository.delete(id);
+			funcionarioRepository.delete(id);
 			return new ResponseEntity<String>(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@RequestMapping(method=RequestMethod.GET, value="/{id}")
 	@ResponseBody
-	public Curso buscarCurso(@PathVariable Long id){
-		Curso curso = cursoRepository.findOne(id);
-		return curso;
+	public Funcionario buscarFuncionario(@PathVariable Long id){
+		Funcionario funcionario = funcionarioRepository.findOne(id);
+		return funcionario;
 	}
 }
