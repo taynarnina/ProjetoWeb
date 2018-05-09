@@ -10,22 +10,24 @@
 	<thead>
 		<tr>
 			<td style="width: 5%">#</td>
-			<td style="width: 25%">Nome</td>
-			<td style="width: 10%">Codigo</td>
-			<td style="width: 20%">Area</td>
-			<td style="width: 20%">Tipo</td>
+			<td style="width: 25%">Titulo</td>
+			<td style="width: 15%">Edicao</td>
+			<td style="width: 15%">Editora</td>
+			<td style="width: 10%">N° de Paginas</td>
+			<td style="width: 10%">Data</td>
 			<td style="width: 10%">Editar</td>
 			<td style="width: 10%">Deletar</td>
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach items="${cursos}" var="curso">
-			<tr data-id="${curso.id}">
-				<td>${curso.id}</td>
-				<td>${curso.nome}</td>
-				<td>${curso.codigo}</td>
-				<td>${curso.area}</td>
-				<td>${curso.tipo}</td>
+		<c:forEach items="${jornais}" var="jornal">
+			<tr data-id="${jornal.id}">
+				<td>${jornal.id}</td>
+				<td>${jornal.titulo}</td>
+				<td>${jornal.edicao}</td>
+				<td>${jornal.editora}</td>
+				<td>${jornal.numpaginas}</td>
+				<td>${jornal.data}</td>
 				<td><button type="button" class="btn btn-warning btn-editar">Editar</button></td>
 				<td><button type="button" class="btn btn-danger btn-deletar">Deletar</button></td>
 			</tr>
@@ -33,12 +35,12 @@
 	</tbody>
 	<tfoot>
 		<tr>
-			<td colspan="7">Cursos cadastrados: <span id="quantidade-cursos">${cursos.size()}</span></td>
+			<td colspan="8">Jornais cadastrados: <span id="quantidade-jornais">${jornais.size()}</span></td>
 		</tr>
 		<tr>
-			<td colspan="7">
+			<td colspan="8">
 				<button type="button" class="btn btn-primary" data-toggle="modal"
-					data-target="#modal-curso">Cadastrar Curso</button>
+					data-target="#modal-jornal">Cadastrar Jornal</button>
 			</td>
 		</tr>
 	</tfoot>

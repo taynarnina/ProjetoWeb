@@ -15,59 +15,53 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.edu.ufab.exception.Exception;
-import br.edu.ufab.model.entities.Curso;
-import br.edu.ufab.model.enums.AreaDeCurso;
-import br.edu.ufab.model.enums.TipoDeCurso;
-import br.edu.ufab.model.repositories.CursoRepository;
+import br.edu.ufab.model.entities.Orientador;
+import br.edu.ufab.model.repositories.OrientadorRepository;
 
 @Controller
-@RequestMapping("/curso")
-public class CursoController {
+@RequestMapping("/orientador")
+public class OrientadorController {
 
-	@Autowired private CursoRepository cursoRepository;
+	@Autowired private OrientadorRepository orientadorRepository;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String listaCursos(Model model) {
-		Iterable<Curso> cursos = cursoRepository.findAll();
-		model.addAttribute("titulo", "Lista de Cursos");
-		model.addAttribute("cursos",cursos);
-		model.addAttribute("areas",AreaDeCurso.values());
-		model.addAttribute("tipos",TipoDeCurso.values());
-		return "curso/lista";
+	public String listaOrientadores(Model model) {
+		Iterable<Orientador> orientadores = orientadorRepository.findAll();
+		model.addAttribute("titulo", "Lista de Orientadores");
+		model.addAttribute("orientadores",orientadores);
+		return "orientador/lista";
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public String salvarCurso(
-			@Valid @ModelAttribute Curso curso,
+	public String salvarOrientador(
+			@Valid @ModelAttribute Orientador orientador,
 			BindingResult bindingResult,
 			Model model) {
 		
 		if ( bindingResult.hasErrors() ) {
 			throw new Exception();
 		} else {
-			cursoRepository.save(curso);
+			orientadorRepository.save(orientador);
 		}
 		
-		model.addAttribute("cursos",cursoRepository.findAll());
-		model.addAttribute("areas",AreaDeCurso.values());
-		model.addAttribute("tipos",TipoDeCurso.values());
-		return "curso/tabela-cursos";
+		model.addAttribute("orientadores",orientadorRepository.findAll());
+		return "orientador/tabela-orientadores";
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
-	public ResponseEntity<String> deletarCurso(@PathVariable Long id) {
+	public ResponseEntity<String> deletarOrientador(@PathVariable Long id) {
 		try {
-			cursoRepository.delete(id);
+			orientadorRepository.delete(id);
 			return new ResponseEntity<String>(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@RequestMapping(method=RequestMethod.GET, value="/{id}")
 	@ResponseBody
-	public Curso buscarCurso(@PathVariable Long id){
-		Curso curso = cursoRepository.findOne(id);
-		return curso;
+	public Orientador buscarOrientador(@PathVariable Long id){
+		Orientador orientador = orientadorRepository.findOne(id);
+		return orientador;
 	}
 }

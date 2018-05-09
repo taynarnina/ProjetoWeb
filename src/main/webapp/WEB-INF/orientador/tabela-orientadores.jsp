@@ -9,23 +9,17 @@
 	class="table table-hover table-condensed table-striped table-bordered">
 	<thead>
 		<tr>
-			<td style="width: 5%">#</td>
-			<td style="width: 25%">Nome</td>
-			<td style="width: 10%">Codigo</td>
-			<td style="width: 20%">Area</td>
-			<td style="width: 20%">Tipo</td>
-			<td style="width: 10%">Editar</td>
-			<td style="width: 10%">Deletar</td>
+			<td style="width: 10%">#</td>
+			<td style="width: 60%">Nome</td>
+			<td style="width: 15%">Editar</td>
+			<td style="width: 15%">Deletar</td>
 		</tr>
 	</thead>
 	<tbody>
-		<c:forEach items="${cursos}" var="curso">
-			<tr data-id="${curso.id}">
-				<td>${curso.id}</td>
-				<td>${curso.nome}</td>
-				<td>${curso.codigo}</td>
-				<td>${curso.area}</td>
-				<td>${curso.tipo}</td>
+		<c:forEach items="${orientadores}" var="orientador">
+			<tr data-id="${orientador.id}">
+				<td>${orientador.id}</td>
+				<td>${orientador.nome}</td>
 				<td><button type="button" class="btn btn-warning btn-editar">Editar</button></td>
 				<td><button type="button" class="btn btn-danger btn-deletar">Deletar</button></td>
 			</tr>
@@ -33,12 +27,12 @@
 	</tbody>
 	<tfoot>
 		<tr>
-			<td colspan="7">Cursos cadastrados: <span id="quantidade-cursos">${cursos.size()}</span></td>
+			<td colspan="7">Orientadores cadastrados: <span id="quantidade-orientadores">${orientadores.size()}</span></td>
 		</tr>
 		<tr>
 			<td colspan="7">
 				<button type="button" class="btn btn-primary" data-toggle="modal"
-					data-target="#modal-curso">Cadastrar Curso</button>
+					data-target="#modal-orientador">Cadastrar Orientador</button>
 			</td>
 		</tr>
 	</tfoot>
