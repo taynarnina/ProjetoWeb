@@ -8,10 +8,17 @@ $(document).ready(function(){
 
 var limparModal = function(){
 	$('#id').val('');
+	$('#cpf').val('');
+	$('#rg').val('');
 	$('#nome').val('');
-	$('#codigo').val('');
-	$('#area').val('');
-	$('#tipo').val('');
+	$('#naturalidade').val('');
+	$('#endereco').val('');
+	$('#telefone').val('');
+	$('#datanascimento').val('');
+	$('#senha').val('');
+	$('#email').val('');
+	$('#usuario').val('');
+	$('#nivel').val('');
 };
 
 var aplicatListenerBtnSalvar = function(){
@@ -35,34 +42,41 @@ var aplicatListenerBtnSalvar = function(){
 
 var aplicarListeners = function(){
 	
-	$('#modal-curso').on('hide.bs.modal', limparModal);
+	$('#modal-funcionario').on('hide.bs.modal', limparModal);
 	
 	$('.btn-editar').on('click', function(){
 		var id = $(this).parents('tr').data('id');
-		var url = 'curso/'+id;
+		var url = 'funcionario/'+id;
 		
 		$.get(url)
-			.done(function(curso){
-				$('#id').val(curso.id);
-				$('#nome').val(curso.nome);
-				$('#codigo').val(curso.codigo);
-				$('#area').val(curso.area);
-				$('#tipo').val(curso.tipo);
+			.done(function(funcionario){
+				$('#id').val(funcionario.id);
+				$('#cpf').val(funcionario.cpf);
+				$('#rg').val(funcionario.rg);
+				$('#nome').val(funcionario.nome);
+				$('#naturalidade').val(funcionario.naturalidade);
+				$('#endereco').val(funcionario.endereco);
+				$('#telefone').val(funcionario.telefone);
+				$('#datanascimento').val(funcionario.datanascimento);
+				$('#senha').val(funcionario.senha);
+				$('#email').val(funcionario.email);
+				$('#usuario').val(funcionario.usuario);
+				$('#nivel').val(funcionario.nivel);
 				
-				$('#modal-curso').modal('show');
+				$('#modal-funcionario').modal('show');
 			});
 	});
 	
 	$('.btn-deletar').on('click', function(){
 		var id = $(this).parents('tr').data('id');
-		var cursos = $('#quantidade-cursos').text();
+		var funcionarios = $('#quantidade-funcionarios').text();
 		
 		$.ajax({
-			url : "curso/"+id,
+			url : "funcionario/"+id,
 			type: 'DELETE',
 		    success: function(result) {
 		    	$('tr[data-id="'+id+'"]').remove();
-		    	$('#quantidade-cursos').text(cursos - 1);
+		    	$('#quantidade-funcionarios').text(funcionarios - 1);
 		    }
 	    });
 	});

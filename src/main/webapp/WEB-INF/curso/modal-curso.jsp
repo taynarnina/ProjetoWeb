@@ -32,7 +32,18 @@
 					<label for="tipo">Tipo: </label>
 					<select id="tipo" name="tipo" class="form-control">
 						<c:forEach items="${tipos}" var="tipo">
-							<option value="${tipo}">${tipo}</option>
+							<c:if test="${tipo == 'G'}">
+								<option value="${tipo}">GRADUACAO</option>
+							</c:if>
+							<c:if test="${tipo == 'E'}">
+								<option value="${tipo}">ESPECIALIZACAO</option>
+							</c:if>
+							<c:if test="${tipo == 'M'}">
+								<option value="${tipo}">MESTRADO</option>
+							</c:if>
+							<c:if test="${tipo == 'D'}">
+								<option value="${tipo}">DOUTORADO</option>
+							</c:if>
 						</c:forEach>
 					</select>
 					

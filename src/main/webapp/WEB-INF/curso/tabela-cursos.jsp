@@ -25,7 +25,18 @@
 				<td>${curso.nome}</td>
 				<td>${curso.codigo}</td>
 				<td>${curso.area}</td>
-				<td>${curso.tipo}</td>
+				<c:if test="${curso.tipo == 'G'}">
+					<td>GRADUACAO</td>
+				</c:if>
+				<c:if test="${curso.tipo == 'E'}">
+					<td>ESPECIALIZACAO</td>
+				</c:if>
+				<c:if test="${curso.tipo == 'M'}">
+					<td>MESTRADO</td>
+				</c:if>
+				<c:if test="${curso.tipo == 'D'}">
+					<td>DOUTORADO</td>
+				</c:if>
 				<td><button type="button" class="btn btn-warning btn-editar">Editar</button></td>
 				<td><button type="button" class="btn btn-danger btn-deletar">Deletar</button></td>
 			</tr>
