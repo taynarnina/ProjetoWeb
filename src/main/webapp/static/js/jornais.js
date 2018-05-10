@@ -10,7 +10,7 @@ var limparModal = function(){
 	$('#id').val('');
 	$('#titulo').val('');
 	$('#edicao').val('');
-	$('#editora').val('');
+	$('#editora option').attr('selected', false);
 	$('#numpaginas').val('');
 	$('#data').val('');
 };
@@ -43,11 +43,14 @@ var aplicarListeners = function(){
 		var url = 'jornal/'+id;
 		
 		$.get(url)
-			.done(function(jornal){
+			.success(function(jornal){
 				$('#id').val(jornal.id);
 				$('#titulo').val(jornal.titulo);
 				$('#edicao').val(jornal.edicao);
-				$('#editora').val(jornal.editora);
+				
+				var id = jornal.editora.id;
+				$('#editora option[value='+id+']').attr('selected', true);
+				
 				$('#numpaginas').val(jornal.numpaginas);
 				$('#data').val(jornal.data);
 				
@@ -62,7 +65,7 @@ var aplicarListeners = function(){
 		$.ajax({
 			url : "jornal/"+id,
 			type: 'DELETE',
-		    success: function(result) {
+		    success: function() {
 		    	$('tr[data-id="'+id+'"]').remove();
 		    	$('#quantidade-jornais').text(jornais - 1);
 		    }

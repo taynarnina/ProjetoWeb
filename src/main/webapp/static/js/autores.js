@@ -39,7 +39,7 @@ var aplicarListeners = function(){
 		var url = 'autor/'+id;
 		
 		$.get(url)
-			.done(function(autor){
+			.success(function(autor){
 				$('#id').val(autor.id);
 				$('#nome').val(autor.nome);
 				
@@ -54,7 +54,7 @@ var aplicarListeners = function(){
 		$.ajax({
 			url : "autor/"+id,
 			type: 'DELETE',
-		    success: function(result) {
+		    success: function() {
 		    	$('tr[data-id="'+id+'"]').remove();
 		    	$('#quantidade-autores').text(autores - 1);
 		    }

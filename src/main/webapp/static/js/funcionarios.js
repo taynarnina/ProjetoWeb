@@ -49,7 +49,7 @@ var aplicarListeners = function(){
 		var url = 'funcionario/'+id;
 		
 		$.get(url)
-			.done(function(funcionario){
+			.success(function(funcionario){
 				$('#id').val(funcionario.id);
 				$('#cpf').val(funcionario.cpf);
 				$('#rg').val(funcionario.rg);
@@ -74,7 +74,7 @@ var aplicarListeners = function(){
 		$.ajax({
 			url : "funcionario/"+id,
 			type: 'DELETE',
-		    success: function(result) {
+		    success: function() {
 		    	$('tr[data-id="'+id+'"]').remove();
 		    	$('#quantidade-funcionarios').text(funcionarios - 1);
 		    }

@@ -23,7 +23,11 @@
 					<input id="edicao" name="edicao" class="form-control">
 					
 					<label for="editora">Editora: </label>
-					<input id="editora" name="editora" class="form-control">
+					<select id="editora" name="editora" class="form-control">
+						<c:forEach items="${editoras}" var="editora">
+							<option value="${editora.id}">${editora.nome}</option>
+						</c:forEach>
+					</select>
 					
 					<label for="numpaginas">N° de Paginas: </label>
 					<input id="numpaginas" name="numpaginas" class="form-control">

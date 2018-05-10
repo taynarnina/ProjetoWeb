@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,13 +17,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.edu.ufab.exception.Exception;
+import br.edu.ufab.model.entities.Editora;
 import br.edu.ufab.model.entities.itens.Jornal;
+import br.edu.ufab.model.repositories.EditoraRepository;
 import br.edu.ufab.model.repositories.itens.JornalRepository;
+import br.edu.ufab.propertyeditors.EditoraPropertyEditor;
 
 @Controller
 @RequestMapping("/jornal")
 public class JornalController {
 
+	@Autowired private EditoraPropertyEditor editoraPropertyEditor;
+	@Autowired private EditoraRepository editoraRepository;
 	@Autowired private JornalRepository jornalRepository;
 	
 	@RequestMapping(method=RequestMethod.GET)
@@ -29,6 +36,7 @@ public class JornalController {
 		Iterable<Jornal> jornais = jornalRepository.findAll();
 		model.addAttribute("titulo", "Lista de Jornais");
 		model.addAttribute("jornais",jornais);
+		model.addAttribute("editoras",editoraRepository.findAll());
 		return "jornal/lista";
 	}
 	
@@ -45,6 +53,7 @@ public class JornalController {
 		}
 		
 		model.addAttribute("jornais",jornalRepository.findAll());
+		model.addAttribute("editoras",editoraRepository.findAll());
 		return "jornal/tabela-jornais";
 	}
 	
@@ -63,5 +72,10 @@ public class JornalController {
 	public Jornal buscarJornal(@PathVariable Long id){
 		Jornal jornal = jornalRepository.findOne(id);
 		return jornal;
+	}
+	
+	@InitBinder
+	public void initBinder(WebDataBinder webDataBinder){
+		webDataBinder.registerCustomEditor(Editora.class, editoraPropertyEditor);
 	}
 }

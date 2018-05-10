@@ -25,7 +25,7 @@
 				<td>${revista.id}</td>
 				<td>${revista.titulo}</td>
 				<td>${revista.edicao}</td>
-				<td>${revista.editora}</td>
+				<td>${revista.editora.nome}</td>
 				<td>${revista.numpaginas}</td>
 				<td>${revista.datapublicacao}</td>
 				<td><button type="button" class="btn btn-warning btn-editar">Editar</button></td>

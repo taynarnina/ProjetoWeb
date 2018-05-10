@@ -39,7 +39,7 @@ var aplicarListeners = function(){
 		var url = 'orientador/'+id;
 		
 		$.get(url)
-			.done(function(orientador){
+			.success(function(orientador){
 				$('#id').val(orientador.id);
 				$('#nome').val(orientador.nome);
 				
@@ -54,7 +54,7 @@ var aplicarListeners = function(){
 		$.ajax({
 			url : "orientador/"+id,
 			type: 'DELETE',
-		    success: function(result) {
+		    success: function() {
 		    	$('tr[data-id="'+id+'"]').remove();
 		    	$('#quantidade-orientadores').text(orientadores - 1);
 		    }
