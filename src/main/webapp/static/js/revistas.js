@@ -10,7 +10,7 @@ var limparModal = function(){
 	$('#id').val('');
 	$('#titulo').val('');
 	$('#edicao').val('');
-	$('#editora').val('');
+	$('#editora option').attr('selected', false);
 	$('#numpaginas').val('');
 	$('#datapublicacao').val('');
 };
@@ -43,11 +43,14 @@ var aplicarListeners = function(){
 		var url = 'revista/'+id;
 		
 		$.get(url)
-			.done(function(revista){
+			.success(function(revista){
 				$('#id').val(revista.id);
 				$('#titulo').val(revista.titulo);
 				$('#edicao').val(revista.edicao);
-				$('#editora').val(revista.editora);
+
+				var id = revista.editora.id;
+				$('#editora option[value='+id+']').attr('selected', true);
+				
 				$('#numpaginas').val(revista.numpaginas);
 				$('#datapublicacao').val(revista.datapublicacao);
 				
@@ -62,7 +65,7 @@ var aplicarListeners = function(){
 		$.ajax({
 			url : "revista/"+id,
 			type: 'DELETE',
-		    success: function(result) {
+		    success: function() {
 		    	$('tr[data-id="'+id+'"]').remove();
 		    	$('#quantidade-revistas').text(revistas - 1);
 		    }

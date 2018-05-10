@@ -42,7 +42,7 @@ var aplicarListeners = function(){
 		var url = 'curso/'+id;
 		
 		$.get(url)
-			.done(function(curso){
+			.success(function(curso){
 				$('#id').val(curso.id);
 				$('#nome').val(curso.nome);
 				$('#codigo').val(curso.codigo);
@@ -60,7 +60,7 @@ var aplicarListeners = function(){
 		$.ajax({
 			url : "curso/"+id,
 			type: 'DELETE',
-		    success: function(result) {
+		    success: function() {
 		    	$('tr[data-id="'+id+'"]').remove();
 		    	$('#quantidade-cursos').text(cursos - 1);
 		    }

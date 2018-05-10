@@ -2,10 +2,13 @@ package br.edu.ufab.model.entities.itens;
 
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+import br.edu.ufab.model.entities.Editora;
 
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -15,9 +18,8 @@ public abstract class Impresso extends ItemAcervo {
 	@NotEmpty
 	private String edicao;
 	
-	@NotNull
-	@NotEmpty
-	private String editora;
+	@ManyToOne
+	private Editora editora;
 	
 	@NotNull
 	private int numpaginas;
@@ -33,12 +35,12 @@ public abstract class Impresso extends ItemAcervo {
 	}
 
 
-	public String getEditora() {
+	public Editora getEditora() {
 		return editora;
 	}
 
 
-	public void setEditora(String editora) {
+	public void setEditora(Editora editora) {
 		this.editora = editora;
 	}
 

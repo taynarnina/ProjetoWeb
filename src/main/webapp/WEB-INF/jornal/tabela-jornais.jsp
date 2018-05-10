@@ -25,7 +25,7 @@
 				<td>${jornal.id}</td>
 				<td>${jornal.titulo}</td>
 				<td>${jornal.edicao}</td>
-				<td>${jornal.editora}</td>
+				<td>${jornal.editora.nome}</td>
 				<td>${jornal.numpaginas}</td>
 				<td>${jornal.data}</td>
 				<td><button type="button" class="btn btn-warning btn-editar">Editar</button></td>

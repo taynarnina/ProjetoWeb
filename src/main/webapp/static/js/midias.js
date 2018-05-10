@@ -41,7 +41,7 @@ var aplicarListeners = function(){
 		var url = 'midia/'+id;
 		
 		$.get(url)
-			.done(function(midia){
+			.success(function(midia){
 				$('#id').val(midia.id);
 				$('#titulo').val(midia.titulo);
 				$('#tipo').val(midia.tipo);
@@ -58,7 +58,7 @@ var aplicarListeners = function(){
 		$.ajax({
 			url : "midia/"+id,
 			type: 'DELETE',
-		    success: function(result) {
+		    success: function() {
 		    	$('tr[data-id="'+id+'"]').remove();
 		    	$('#quantidade-midias').text(midias - 1);
 		    }
