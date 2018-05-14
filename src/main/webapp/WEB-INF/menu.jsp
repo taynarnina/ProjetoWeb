@@ -4,6 +4,17 @@
       <a class="navbar-brand" href="">Biblioteca UFAB</a>
     </div>
     <ul class="nav navbar-nav">
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Emprestimos <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="emprestimo">Novo emprestimo</a></li>
+          <li><a href="devolucao">Devolução</a></li>
+           <li><a href="renocacao">Renovação</a></li>
+           <li><a href="reserva">Reserva</a></li>
+           <li><a href="divida">Quitar Divida</a></li>
+           <li><a href="relatorio">Gerar Relatorio</a></li>
+        </ul>
+      </li>
       <li><a href="curso">Cursos</a></li>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pessoas <span class="caret"></span></a>
@@ -15,12 +26,12 @@
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Itens <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="livro">Livro</a></li>
-          <li><a href="revista">Revista</a></li>
-          <li><a href="jornal">Jornais</a></li>
-          <li><a href="midia">Midias Eletronicas</a></li>
-          <li><a href="tcc">TCC</a></li>
           <li><a href="anais">Anais</a></li>
+          <li><a href="jornal">Jornais</a></li>
+          <li><a href="livro">Livros</a></li>
+          <li><a href="midia">Midias Eletronicas</a></li>
+          <li><a href="revista">Revistas</a></li>
+          <li><a href="tcc">TCC</a></li>
         </ul>
       </li>
       <li class="dropdown">

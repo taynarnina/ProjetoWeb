@@ -1,4 +1,4 @@
-package br.edu.ufab.controller;
+package br.edu.ufab.controller.itens;
 
 import javax.validation.Valid;
 
@@ -15,43 +15,46 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.edu.ufab.exception.Exception;
-import br.edu.ufab.model.entities.Editora;
-import br.edu.ufab.model.repositories.EditoraRepository;
+import br.edu.ufab.model.entities.itens.MidiaEletronica;
+import br.edu.ufab.model.enums.TipoDeMidia;
+import br.edu.ufab.model.repositories.itens.MidiaEletronicaRepository;
 
 @Controller
-@RequestMapping("/editora")
-public class EditoraController {
-
-	@Autowired private EditoraRepository editoraRepository;
+@RequestMapping("/midia")
+public class MidiaEletronicaController {
+	
+	@Autowired private MidiaEletronicaRepository midiaEletronicaRepository;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String listaEditoras(Model model) {
-		Iterable<Editora> editoras = editoraRepository.findAll();
-		model.addAttribute("titulo", "Lista de Editoras");
-		model.addAttribute("editoras",editoras);
-		return "outros/editora/lista";
+	public String listaMidias(Model model) {
+		Iterable<MidiaEletronica> midias = midiaEletronicaRepository.findAll();
+		model.addAttribute("titulo", "Lista de Midias Eletronicas");
+		model.addAttribute("midias",midias);
+		model.addAttribute("tipos",TipoDeMidia.values());
+		return "itens/midia/lista";
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public String salvarEditora(
-			@Valid @ModelAttribute Editora editora,
+	public String salvarMidia(
+			@Valid @ModelAttribute MidiaEletronica midiaEletronica,
 			BindingResult bindingResult,
 			Model model) {
 		
 		if ( bindingResult.hasErrors() ) {
 			throw new Exception();
 		} else {
-			editoraRepository.save(editora);
+			midiaEletronicaRepository.save(midiaEletronica);
 		}
 		
-		model.addAttribute("editoras",editoraRepository.findAll());
-		return "outros/editora/tabela-editoras";
+		model.addAttribute("midias",midiaEletronicaRepository.findAll());
+		model.addAttribute("tipos",TipoDeMidia.values());
+		return "itens/midia/tabela-midias";
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
-	public ResponseEntity<String> deletarEditora(@PathVariable Long id) {
+	public ResponseEntity<String> deletarMidia(@PathVariable Long id) {
 		try {
-			editoraRepository.delete(id);
+			midiaEletronicaRepository.delete(id);
 			return new ResponseEntity<String>(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
@@ -60,8 +63,8 @@ public class EditoraController {
 
 	@RequestMapping(method=RequestMethod.GET, value="/{id}")
 	@ResponseBody
-	public Editora buscarEditora(@PathVariable Long id){
-		Editora editora = editoraRepository.findOne(id);
-		return editora;
-	}	
+	public MidiaEletronica buscarMidia(@PathVariable Long id){
+		MidiaEletronica midia = midiaEletronicaRepository.findOne(id);
+		return midia;
+	}
 }

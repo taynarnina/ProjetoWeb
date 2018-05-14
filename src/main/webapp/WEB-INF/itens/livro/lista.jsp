@@ -15,15 +15,15 @@
 			</style>
 		</head>
 		<body>
-			<jsp:include page="../menu.jsp"/>
-			<section class="container" id="secao-cursos">
-				<jsp:include page="tabela-cursos.jsp"/>
+			<jsp:include page="../../menu.jsp"/>
+			<section class="container" id="secao-livros">
+				<jsp:include page="tabela-livros.jsp"/>
 			</section>
 			
-			<jsp:include page="modal-curso.jsp"/>
+			<jsp:include page="modal-livro.jsp"/>
 			
 			<script type="text/javascript" src="${path}/static/js/jquery-2.1.3.min.js"></script>
 			<script type="text/javascript" src="${path}/static/bootstrap/js/bootstrap.min.js"></script>
-			<script type="text/javascript" src="${path}/static/js/cursos.js"></script>
+			<script type="text/javascript" src="${path}/static/js/livros.js"></script>
 		</body>
 	</html>
