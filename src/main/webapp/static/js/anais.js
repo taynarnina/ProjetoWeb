@@ -18,7 +18,8 @@ var limparModal = function(){
 var aplicatListenerBtnSalvar = function(){
 	$('#btn-salvar').on('click', function(){
 		var url = 'anais';
-		var dadosAnais = $('#form-anais').serialize();
+		var dadosAnais = $('#form-anais :input[value!=""]').serialize();
+		
 		$.post(url, dadosAnais)
 			.done(function(pagina){
 				$('#secao-anais').html(pagina)
@@ -62,10 +63,12 @@ var aplicarListeners = function(){
 	$('.btn-deletar').on('click', function(){
 		var id = $(this).parents('tr').data('id');
 		var anais = $('#quantidade-anais').text();
+		var csrf = $('#csrf').val();
 		
 		$.ajax({
 			url : "anais/"+id,
 			type: 'DELETE',
+			headers: {'X-CSRF-TOKEN': csrf},
 		    success: function() {
 		    	$('tr[data-id="'+id+'"]').remove();
 		    	$('#quantidade-anais').text(anais - 1);

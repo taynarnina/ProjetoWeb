@@ -26,10 +26,10 @@ var limparModal = function(){
 var aplicatListenerBtnSalvar = function(){
 	$('#btn-salvar').on('click', function(){
 		var url = 'aluno';
-		var dadosAlunos = $('#form-aluno').serialize();
+		var dadosAluno = $('#form-aluno :input[value!=""]').serialize();
 		
-		$.post(url, dadosAlunos)
-			.done(function(pagina){	
+		$.post(url, dadosAluno)
+			.done(function(pagina){
 				$('#secao-alunos').html(pagina)
 				aplicarListeners();
 			})
@@ -77,10 +77,12 @@ var aplicarListeners = function(){
 	$('.btn-deletar').on('click', function(){
 		var id = $(this).parents('tr').data('id');
 		var alunos = $('#quantidade-alunos').text();
+		var csrf = $('#csrf').val();
 		
 		$.ajax({
 			url : "aluno/"+id,
 			type: 'DELETE',
+			headers: {'X-CSRF-TOKEN': csrf},
 		    success: function() {
 		    	$('tr[data-id="'+id+'"]').remove();
 		    	$('#quantidade-alunos').text(alunos - 1);

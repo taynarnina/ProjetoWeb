@@ -14,8 +14,6 @@ import br.edu.ufab.model.enums.PeriodoDeIngresso;
 @Entity
 public class Aluno extends Pessoa {
 
-	@NotNull
-	@NotEmpty
 	private String matricula;
 	
 	@NotNull

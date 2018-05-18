@@ -29,7 +29,7 @@ public class AutorController {
 		Iterable<Autor> autores = autorRepository.findAll();
 		model.addAttribute("titulo", "Lista de Autores");
 		model.addAttribute("autores",autores);
-		return "autor/lista";
+		return "outros/autor/lista";
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
@@ -45,7 +45,7 @@ public class AutorController {
 		}
 		
 		model.addAttribute("autores",autorRepository.findAll());
-		return "autor/tabela-autores";
+		return "outros/autor/tabela-autores";
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")

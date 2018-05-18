@@ -19,7 +19,7 @@ var limparModal = function(){
 var aplicatListenerBtnSalvar = function(){
 	$('#btn-salvar').on('click', function(){
 		var url = 'livro';
-		var dadosLivros = $('#form-livro').serialize();
+		var dadosLivros = $('#form-livro :input[value!=""]').serialize();
 		
 		$.post(url, dadosLivros)
 			.done(function(pagina){	
@@ -67,10 +67,12 @@ var aplicarListeners = function(){
 	$('.btn-deletar').on('click', function(){
 		var id = $(this).parents('tr').data('id');
 		var livros = $('#quantidade-livros').text();
+		var csrf = $('#csrf').val();
 		
 		$.ajax({
 			url : "livro/"+id,
 			type: 'DELETE',
+			headers: {'X-CSRF-TOKEN': csrf},
 		    success: function() {
 		    	$('tr[data-id="'+id+'"]').remove();
 		    	$('#quantidade-livros').text(livros - 1);

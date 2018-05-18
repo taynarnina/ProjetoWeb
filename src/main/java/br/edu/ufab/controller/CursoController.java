@@ -33,7 +33,7 @@ public class CursoController {
 		model.addAttribute("cursos",cursos);
 		model.addAttribute("areas",AreaDeCurso.values());
 		model.addAttribute("tipos",TipoDeCurso.values());
-		return "curso/lista";
+		return "outros/curso/lista";
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
@@ -49,9 +49,7 @@ public class CursoController {
 		}
 		
 		model.addAttribute("cursos",cursoRepository.findAll());
-		model.addAttribute("areas",AreaDeCurso.values());
-		model.addAttribute("tipos",TipoDeCurso.values());
-		return "curso/tabela-cursos";
+		return "outros/curso/tabela-cursos";
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")

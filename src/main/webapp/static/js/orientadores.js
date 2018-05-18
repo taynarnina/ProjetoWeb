@@ -14,7 +14,7 @@ var limparModal = function(){
 var aplicatListenerBtnSalvar = function(){
 	$('#btn-salvar').on('click', function(){
 		var url = 'orientador';
-		var dadosOrientadores= $('#form-orientador').serialize();
+		var dadosOrientadores= $('#form-orientador :input[value!=""]').serialize();
 		
 		$.post(url, dadosOrientadores)
 			.done(function(pagina){	
@@ -50,10 +50,12 @@ var aplicarListeners = function(){
 	$('.btn-deletar').on('click', function(){
 		var id = $(this).parents('tr').data('id');
 		var orientadores = $('#quantidade-orientadores').text();
+		var csrf = $('#csrf').val();
 		
 		$.ajax({
 			url : "orientador/"+id,
 			type: 'DELETE',
+			headers: {'X-CSRF-TOKEN': csrf},
 		    success: function() {
 		    	$('tr[data-id="'+id+'"]').remove();
 		    	$('#quantidade-orientadores').text(orientadores - 1);

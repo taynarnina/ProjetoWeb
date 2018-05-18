@@ -18,7 +18,8 @@ var limparModal = function(){
 var aplicatListenerBtnSalvar = function(){
 	$('#btn-salvar').on('click', function(){
 		var url = 'tcc';
-		var dadosTCCs = $('#form-tcc').serialize();
+		var dadosTCCs = $('#form-tcc :input[value!=""]').serialize();
+		
 		$.post(url, dadosTCCs)
 			.done(function(pagina){
 				$('#secao-tccs').html(pagina)
@@ -66,10 +67,12 @@ var aplicarListeners = function(){
 	$('.btn-deletar').on('click', function(){
 		var id = $(this).parents('tr').data('id');
 		var tccs = $('#quantidade-tccs').text();
+		var csrf = $('#csrf').val();
 		
 		$.ajax({
 			url : "tcc/"+id,
 			type: 'DELETE',
+			headers: {'X-CSRF-TOKEN': csrf},
 		    success: function() {
 		    	$('tr[data-id="'+id+'"]').remove();
 		    	$('#quantidade-tccs').text(tccs - 1);
