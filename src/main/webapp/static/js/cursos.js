@@ -17,7 +17,7 @@ var limparModal = function(){
 var aplicatListenerBtnSalvar = function(){
 	$('#btn-salvar').on('click', function(){
 		var url = 'curso';
-		var dadosCursos = $('#form-curso').serialize();
+		var dadosCursos = $('#form-curso :input[value!=""]').serialize();
 		
 		$.post(url, dadosCursos)
 			.done(function(pagina){	
@@ -56,10 +56,12 @@ var aplicarListeners = function(){
 	$('.btn-deletar').on('click', function(){
 		var id = $(this).parents('tr').data('id');
 		var cursos = $('#quantidade-cursos').text();
+		var csrf = $('#csrf').val();
 		
 		$.ajax({
 			url : "curso/"+id,
 			type: 'DELETE',
+			headers: {'X-CSRF-TOKEN': csrf},
 		    success: function() {
 		    	$('tr[data-id="'+id+'"]').remove();
 		    	$('#quantidade-cursos').text(cursos - 1);

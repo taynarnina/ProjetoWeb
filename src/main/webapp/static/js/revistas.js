@@ -18,7 +18,7 @@ var limparModal = function(){
 var aplicatListenerBtnSalvar = function(){
 	$('#btn-salvar').on('click', function(){
 		var url = 'revista';
-		var dadosRevistas = $('#form-revista').serialize();
+		var dadosRevistas = $('#form-revista :input[value!=""]').serialize();
 		
 		$.post(url, dadosRevistas)
 			.done(function(pagina){	
@@ -61,10 +61,12 @@ var aplicarListeners = function(){
 	$('.btn-deletar').on('click', function(){
 		var id = $(this).parents('tr').data('id');
 		var revistas = $('#quantidade-revistas').text();
+		var csrf = $('#csrf').val();
 		
 		$.ajax({
 			url : "revista/"+id,
 			type: 'DELETE',
+			headers: {'X-CSRF-TOKEN': csrf},
 		    success: function() {
 		    	$('tr[data-id="'+id+'"]').remove();
 		    	$('#quantidade-revistas').text(revistas - 1);

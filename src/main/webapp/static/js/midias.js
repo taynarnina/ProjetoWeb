@@ -16,7 +16,7 @@ var limparModal = function(){
 var aplicatListenerBtnSalvar = function(){
 	$('#btn-salvar').on('click', function(){
 		var url = 'midia';
-		var dadosMidias= $('#form-midia').serialize();
+		var dadosMidias= $('#form-midia :input[value!=""]').serialize();
 		
 		$.post(url, dadosMidias)
 			.done(function(pagina){	
@@ -54,10 +54,12 @@ var aplicarListeners = function(){
 	$('.btn-deletar').on('click', function(){
 		var id = $(this).parents('tr').data('id');
 		var midias = $('#quantidade-midias').text();
+		var csrf = $('#csrf').val();
 		
 		$.ajax({
 			url : "midia/"+id,
 			type: 'DELETE',
+			headers: {'X-CSRF-TOKEN': csrf},
 		    success: function() {
 		    	$('tr[data-id="'+id+'"]').remove();
 		    	$('#quantidade-midias').text(midias - 1);

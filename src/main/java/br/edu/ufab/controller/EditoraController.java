@@ -29,7 +29,7 @@ public class EditoraController {
 		Iterable<Editora> editoras = editoraRepository.findAll();
 		model.addAttribute("titulo", "Lista de Editoras");
 		model.addAttribute("editoras",editoras);
-		return "editora/lista";
+		return "outros/editora/lista";
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
@@ -45,7 +45,7 @@ public class EditoraController {
 		}
 		
 		model.addAttribute("editoras",editoraRepository.findAll());
-		return "editora/tabela-editoras";
+		return "outros/editora/tabela-editoras";
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")

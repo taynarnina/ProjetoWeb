@@ -24,7 +24,7 @@ var limparModal = function(){
 var aplicatListenerBtnSalvar = function(){
 	$('#btn-salvar').on('click', function(){
 		var url = 'funcionario';
-		var dadosFuncionarios = $('#form-funcionario').serialize();
+		var dadosFuncionarios = $('#form-funcionario :input[value!=""]').serialize();
 		
 		$.post(url, dadosFuncionarios)
 			.done(function(pagina){	
@@ -70,10 +70,12 @@ var aplicarListeners = function(){
 	$('.btn-deletar').on('click', function(){
 		var id = $(this).parents('tr').data('id');
 		var funcionarios = $('#quantidade-funcionarios').text();
+		var csrf = $('#csrf').val();
 		
 		$.ajax({
 			url : "funcionario/"+id,
 			type: 'DELETE',
+			headers: {'X-CSRF-TOKEN': csrf},
 		    success: function() {
 		    	$('tr[data-id="'+id+'"]').remove();
 		    	$('#quantidade-funcionarios').text(funcionarios - 1);

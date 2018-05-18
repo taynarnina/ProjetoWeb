@@ -18,7 +18,7 @@ var limparModal = function(){
 var aplicatListenerBtnSalvar = function(){
 	$('#btn-salvar').on('click', function(){
 		var url = 'jornal';
-		var dadosJornais = $('#form-jornal').serialize();
+		var dadosJornais = $('#form-jornal :input[value!=""]').serialize();
 		
 		$.post(url, dadosJornais)
 			.done(function(pagina){	
@@ -61,10 +61,12 @@ var aplicarListeners = function(){
 	$('.btn-deletar').on('click', function(){
 		var id = $(this).parents('tr').data('id');
 		var jornais = $('#quantidade-jornais').text();
+		var csrf = $('#csrf').val();
 		
 		$.ajax({
 			url : "jornal/"+id,
 			type: 'DELETE',
+			headers: {'X-CSRF-TOKEN': csrf},
 		    success: function() {
 		    	$('tr[data-id="'+id+'"]').remove();
 		    	$('#quantidade-jornais').text(jornais - 1);

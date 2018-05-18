@@ -29,7 +29,7 @@ public class OrientadorController {
 		Iterable<Orientador> orientadores = orientadorRepository.findAll();
 		model.addAttribute("titulo", "Lista de Orientadores");
 		model.addAttribute("orientadores",orientadores);
-		return "orientador/lista";
+		return "outros/orientador/lista";
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
@@ -45,7 +45,7 @@ public class OrientadorController {
 		}
 		
 		model.addAttribute("orientadores",orientadorRepository.findAll());
-		return "orientador/tabela-orientadores";
+		return "outros/orientador/tabela-orientadores";
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
